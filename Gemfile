@@ -3,7 +3,9 @@ source 'https://rubygems.org'
 gem 'rails', '3.2.6'
 gem 'mysql2'
 gem 'jquery-rails'
-
+gem 'redis'
+gem 'yajl-ruby'
+gem 'formtastic'
 
 group :assets do
   gem 'sass-rails',   '~> 3.2.3'
@@ -24,4 +26,5 @@ group :test do
   gem 'guard-rspec'
   gem 'factory_girl_rails' #, '1.2.0'
   gem 'launchy'
+  gem 'capybara'
 end

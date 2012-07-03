@@ -1,0 +1,9 @@
+<%= semantic_form_for @glossary do |f| %>
+  <%= f.input :english %>
+  <%= f.input :japanese %>
+  <%= f.fields_for :sentences do |builder| %>
+    <%= render 'sentence_fields', f:builder %>
+  <% end %>
+  <%= link_to_add_fields add(:sentence), f, :sentences %>
+  <%= f.submit %>
+<% end %>

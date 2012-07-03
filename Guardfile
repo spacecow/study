@@ -28,6 +28,7 @@ guard 'rspec', :version => 2, :cli => "--format nested --drb --fail-fast", :all_
   
   # Capybara request specs
   watch(%r{^app/views/(.+)/.*\.(erb|haml)$})          { |m| "spec/requests/#{m[1]}_spec.rb" }
+  watch(%r{^app/views/(.+)/(.*)\.html\.(erb|haml)$})          { |m| ["spec/requests/#{m[1]}_#{m[2]}_spec.rb","spec/requests/#{m[1]}_#{m[2]}/.+_spec.rb"] }
   
   # Turnip features and steps
   watch(%r{^spec/acceptance/(.+)\.feature$})

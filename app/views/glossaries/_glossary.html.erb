@@ -1,0 +1,9 @@
+<div class="glossary">
+  <div id="english">
+    <%= glossary.english %>
+  </div>
+  <div id="japanese">
+    <%= link_to glossary.japanese, edit_glossary_path(glossary) %>
+  </div>
+  <%= render 'sentences/sentences', sentences:glossary.sentences if glossary.sentences.present? %>
+</div>
