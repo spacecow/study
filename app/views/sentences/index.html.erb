@@ -1,0 +1,5 @@
+<%= title pl(:sentence) %>
+
+<%= render 'sentences', sentences:@sentences if @sentences.present? %>
+
+<%= link_to new(:sentence), new_sentence_path %>

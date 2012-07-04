@@ -1,8 +1,9 @@
 <div class="sentence">
+  <div id="japanese">
+    <%= link_to sentence.japanese, edit_sentence_path(sentence) %>
+  </div>
   <div id="english">
     <%= sentence.english %>
   </div>
-  <div id="japanese">
-    <%= sentence.japanese %>
-  </div>
+  <%= render 'glossaries', glossaries:sentence.glossaries if sentence.glossaries.present? %>
 </div>

@@ -5,7 +5,7 @@ gem 'mysql2'
 gem 'jquery-rails'
 gem 'redis'
 gem 'yajl-ruby'
-gem 'formtastic'
+gem 'simple_form'
 
 group :assets do
   gem 'sass-rails',   '~> 3.2.3'

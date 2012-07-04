@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120703020344) do
+ActiveRecord::Schema.define(:version => 20120704013909) do
 
   create_table "glossaries", :force => true do |t|
     t.string   "english"
@@ -20,12 +20,18 @@ ActiveRecord::Schema.define(:version => 20120703020344) do
     t.datetime "updated_at", :null => false
   end
 
+  create_table "lookups", :force => true do |t|
+    t.integer  "glossary_id"
+    t.integer  "sentence_id"
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
+  end
+
   create_table "sentences", :force => true do |t|
     t.string   "english"
     t.string   "japanese"
-    t.integer  "glossary_id"
-    t.datetime "created_at",  :null => false
-    t.datetime "updated_at",  :null => false
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
   end
 
 end

@@ -3,7 +3,7 @@
     <%= glossary.english %>
   </div>
   <div id="japanese">
-    <%= link_to glossary.japanese, edit_glossary_path(glossary) %>
+    <%= glossary.japanese %>
   </div>
-  <%= render 'sentences/sentences', sentences:glossary.sentences if glossary.sentences.present? %>
+  <%= render 'sentences', sentences:glossary.sentences if glossary.sentences.present? %>
 </div>

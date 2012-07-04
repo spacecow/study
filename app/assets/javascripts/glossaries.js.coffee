@@ -1,6 +1,5 @@
 jQuery ->
-  $('form').on 'click', '.add_fields', (event) ->
-    time = new Date().getTime()
-    regexp = new RegExp($(this).data('id'), 'g')
-    $(this).before($(this).data('fields').replace(regexp, time))
-    event.preventDefault()
+  $('#glossary_sentence_tokens').tokenInput '/sentences.json'
+    propertyToSearch: 'japanese'
+    prePopulate: $('#glossary_sentence_tokens').data('pre')
+    preventDuplicates: true

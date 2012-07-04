@@ -1,3 +1,5 @@
 <%= title pl(:glossary) %>
 
-<%= render 'glossaries' if @glossaries.present? %>
+<%= render 'glossaries', glossaries:@glossaries if @glossaries.present? %>
+
+<%= link_to new(:sentence), new_sentence_path %>
