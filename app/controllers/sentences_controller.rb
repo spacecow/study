@@ -1,6 +1,10 @@
 class SentencesController < ApplicationController
   def index
     @sentences = Sentence.all
+    respond_to do |f|
+      f.html
+      f.json {render json:@sentences}
+    end
   end
 
   def new
