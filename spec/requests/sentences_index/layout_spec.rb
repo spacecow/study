@@ -31,21 +31,28 @@ describe "Sentences index" do
       page.should have_div(:sentences)
     end
 
-    it "has a div for each sentence" do
-      div(:sentences).divs_no(:sentence).should eq(1)
+    it "has a div for each sentence/glossary" do
+      div(:sentences).divs_no(:sentence_container).should eq(1)
     end
 
-    it "has english displayed" do
-      div(:sentences).div(:sentence,0).div(:english).should have_content('The flood overwhelmed the village') 
+    it "has a div for the sentence" do
+      div(:sentence_container,0).should have_div(:sentence)
     end
-    it "has japanese displayed as a link to its edit page" do
-      div(:sentences).div(:sentence,0).div(:japanese).should have_link('kouzui ga sono mura wo nomikonde shimatta') 
+
+    it "has english displayed as a link" do
+      div(:sentence).div(:english).should have_content('The flood overwhelmed the village') 
+      click_link('The flood overwhelmed the village')
+      page.current_path.should eq sentence_path(@sentence)
+    end
+
+    it "has japanese displayed as a link" do
+      div(:sentence).div(:japanese).should have_link('kouzui ga sono mura wo nomikonde shimatta') 
       click_link('kouzui ga sono mura wo nomikonde shimatta')
-      page.current_path.should eq edit_sentence_path(@sentence)
+      page.current_path.should eq sentence_path(@sentence)
     end
 
     it "has no glossaries list" do
-      div(:sentences).div(:sentence,0).should_not have_list(:glossaries)
+      div(:sentence_container,0).should_not have_ul(:glossaries)
     end
   end
 
@@ -58,17 +65,17 @@ describe "Sentences index" do
     end
 
     it "has a glossaries list" do
-      div(:sentences).div(:sentence,0).should have_list(:glossaries)
+      div(:sentence_container,0).should have_ul(:glossaries)
     end
 
-    it "has a each glossary listed" do
-      div(:sentences).div(:sentence,0).ul(:glossaries).lis_no(:glossary).should eq(1)
+    it "has a div for each glossary" do
+      ul(:glossaries).lis_no(:glossary).should eq(1)
     end
 
-    it "has each glossary listed as a link" do
-      div(:sentences).div(:sentence,0).ul(:glossaries).li(:glossary,0).div(:japanese).should have_link('kouzui')
-      click_link 'kouzui'
-      page.current_path.should eq edit_glossary_path(@glossary)
+    it "has japanese glossary displayed as a link" do
+      li(:glossary,0).div(:japanese).should have_content('kouzui')
+      click_link('kouzui')
+      page.current_path.should eq glossary_path(@glossary)
     end
   end
 end

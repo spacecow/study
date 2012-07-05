@@ -1,0 +1,9 @@
+<%= title @glossary.japanese %>
+<%= subtitle @glossary.english %>
+
+<%= render 'sentences', sentences:@glossary.sentences if @glossary.sentences.present? %>
+<div class="clear"></div>
+
+<div id="bottom">
+  <%= link_to t(:edit), edit_glossary_path(@glossary), class:'bottom' %>
+</div>

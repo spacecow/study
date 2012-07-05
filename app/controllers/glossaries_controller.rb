@@ -1,4 +1,16 @@
 class GlossariesController < ApplicationController
+  def show
+    @glossary = Glossary.find(params[:id])
+  end
+
+  def index
+    @glossaries = Glossary.order(:japanese)
+    respond_to do |f|
+      f.html
+      f.json {render json:@glossaries.tokens(params[:q])}
+    end
+  end
+
   def new
     @glossary = Glossary.new
     @glossary.sentences.build
@@ -21,14 +33,6 @@ class GlossariesController < ApplicationController
     if @glossary.update_attributes(params[:glossary])
       redirect_to glossaries_path
     else
-    end
-  end
-
-  def index
-    @glossaries = Glossary.order(:japanese)
-    respond_to do |f|
-      f.html
-      f.json {render json:@glossaries.tokens(params[:q])}
     end
   end
 end

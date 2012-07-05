@@ -1,8 +1,8 @@
-<div class="sentence">
+<li class="sentence">
   <div id="english">
-    <%= link_to sentence.english, edit_sentence_path(sentence) %>
+    <%= link_to(sentence.english, sentence) unless sentence.english.blank? %>
   </div>
   <div id="japanese">
-    <%= sentence.japanese %>
+    <%= link_to(sentence.japanese, sentence) unless sentence.japanese.blank? %>
   </div>
-</div>
+</li>

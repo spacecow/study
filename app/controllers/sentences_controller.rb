@@ -1,4 +1,8 @@
 class SentencesController < ApplicationController
+  def show
+    @sentence = Sentence.find(params[:id])
+  end
+
   def index
     @sentences = Sentence.all
     respond_to do |f|
@@ -15,7 +19,7 @@ class SentencesController < ApplicationController
   def create
     @sentence = Sentence.new(params[:sentence])
     if @sentence.save
-      redirect_to new_sentence_path
+      redirect_to @sentence 
     end
   end
 

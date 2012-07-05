@@ -1,9 +1,12 @@
-<div class="glossary">
-  <div id="english">
-    <%= glossary.english %>
-  </div>
-  <div id="japanese">
-    <%= glossary.japanese %>
+<div class="glossary_container">
+  <div id="glossary">
+    <div id="japanese">
+      <%= link_to(glossary.japanese, glossary) unless glossary.japanese.blank?  %>
+    </div>
+    <div id="english">
+      <%= link_to(glossary.english, glossary) unless glossary.english.blank? %>
+    </div>
   </div>
   <%= render 'sentences', sentences:glossary.sentences if glossary.sentences.present? %>
+  <div class="clear"></div>
 </div>

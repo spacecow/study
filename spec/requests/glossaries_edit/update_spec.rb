@@ -31,7 +31,6 @@ describe "Glossary" do
     context "link to sentence" do
       before(:each) do
         @sentence = FactoryGirl.create(:sentence)
-save_and_open_page
         fill_in 'Sentence', with:@sentence.id
         @lookup_count = Lookup.count
         click_button 'Update Glossary'

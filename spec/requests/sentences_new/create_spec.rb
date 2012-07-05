@@ -27,8 +27,8 @@ describe "Glossaries new" do
         @sentence.japanese.should eq "kouzui ga sono mura wo nomikonde shimatta"
       end
 
-      it "redirects to the new glossary page" do
-        page.current_path.should eq new_sentence_path
+      it "redirects to that sentence page" do
+        page.current_path.should eq sentence_path(@sentence)
       end
     end
 
