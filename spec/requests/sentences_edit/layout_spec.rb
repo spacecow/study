@@ -18,6 +18,10 @@ describe "Sentence edit" do
     value('Japanese').should eq 'kouzui ga sono mura wo nomikonde shimatta' 
   end
 
+  it "has a glossary field" do
+    value('Glossary').should be_nil 
+  end
+
   it "has an update button" do
     page.should have_button('Update Sentence')
   end

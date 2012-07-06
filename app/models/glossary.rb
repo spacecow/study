@@ -6,7 +6,7 @@ class Glossary < ActiveRecord::Base
   has_many :sentences, :through => :lookups
 
   def sentence_tokens=(tokens)
-    self.sentence_ids = tokens.split(',')
+    self.sentence_ids = Sentence.ids_from_tokens(tokens)
   end
 
   class << self

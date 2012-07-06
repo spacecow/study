@@ -4,10 +4,10 @@ class SentencesController < ApplicationController
   end
 
   def index
-    @sentences = Sentence.all
+    @sentences = Sentence.order(:japanese)
     respond_to do |f|
       f.html
-      f.json {render json:@sentences}
+      f.json {render json:@sentences.tokens(params[:q])}
     end
   end
 

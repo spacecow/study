@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe "Glossaries new" do
+describe "Sentence new" do
   before(:each) do
     visit new_sentence_path
   end

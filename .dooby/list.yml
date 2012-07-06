@@ -1,3 +1,5 @@
 --- 
 e2776c: !ruby/object:Dooby::Task 
   todo: add show sentence page :doing
+a94f0b: !ruby/object:Dooby::Task 
+  todo: no java edit for sentences on glossary edit
