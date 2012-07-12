@@ -24,18 +24,18 @@ describe Glossary do
     end
 
     it "adds link between glossary and kanji to db" do
-      lambda{ @glossary.links_to_kanjis
+      lambda{ @glossary.link_to_kanjis
       }.should change(GlossariesKanji, :count).by(1)
     end
 
     it "adds link between Glossary and kanji to db" do
-      lambda{ Glossary.links_to_kanjis
+      lambda{ Glossary.link_to_kanjis
       }.should change(GlossariesKanji, :count).by(1)
     end
 
     it "add no links if links already exists" do
       @kanji.glossaries << @glossary
-      lambda{ @glossary.links_to_kanjis
+      lambda{ @glossary.link_to_kanjis
       }.should change(GlossariesKanji, :count).by(0)
     end
   end

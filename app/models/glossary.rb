@@ -8,11 +8,13 @@ class Glossary < ActiveRecord::Base
   attr_accessible :content, :reading, :sentence_tokens
   attr_reader :sentence_tokens
 
+  validates :content, presence:true
+
   def display
     "#{content}(#{reading})"
   end
 
-  def links_to_kanjis
+  def link_to_kanjis
     kanji_array.each{|e| kanjis << Kanji.find_by_symbol(e)} if kanjis.empty?
   end
 
@@ -30,8 +32,8 @@ class Glossary < ActiveRecord::Base
       tokens.split(",")
     end
 
-    def links_to_kanjis
-      all.each{|e| e.links_to_kanjis}
+    def link_to_kanjis
+      all.each{|e| e.link_to_kanjis}
     end
 
     def tokens(query)

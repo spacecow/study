@@ -1,6 +1,7 @@
+# -*- coding: utf-8 -*-
 require 'spec_helper'
 
-describe "Glossaries new" do
+describe "Sentence new" do
   context "create" do
     before(:each) do
       visit new_sentence_path
@@ -32,25 +33,61 @@ describe "Glossaries new" do
       end
     end
 
-    context "link to glossary" do
+    context "link to" do
       before(:each) do
-        @glossary = FactoryGirl.create(:glossary)
-        fill_in 'Glossary', with:@glossary.id
-        @lookup_count = Lookup.count
-        click_button 'Create Sentence'
-        @lookup = Lookup.last
+        FactoryGirl.create(:kanji, symbol:'魔')
+        @glossarieskanji_count = GlossariesKanji.count
       end
 
-      it "adds a lookup to the db" do
-        Lookup.count.should eq @lookup_count+1
+      context "new glossary" do
+        before(:each) do
+          fill_in 'Glossary', with:'<<<魔法>>>'
+          @lookup_count = Lookup.count
+          @glossary_count = Glossary.count
+          click_button 'Create Sentence'
+          @lookup = Lookup.last
+          @glossary = Glossary.last
+        end
+
+        it "adds a glossary to the db" do
+          Glossary.count.should eq @glossary_count+1
+        end
+        it "adds a lookup to the db" do
+          Lookup.count.should eq @lookup_count+1
+        end
+
+        it "sets the glossary_id" do
+          @lookup.glossary.should eq @glossary
+        end
+        it "sets the sentence_id" do
+          @lookup.sentence.should eq Sentence.last
+        end
       end
 
-      it "sets the glossary_id" do
-        @lookup.glossary.should eq @glossary
+      context "existing glossary" do
+        before(:each) do
+          @glossary = FactoryGirl.create(:glossary, content:'魔法')
+          fill_in 'Glossary', with:@glossary.id
+          @lookup_count = Lookup.count
+          click_button 'Create Sentence'
+          @lookup = Lookup.last
+        end
+
+        it "adds a lookup to the db" do
+          Lookup.count.should eq @lookup_count+1
+        end
+
+        it "sets the glossary_id" do
+          @lookup.glossary.should eq @glossary
+        end
+
+        it "sets the sentence_id" do
+          @lookup.sentence.should eq Sentence.last
+        end
       end
 
-      it "sets the sentence_id" do
-        @lookup.sentence.should eq Sentence.last
+      after(:each) do
+        GlossariesKanji.count.should eq @glossarieskanji_count+1
       end
     end
   end

@@ -3,4 +3,12 @@ class Lookup < ActiveRecord::Base
 
   belongs_to :glossary
   belongs_to :sentence
+
+  after_create :link_kanji
+
+  private
+
+    def link_kanji
+      Glossary.find(self[:glossary_id]).link_to_kanjis
+    end
 end

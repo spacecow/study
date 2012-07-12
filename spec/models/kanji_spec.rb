@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Kanji, focus:true do
+describe Kanji do
   describe "#generate_db" do
     it "saves them all to db", slow:true do
       lambda{ Kanji.generate_db

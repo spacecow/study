@@ -12,7 +12,7 @@ describe "Glossary edit" do
   end
 
   it "has its content field filled in" do
-    value('Content').should eq '飲み込む' 
+    value('* Content').should eq '飲み込む' 
   end
 
   it "has its reading field filled in" do

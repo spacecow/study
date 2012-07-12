@@ -14,14 +14,15 @@ class Sentence < ActiveRecord::Base
       tokens.gsub!(/<<<(.+?)>>>/){ create!(japanese:$1).id}
       tokens.split(",")
     end
+  end
 
-    def tokens(query)
-      sentences = where("japanese like ?", "%#{query}%")
-      if sentences.empty?
-        [{id: "<<<#{query}>>>", japanese: "New: \"#{query}\""}]
-      else
-        sentences
-      end
-    end
-  end 
+  #  def tokens(query)
+  #    sentences = where("japanese like ?", "%#{query}%")
+  #    if sentences.empty?
+  #      [{id: "<<<#{query}>>>", japanese: "New: \"#{query}\""}]
+  #    else
+  #      sentences
+  #    end
+  #  end
+  #end 
 end
