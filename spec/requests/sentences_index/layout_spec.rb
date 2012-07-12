@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 require 'spec_helper'
 
 describe "Sentences index" do
@@ -56,26 +57,53 @@ describe "Sentences index" do
     end
   end
 
-  context "with sentences & glossaries" do
+  context "with sentences" do
     before(:each) do
       sentence = FactoryGirl.create(:sentence, english:'The flood overwhelmed the village', japanese:'kouzui ga sono mura wo nomikonde shimatta')
-      @glossary = FactoryGirl.create(:glossary, japanese:'kouzui')
+      @glossary = FactoryGirl.create(:glossary, content:'洪水')
       @glossary.sentences << sentence
-      visit sentences_path
     end
 
-    it "has a glossaries list" do
-      div(:sentence_container,0).should have_ul(:glossaries)
+    context "& glossaries" do
+      before(:each) do
+        visit sentences_path
+      end
+
+      it "has a glossaries list" do
+        div(:sentence_container,0).should have_ul(:glossaries)
+      end
+
+      it "has a div for each glossary" do
+        ul(:glossaries).lis_no(:glossary).should eq(1)
+      end
+
+      it "has japanese glossary displayed as a link" do
+        li(:glossary,0).div(:content).should have_content('洪水')
+        click_link('洪水')
+        page.current_path.should eq glossary_path(@glossary)
+      end
+
+      it "has no kanjis span" do
+        div(:content).should_not have_span("kanjis")
+      end
     end
 
-    it "has a div for each glossary" do
-      ul(:glossaries).lis_no(:glossary).should eq(1)
-    end
+    context ", glossaries & kanjis" do
+      before(:each) do
+        @kanji = FactoryGirl.create(:kanji, symbol:'洪')
+        @glossary.kanjis << @kanji
+        visit sentences_path
+      end
 
-    it "has japanese glossary displayed as a link" do
-      li(:glossary,0).div(:japanese).should have_content('kouzui')
-      click_link('kouzui')
-      page.current_path.should eq glossary_path(@glossary)
+      it "has a kanjis span" do
+        div(:content).should have_span("kanjis")
+      end
+
+      it "has kanji displayed as a link to the kanji show page" do
+        span(:kanjis).should have_link('洪') 
+        click_link('洪')
+        page.current_path.should eq kanji_path(@kanji)
+      end
     end
   end
 end

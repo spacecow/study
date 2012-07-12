@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe "Glossary edit" do
   before(:each) do
-    glossary = FactoryGirl.create(:glossary, japanese:'nomikomu', english:'gulp down')
+    glossary = FactoryGirl.create(:glossary, content:'nomikomu')
     visit edit_glossary_path(glossary)
   end
 
@@ -10,12 +10,8 @@ describe "Glossary edit" do
     page.should have_title('Edit Glossary')
   end
 
-  it "has its english field filled in" do
-    value('English').should eq 'gulp down' 
-  end
-
-  it "has its japanese field filled in" do
-    value('Japanese').should eq 'nomikomu' 
+  it "has its content field filled in" do
+    value('Content').should eq 'nomikomu' 
   end
 
   it "has no sentence field" do

@@ -1,5 +1,6 @@
 <li class="glossary">
-  <div id="japanese">
-    <%= link_to(glossary.japanese, glossary) unless glossary.japanese.blank? %>
+  <div id="content">
+    <%= link_to(glossary.content, glossary) unless glossary.content.blank? %>
+    <%= render 'sentences/kanjis', kanjis:glossary.kanjis if glossary.kanjis.present? %>
   </div>
 </li>

@@ -1,0 +1,3 @@
+<%= title @kanji.symbol %>
+
+<%= render 'sentences/glossaries', glossaries:@kanji.glossaries if @kanji.glossaries.present? %>

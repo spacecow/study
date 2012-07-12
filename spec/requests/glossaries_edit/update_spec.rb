@@ -3,9 +3,9 @@ require 'spec_helper'
 describe "Glossary" do
   context "update" do
     before(:each) do
-      glossary = FactoryGirl.create(:glossary, japanese:'nomikomu')
+      glossary = FactoryGirl.create(:glossary, content:'nomikomu')
       visit edit_glossary_path(glossary)
-      fill_in 'Japanese', with:'nihongo'
+      fill_in 'Content', with:'nihongo'
     end
 
     context "glossary" do
@@ -20,7 +20,7 @@ describe "Glossary" do
       end
 
       it "sets the glossary japanese" do
-        @glossary.japanese.should eq "nihongo"
+        @glossary.content.should eq "nihongo"
       end
 
       it "redirects to the glossaries index" do

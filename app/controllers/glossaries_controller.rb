@@ -4,7 +4,7 @@ class GlossariesController < ApplicationController
   end
 
   def index
-    @glossaries = Glossary.order(:japanese)
+    @glossaries = Glossary.order(:content)
     respond_to do |f|
       f.html
       f.json {render json:@glossaries.tokens(params[:q])}

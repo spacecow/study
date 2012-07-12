@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe "Glossary show" do
   before(:each) do
-    @glossary = FactoryGirl.create(:glossary, english:'flood', japanese:'kouzui')
+    @glossary = FactoryGirl.create(:glossary, content:'kouzui')
   end
 
   context "without glossary" do
@@ -12,12 +12,10 @@ describe "Glossary show" do
 
     it "has the glossary info in the title" do
       page.should have_title("kouzui")
-      page.should have_subtitle("flood")
     end
 
     it "displays no info as divs" do
-      page.should_not have_div(:english)
-      page.should_not have_div(:japanese)
+      page.should_not have_div(:content)
     end
 
     it "has no sentence list" do

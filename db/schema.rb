@@ -11,11 +11,23 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120704013909) do
+ActiveRecord::Schema.define(:version => 20120712043503) do
 
   create_table "glossaries", :force => true do |t|
-    t.string   "english"
-    t.string   "japanese"
+    t.string   "content"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  create_table "glossaries_kanjis", :force => true do |t|
+    t.integer  "kanji_id"
+    t.integer  "glossary_id"
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
+  end
+
+  create_table "kanjis", :force => true do |t|
+    t.string   "symbol"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
   end

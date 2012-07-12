@@ -23,7 +23,7 @@ describe "Glossaries index" do
 
   context "with glossaries, without sentences" do
     before(:each) do
-      @glossary = FactoryGirl.create(:glossary, english:'gulp down', japanese:'nomikomu')
+      @glossary = FactoryGirl.create(:glossary, content:'nomikomu')
       visit glossaries_path
     end
 
@@ -39,14 +39,8 @@ describe "Glossaries index" do
       div(:glossary_container,0).should have_div(:glossary)
     end
 
-    it "has english displayed as a link" do
-      div(:glossary).div(:english).should have_link('gulp down') 
-      click_link('gulp down')
-      page.current_path.should eq glossary_path(@glossary)
-    end
-
-    it "has japanese displayed as a link" do
-      div(:glossary).div(:japanese).should have_link('nomikomu') 
+    it "has content displayed as a link" do
+      div(:glossary).div(:content).should have_link('nomikomu') 
       click_link('nomikomu')
       page.current_path.should eq glossary_path(@glossary)
     end
