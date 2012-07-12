@@ -60,7 +60,7 @@ describe "Sentences index" do
   context "with sentences" do
     before(:each) do
       sentence = FactoryGirl.create(:sentence, english:'The flood overwhelmed the village', japanese:'kouzui ga sono mura wo nomikonde shimatta')
-      @glossary = FactoryGirl.create(:glossary, content:'洪水')
+      @glossary = FactoryGirl.create(:glossary, content:'洪水', reading:'こうずい')
       @glossary.sentences << sentence
     end
 
@@ -78,7 +78,7 @@ describe "Sentences index" do
       end
 
       it "has japanese glossary displayed as a link" do
-        li(:glossary,0).div(:content).should have_content('洪水')
+        li(:glossary,0).div(:content).should have_content('洪水(こうずい)')
         click_link('洪水')
         page.current_path.should eq glossary_path(@glossary)
       end

@@ -5,8 +5,12 @@ class Glossary < ActiveRecord::Base
   has_many :glossaries_kanjis
   has_many :kanjis, :through => :glossaries_kanjis
 
-  attr_accessible :content, :sentence_tokens
+  attr_accessible :content, :reading, :sentence_tokens
   attr_reader :sentence_tokens
+
+  def display
+    "#{content}(#{reading})"
+  end
 
   def links_to_kanjis
     kanji_array.each{|e| kanjis << Kanji.find_by_symbol(e)} if kanjis.empty?
