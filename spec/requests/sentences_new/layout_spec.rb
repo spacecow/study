@@ -2,6 +2,7 @@ require 'spec_helper'
 
 describe "Sentence new" do
   before(:each) do
+    signin_member
     visit new_sentence_path
   end
 

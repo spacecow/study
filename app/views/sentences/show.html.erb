@@ -1,9 +1,11 @@
-<%= title @sentence.japanese %>
-<%= subtitle @sentence.english %>
+<%= present @sentence do |presenter| %>
+  <%= title @sentence.japanese %>
+  <%= subtitle @sentence.english %>
 
-<%= render 'glossaries', glossaries:@sentence.glossaries if @sentence.glossaries.present? %>
-<div class="clear"></div>
+  <%= render 'glossaries', glossaries:@sentence.glossaries if @sentence.glossaries.present? %>
+  <div class="clear"></div>
 
-<div id="bottom">
-  <%= link_to t(:edit), edit_sentence_path(@sentence) %>
-</div>
+  <div id="bottom">
+    <%= presenter.edit_link %>
+  </div>
+<% end %>

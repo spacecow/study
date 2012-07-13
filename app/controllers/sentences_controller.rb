@@ -1,4 +1,6 @@
 class SentencesController < ApplicationController
+  load_and_authorize_resource
+
   def show
     @sentence = Sentence.find(params[:id])
   end
@@ -17,7 +19,8 @@ class SentencesController < ApplicationController
   end
 
   def create
-    @sentence = Sentence.new(params[:sentence])
+    @sentence = current_user.sentences.build(params[:sentence])
+    #@sentence = Sentence.new(params[:sentence])
     if @sentence.save
       redirect_to @sentence 
     end

@@ -4,6 +4,8 @@ require 'spec_helper'
 describe "Sentence new" do
   context "create" do
     before(:each) do
+      @user = create_member
+      signin
       visit new_sentence_path
       fill_in 'Japanese', with:'kouzui ga sono mura wo nomikonde shimatta'
       fill_in 'English', with:'The flood overwhelmed the village'
@@ -26,6 +28,10 @@ describe "Sentence new" do
 
       it "sets the japanese" do
         @sentence.japanese.should eq "kouzui ga sono mura wo nomikonde shimatta"
+      end
+
+      it "sets the link to the current user" do
+        @sentence.owner.should eq @user
       end
 
       it "redirects to that sentence page" do

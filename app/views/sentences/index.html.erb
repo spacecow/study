@@ -1,7 +1,9 @@
-<%= title pl(:sentence) %>
+<%= present Sentence do |presenter| %>
+  <%= title pl(:sentence) %>
 
-<%= render 'sentences', sentences:@sentences if @sentences.present? %>
+  <%= render 'sentences', sentences:@sentences if @sentences.present? %>
 
-<div id="bottom">
-  <%= link_to new(:sentence), new_sentence_path %>
-</div>
+  <div id="bottom">
+    <%= presenter.new_link %>
+  </div>
+<% end %>

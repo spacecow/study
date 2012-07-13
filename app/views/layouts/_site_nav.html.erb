@@ -1,4 +1,9 @@
 <div id="site_nav">
   <%= link_to pl(:glossary), glossaries_path %>
   <%= link_to pl(:sentence), sentences_path %>
+  <% if current_user %>
+    <%= link_to t(:signout), signout_path %>
+  <% else %>
+    <%= link_to t(:signin), 'auth/facebook' %>
+  <% end %>
 </div>

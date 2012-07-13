@@ -5,9 +5,14 @@ class Sentence < ActiveRecord::Base
   has_many :lookups
   has_many :glossaries, :through => :lookups
 
+  #belongs_to :owner, :class_name => 'User'
+  belongs_to :user
+
   def glossary_tokens=(tokens)
     self.glossary_ids = Glossary.ids_from_tokens(tokens) 
   end
+
+  def owner; user end
 
   class << self
     def ids_from_tokens(tokens)
@@ -15,14 +20,4 @@ class Sentence < ActiveRecord::Base
       tokens.split(",")
     end
   end
-
-  #  def tokens(query)
-  #    sentences = where("japanese like ?", "%#{query}%")
-  #    if sentences.empty?
-  #      [{id: "<<<#{query}>>>", japanese: "New: \"#{query}\""}]
-  #    else
-  #      sentences
-  #    end
-  #  end
-  #end 
 end

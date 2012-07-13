@@ -25,9 +25,22 @@ Spork.prefork do
     # automatically. This will be the default behavior in future versions of
     # rspec-rails.
     config.infer_base_class_for_anonymous_controllers = false
+
+    #focus tag
+    #---------
+    config.filter_run :focus => true
+    config.run_all_when_everything_filtered = true
   end
 end
 
 Spork.each_run do
   FactoryGirl.reload
+end
+
+RSpec.configure do |config|
+  config.before do
+    OmniAuth.config.test_mode = true
+    pre = {provider:'facebook', uid:"123456", info:{name:'Test Name', nickname:'testuser', email:'test@user.com'}, credentials:{token:'abc123', expires_at:1341979183}}
+    OmniAuth.config.mock_auth[:facebook] = OmniAuth::AuthHash.new(pre)
+  end
 end

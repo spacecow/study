@@ -1,7 +1,5 @@
-<%= title pl(:glossary) %>
+<% present Glossary do |presenter| %>
+  <%= title pl(:glossary) %>
 
-<%= render 'glossaries', glossaries:@glossaries if @glossaries.present? %>
-
-<div id="bottom">
-  <%= link_to new(:sentence), new_sentence_path %>
-</div>
+  <%= render 'glossaries', glossaries:@glossaries if @glossaries.present? %>
+<% end %>

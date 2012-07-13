@@ -3,6 +3,7 @@ require 'spec_helper'
 describe "Sentence update" do
   context "update" do
     before(:each) do
+      signin_member
       sentence = FactoryGirl.create(:sentence, english:'gulp down', japanese:'nomikomu')
       visit edit_sentence_path(sentence)
       fill_in 'English', with:'The flood overwhelmed the village'

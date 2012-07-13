@@ -14,10 +14,8 @@ describe "Glossaries index" do
       page.should_not have_div(:glossaries)
     end
 
-    it "has a link to the new sentence page" do
-      page.should have_link('New Sentence')
-      click_link 'New Sentence'
-      page.current_path.should eq new_sentence_path
+    it "has no link to the new glossary page" do
+      page.should_not have_bottom_link('New Glossary')
     end
   end
 

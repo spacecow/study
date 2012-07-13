@@ -2,6 +2,7 @@ require 'spec_helper'
 
 describe "Sentence edit" do
   before(:each) do
+    signin_member
     sentence = FactoryGirl.create(:sentence, japanese:'kouzui ga sono mura wo nomikonde shimatta', english:'The flood overwhelmed the village')
     visit edit_sentence_path(sentence)
   end

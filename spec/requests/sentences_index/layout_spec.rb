@@ -2,7 +2,7 @@
 require 'spec_helper'
 
 describe "Sentences index" do
-  context "without sentences" do
+  context "no user, without sentences" do
     before(:each) do
       visit sentences_path
     end
@@ -13,6 +13,17 @@ describe "Sentences index" do
 
     it "has no glossaries div" do
       page.should_not have_div(:sentences)
+    end
+
+    it "has no link to the new sentence page" do
+      page.should_not have_link('New Sentence')
+    end
+  end
+
+  context "signed in user, without sentences" do
+    before(:each) do
+      signin_member
+      visit sentences_path
     end
 
     it "has a link to the new sentence page" do

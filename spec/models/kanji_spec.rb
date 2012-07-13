@@ -1,12 +1,12 @@
 require 'spec_helper'
 
 describe Kanji do
-  describe "#generate_db" do
-    it "saves them all to db", slow:true do
-      lambda{ Kanji.generate_db
-      }.should change(Kanji, :count).by(6355)
-    end
-  end
+  #describe "#generate_db" do
+  #  it "saves them all to db", slow:true do
+  #    lambda{ Kanji.generate_db
+  #    }.should change(Kanji, :count).by(6355)
+  #  end
+  #end
 
   context "create" do
     before(:each) do

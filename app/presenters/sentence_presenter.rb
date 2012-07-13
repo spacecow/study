@@ -1,0 +1,2 @@
+class SentencePresenter < BasePresenter
+end

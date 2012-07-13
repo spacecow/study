@@ -6,6 +6,8 @@ gem 'jquery-rails'
 gem 'redis'
 gem 'yajl-ruby'
 gem 'simple_form'
+gem 'omniauth-facebook'
+gem 'cancan'
 
 group :assets do
   gem 'sass-rails',   '~> 3.2.3'

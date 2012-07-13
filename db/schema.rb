@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120712073459) do
+ActiveRecord::Schema.define(:version => 20120713040400) do
 
   create_table "glossaries", :force => true do |t|
     t.string   "content"
@@ -45,6 +45,20 @@ ActiveRecord::Schema.define(:version => 20120712073459) do
     t.string   "japanese"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
+    t.integer  "user_id"
+  end
+
+  create_table "users", :force => true do |t|
+    t.string   "provider"
+    t.string   "uid"
+    t.string   "username"
+    t.string   "name"
+    t.string   "email"
+    t.string   "oauth_token"
+    t.datetime "oauth_expires_at"
+    t.integer  "roles_mask"
+    t.datetime "created_at",       :null => false
+    t.datetime "updated_at",       :null => false
   end
 
 end

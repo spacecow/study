@@ -7,4 +7,11 @@ module ApplicationHelper
     end
     link_to(name, '#', class: "add_fields", data: {id: id, fields: fields.gsub("\n", "")})
   end
+
+  def present(object, klass=nil)
+    klass ||= "#{object.instance_of?(Class) ? object : object.class}Presenter".constantize
+    presenter = klass.new(object, self)
+    yield presenter if block_given?
+    presenter
+  end
 end
