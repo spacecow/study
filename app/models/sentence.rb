@@ -1,12 +1,16 @@
 class Sentence < ActiveRecord::Base
-  attr_accessible :english, :glossary_tokens, :japanese
-  attr_reader :glossary_tokens
+  belongs_to :project
 
   has_many :lookups
   has_many :glossaries, :through => :lookups
 
   #belongs_to :owner, :class_name => 'User'
   belongs_to :user
+
+  attr_accessible :english, :glossary_tokens, :japanese, :project_id
+  attr_reader :glossary_tokens
+
+  validates :project_id, presence:true
 
   def glossary_tokens=(tokens)
     self.glossary_ids = Glossary.ids_from_tokens(tokens) 

@@ -3,7 +3,8 @@ require 'spec_helper'
 describe "Sentence edit" do
   before(:each) do
     signin_member
-    sentence = FactoryGirl.create(:sentence, japanese:'kouzui ga sono mura wo nomikonde shimatta', english:'The flood overwhelmed the village')
+    @project = FactoryGirl.create(:project, name:'Prince')
+    sentence = FactoryGirl.create(:sentence, japanese:'kouzui ga sono mura wo nomikonde shimatta', english:'The flood overwhelmed the village', project:@project)
     visit edit_sentence_path(sentence)
   end
 
@@ -21,6 +22,10 @@ describe "Sentence edit" do
 
   it "has a glossary field" do
     value('Glossary').should be_nil 
+  end
+
+  it "has the project selected" do
+    selected_value('Project').should eq @project.id.to_s
   end
 
   it "has an update button" do

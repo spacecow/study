@@ -7,7 +7,12 @@ FactoryGirl.define do
     symbol "a"
   end
 
+  factory :project do
+    name 'Factory Name'
+  end
+
   factory :sentence do
+    project
   end
 
   factory :user do

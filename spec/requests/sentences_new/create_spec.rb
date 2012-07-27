@@ -4,6 +4,7 @@ require 'spec_helper'
 describe "Sentence new" do
   context "create" do
     before(:each) do
+      FactoryGirl.create(:project)
       @user = create_member
       signin
       visit new_sentence_path
