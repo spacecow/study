@@ -6,7 +6,10 @@ class SentencesController < ApplicationController
   end
 
   def index
+    @project = params[:project]
     @sentences = Sentence.order(:japanese)
+    @sentences = @sentences.where("project_id = #{@project}") if @project
+    @projects = [['All',0]] | Project.all.map{|e| [e.name, e.id]}
     respond_to do |f|
       f.html
       f.json {render json:@sentences.tokens(params[:q])}

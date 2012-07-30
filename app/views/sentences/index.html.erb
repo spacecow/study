@@ -1,4 +1,9 @@
-<%= present Sentence do |presenter| %>
+<% present Sentence do |presenter| %>
+  <%= form_tag sentences_path do %>
+    <%= label_tag :project, pl(:project,1) %>
+    <%= select_tag :project, options_for_select(@projects, @project) %>
+  <% end %>
+
   <%= title pl(:sentence) %>
 
   <%= render 'sentences', sentences:@sentences if @sentences.present? %>

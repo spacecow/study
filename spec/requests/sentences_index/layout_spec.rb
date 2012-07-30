@@ -7,6 +7,14 @@ describe "Sentences index" do
       visit sentences_path
     end
 
+    it "has no projects to select" do
+      options('Project').should eq 'All'
+    end
+
+    it "has all sentences chosen" do
+      selected_value('Project').should eq '0' 
+    end
+
     it "has a title" do
       page.should have_title('Sentences')
     end
@@ -33,10 +41,40 @@ describe "Sentences index" do
     end
   end
 
+  context "with sentences of right project" do
+    before(:each) do
+      @prince = FactoryGirl.create(:project, name:'Prince')
+      FactoryGirl.create(:sentence, english:'The flood overwhelmed the village', japanese:'kouzui ga sono mura wo nomikonde shimatta', project:@prince)
+      FactoryGirl.create(:sentence, english:'Whatever', japanese:'nandemonai')
+      visit sentences_path(project:@prince.id)
+    end
+
+    it "has projects to select" do
+      options('Project').should eq 'All, Prince, Factory Name'
+    end
+
+    it "has all sentences chosen" do
+      selected_value('Project').should eq @prince.id.to_s
+    end
+
+    it "has a div for each sentence/glossary" do
+      div(:sentences).divs_no(:sentence_container).should eq(1)
+    end
+  end
+
   context "with sentences, without glossaries" do
     before(:each) do
-      @sentence = FactoryGirl.create(:sentence, english:'The flood overwhelmed the village', japanese:'kouzui ga sono mura wo nomikonde shimatta')
+      prince = FactoryGirl.create(:project, name:'Prince')
+      @sentence = FactoryGirl.create(:sentence, english:'The flood overwhelmed the village', japanese:'kouzui ga sono mura wo nomikonde shimatta', project:prince)
       visit sentences_path
+    end
+
+    it "has projects to select" do
+      options('Project').should eq 'All, Prince'
+    end
+
+    it "has all sentences chosen" do
+      selected_value('Project').should eq '0' 
     end
 
     it "has a sentences div" do
