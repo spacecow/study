@@ -28,6 +28,8 @@ class SentencesController < ApplicationController
     #@sentence = Sentence.new(params[:sentence])
     if @sentence.save
       redirect_to @sentence 
+    else
+      render :new
     end
   end
 

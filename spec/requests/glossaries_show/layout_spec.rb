@@ -5,7 +5,7 @@ describe "Glossary show" do
     @glossary = FactoryGirl.create(:glossary, content:'kouzui')
   end
 
-  context "without glossary" do
+  context "no user, without glossary" do
     before(:each) do
       visit glossary_path(@glossary)
     end
@@ -22,8 +22,19 @@ describe "Glossary show" do
       page.should_not have_ul(:sentences)
     end
 
+    it "has no edit link" do
+      page.should_not have_link('Edit')
+    end
+  end
+
+  context "signed in user, without glossary" do
+    before(:each) do
+      signin_member
+      visit glossary_path(@glossary)
+    end
+
     it "has an edit link" do
-      page.should have_link('Edit')
+      bottom_links.should have_link('Edit')
       click_link 'Edit'
       page.current_path.should eq edit_glossary_path(@glossary)
     end

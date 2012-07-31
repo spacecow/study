@@ -1,8 +1,10 @@
-<%= title @glossary.content %>
+<% present @glossary do |presenter| %>
+  <%= title @glossary.content %>
 
-<%= render 'sentences', sentences:@glossary.sentences if @glossary.sentences.present? %>
-<div class="clear"></div>
+  <%= render 'sentences', sentences:@glossary.sentences if @glossary.sentences.present? %>
+  <div class="clear"></div>
 
-<div id="bottom">
-  <%= link_to t(:edit), edit_glossary_path(@glossary) %>
-</div>
+  <div id="bottom_links">
+    <%= presenter.edit_link %>
+  </div>
+<% end %>

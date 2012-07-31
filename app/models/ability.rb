@@ -2,13 +2,15 @@ class Ability
   include CanCan::Ability
 
   def initialize(user)
+    can :read, Glossary
     can :read, Sentence
     if user
-      can :show, User
+      can [:create,:update], Glossary
       can [:create,:update], Sentence
-      can :create, Glossary
+      can :show, User
       if user.role? :admin
         can [:index, :create, :update_multiple], Translation
+        can [:create, :update], Project
       end
     end
   end

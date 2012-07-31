@@ -2,6 +2,7 @@ require 'spec_helper'
 
 describe "Project create" do
   before(:each) do
+    signin_admin
     visit new_project_path
   end
 

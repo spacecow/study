@@ -31,6 +31,17 @@ Spork.prefork do
     config.filter_run :focus => true
     config.run_all_when_everything_filtered = true
   end
+
+  def controller_actions(controller)
+    Rails.application.routes.routes.inject({}) do |hash, route|
+      if route.requirements[:controller] == controller && !route.verb.nil?
+        verb = route.verb.to_s.split(':')[-1][1..-3].downcase
+        #route.verb.downcase.empty? ? "get" : route.verb.downcase
+        hash[route.requirements[:action]] = verb.empty? ? 'get' : verb
+      end
+      hash
+    end
+  end
 end
 
 Spork.each_run do

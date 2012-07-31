@@ -36,7 +36,7 @@ describe "Sentence show" do
     end
 
     it "has an edit link" do
-      page.should have_link('Edit')
+      bottom_links.should have_link('Edit')
       click_link 'Edit'
       page.current_path.should eq edit_sentence_path(@sentence)
     end

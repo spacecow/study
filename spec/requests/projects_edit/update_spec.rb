@@ -3,6 +3,7 @@ require 'spec_helper'
 describe "Project update" do
   before(:each) do
     project = FactoryGirl.create(:project, name:'alc')
+    signin_admin
     visit edit_project_path(project)
   end
 

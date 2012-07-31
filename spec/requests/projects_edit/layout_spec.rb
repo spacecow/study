@@ -3,6 +3,7 @@ require 'spec_helper'
 describe "Project edit" do
   before(:each) do
     project = FactoryGirl.create(:project)
+    signin_admin
     visit edit_project_path(project)
   end
 

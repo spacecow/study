@@ -5,6 +5,7 @@ describe "Glossary" do
   context "update" do
     before(:each) do
       glossary = FactoryGirl.create(:glossary, content:'飲み込む', reading:'のみこむ')
+      signin_member
       visit edit_glossary_path(glossary)
       fill_in 'Content', with:'日本語'
       fill_in 'Reading', with:'にほんご'

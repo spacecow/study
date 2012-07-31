@@ -4,6 +4,7 @@ require 'spec_helper'
 describe "Glossary edit" do
   before(:each) do
     glossary = FactoryGirl.create(:glossary, content:'飲み込む', reading:'のみこむ')
+    signin_member
     visit edit_glossary_path(glossary)
   end
 
