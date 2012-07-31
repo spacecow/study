@@ -8,5 +8,14 @@ class Locale < ActiveRecord::Base
       token.gsub!(/<<<(.+?)>>>/){ create!(name:$1).id}
       token
     end
+
+    def tokens(query)
+      tokens = where("name like ?", "%#{query}%")
+      if tokens.empty?
+        [{id: "<<<#{query}>>>", name: "New: \"#{query}\""}]
+      else
+        tokens
+      end
+    end
   end
 end

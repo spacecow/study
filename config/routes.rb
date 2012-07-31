@@ -14,6 +14,7 @@ Study::Application.routes.draw do
   resources :projects, :only => [:new,:create,:edit,:update]
 
   #-- Translations
+  resources :locales, :only => :index
   resources :translations, :only => [:index,:create] do
     collection do
       put 'update_multiple'

@@ -1,6 +1,6 @@
 class TranslationsController < ApplicationController
-  load_and_authorize_resource
-  skip_load_resource :only => :index
+  #load_and_authorize_resource
+  #skip_load_resource :only => :index
 
   def index
     @translation = Translation.new
