@@ -6,7 +6,7 @@ class SentencesController < ApplicationController
   end
 
   def index
-    @project = params[:project]
+    @project = params[:project] unless params[:project] == '0'
     @sentences = Sentence.order(:japanese)
     @sentences = @sentences.where("project_id = #{@project}") if @project
     @projects = [['All',0]] | Project.all.map{|e| [e.name, e.id]}

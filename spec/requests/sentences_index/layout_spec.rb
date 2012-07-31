@@ -15,6 +15,10 @@ describe "Sentences index" do
       selected_value('Project').should eq '0' 
     end
 
+    it "has a Go button" do
+      page.should have_button("Go")
+    end
+
     it "has a title" do
       page.should have_title('Sentences')
     end
@@ -41,12 +45,14 @@ describe "Sentences index" do
     end
   end
 
-  context "with sentences of right project" do
+  context "with sentences of chosen project" do
     before(:each) do
       @prince = FactoryGirl.create(:project, name:'Prince')
       FactoryGirl.create(:sentence, english:'The flood overwhelmed the village', japanese:'kouzui ga sono mura wo nomikonde shimatta', project:@prince)
       FactoryGirl.create(:sentence, english:'Whatever', japanese:'nandemonai')
-      visit sentences_path(project:@prince.id)
+      visit sentences_path
+      select 'Prince', from:'Project'
+      click_button 'Go'
     end
 
     it "has projects to select" do
@@ -67,6 +73,8 @@ describe "Sentences index" do
       prince = FactoryGirl.create(:project, name:'Prince')
       @sentence = FactoryGirl.create(:sentence, english:'The flood overwhelmed the village', japanese:'kouzui ga sono mura wo nomikonde shimatta', project:prince)
       visit sentences_path
+      select 'All', from:'Project'
+      click_button 'Go'
     end
 
     it "has projects to select" do
