@@ -3,7 +3,9 @@ a94f0b: !ruby/object:Dooby::Task
   todo: no java edit for sentences on glossary edit
 10851f: !ruby/object:Dooby::Task 
   todo: add kanji and read data :done
-8e20fd: !ruby/object:Dooby::Task 
-  todo: add reading :doing
 5cb9ba: !ruby/object:Dooby::Task 
   todo: add reading :done
+e57054: !ruby/object:Dooby::Task 
+  todo: translations :doing
+672d23: !ruby/object:Dooby::Task 
+  todo: translations :done

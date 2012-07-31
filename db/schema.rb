@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120727051520) do
+ActiveRecord::Schema.define(:version => 20120730075642) do
 
   create_table "glossaries", :force => true do |t|
     t.string   "content"
@@ -29,6 +29,12 @@ ActiveRecord::Schema.define(:version => 20120727051520) do
 
   create_table "kanjis", :force => true do |t|
     t.string   "symbol"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  create_table "locales", :force => true do |t|
+    t.string   "name"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
   end
@@ -53,6 +59,14 @@ ActiveRecord::Schema.define(:version => 20120727051520) do
     t.datetime "updated_at", :null => false
     t.integer  "user_id"
     t.integer  "project_id"
+  end
+
+  create_table "translations", :force => true do |t|
+    t.string   "key"
+    t.string   "value"
+    t.integer  "locale_id"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
   end
 
   create_table "users", :force => true do |t|

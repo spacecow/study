@@ -7,6 +7,9 @@ class Ability
       can :show, User
       can [:create,:update], Sentence
       can :create, Glossary
+      if user.role? :admin
+        can [:index, :create, :update_multiple], Translation
+      end
     end
   end
 end

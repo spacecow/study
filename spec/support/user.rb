@@ -1,3 +1,6 @@
+def create_admin(h={})
+  create_user_with_role(:admin,h)
+end
 def create_member(h={})
   create_user_with_role(:member,h)
 end

@@ -13,4 +13,10 @@ Study::Application.routes.draw do
   resources :sentences, :only => [:show,:index,:new,:create,:edit,:update]
   resources :projects, :only => [:new,:create,:edit,:update]
 
+  #-- Translations
+  resources :translations, :only => [:index,:create] do
+    collection do
+      put 'update_multiple'
+    end
+  end
 end

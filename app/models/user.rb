@@ -10,6 +10,9 @@ class User < ActiveRecord::Base
   VIP       = 'vip'
   ROLES     = [GOD,ADMIN,MINIADMIN,VIP,MEMBER]
 
+  def role?(s) roles.include?(s.to_s) end
+  def roles; ROLES.reject{|r| ((roles_mask||0) & 2**ROLES.index(r)).zero? } end
+
   class << self
     def authenticate_from_omniauth(auth)
       where(auth.slice(:provider,:uid)).first_or_initialize.tap do |user|

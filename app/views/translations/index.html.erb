@@ -1,0 +1,12 @@
+<%= title pl(:translation) %>
+
+<%= render 'translations', translations:@translations if @translations.keys.present? %>
+
+<%= subtitle new(:translation) %>
+
+<%= simple_form_for @translation do |f| %>
+  <%= f.input :key, wrapper_html:{id:'key'} %>
+  <%= f.input :value, wrapper_html:{id:'value'} %>
+  <%= f.input :locale_token, wrapper_html:{id:'locale'}, label:t(:locale) %>
+  <%= f.submit %>
+<% end %>
