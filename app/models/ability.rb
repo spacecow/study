@@ -4,9 +4,11 @@ class Ability
   def initialize(user)
     can :read, Glossary
     can :read, Sentence
+    can :read, Kanji
     if user
       can [:create,:update], Glossary
       can [:create,:update], Sentence
+      can [:create,:update], Kanji
       can :show, User
       if user.role? :admin
         can [:index, :create, :update_multiple], Translation

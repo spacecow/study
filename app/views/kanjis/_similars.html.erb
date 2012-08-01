@@ -1,0 +1,7 @@
+<div class="clear"></div>
+<h4><%= pl(:similar) %></h4>
+<ul id="similars">
+  <% similars.each do |similar| %>
+    <%= render 'similar', similar:similar %>
+  <% end %>
+</ul>

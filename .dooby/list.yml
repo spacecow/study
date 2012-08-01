@@ -5,7 +5,9 @@ a94f0b: !ruby/object:Dooby::Task
   todo: add kanji and read data :done
 5cb9ba: !ruby/object:Dooby::Task 
   todo: add reading :done
-e57054: !ruby/object:Dooby::Task 
-  todo: translations :doing
 672d23: !ruby/object:Dooby::Task 
   todo: translations :done
+4ab78f: !ruby/object:Dooby::Task 
+  todo: add similarity :doing
+4dfb8b: !ruby/object:Dooby::Task 
+  todo: add similarity :done

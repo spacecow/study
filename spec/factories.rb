@@ -10,6 +10,9 @@ FactoryGirl.define do
   factory :locale do
   end
 
+  factory :meaning do
+  end
+
   factory :project do
     name 'Factory Name'
   end

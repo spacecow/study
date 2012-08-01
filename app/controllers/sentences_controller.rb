@@ -1,8 +1,8 @@
 class SentencesController < ApplicationController
   load_and_authorize_resource
+  skip_load_resource :only => [:index,:new,:create]
 
   def show
-    @sentence = Sentence.find(params[:id])
   end
 
   def index
@@ -34,11 +34,9 @@ class SentencesController < ApplicationController
   end
 
   def edit
-    @sentence = Sentence.find(params[:id])
   end
 
   def update
-    @sentence = Sentence.find(params[:id])
     if @sentence.update_attributes(params[:sentence])
       redirect_to sentences_path
     end

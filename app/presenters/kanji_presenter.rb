@@ -1,0 +1,2 @@
+class KanjiPresenter < BasePresenter
+end

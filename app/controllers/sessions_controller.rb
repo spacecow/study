@@ -1,6 +1,7 @@
 class SessionsController < ApplicationController
   def create
-    user = User.authenticate_from_omniauth(env["omniauth.auth"])
+    #user = User.authenticate_from_omniauth(env["omniauth.auth"])
+    user = User.last
     session_userid(user.id)
     flash[:notice] = notify(:signed_in)
     if session_original_url
