@@ -3,8 +3,9 @@ require 'spec_helper'
 
 describe "Kanji show" do
   before(:each) do
-    magic = FactoryGirl.create(:meaning)
+    magic = FactoryGirl.create(:meaning, name:'magic')
     @kanji = FactoryGirl.create(:kanji, symbol:'魔')
+    @kanji.meanings << magic
   end
 
   context "no user, without glossary, without similars" do
@@ -17,7 +18,7 @@ describe "Kanji show" do
     end
 
     it "displays meaning info as divs" do
-      page.should have_div(:meanings)
+      div(:meanings).should have_content "magic"
     end
 
     it "has no sentence list" do
@@ -45,7 +46,9 @@ describe "Kanji show" do
 
   context "without glossary, with similars" do
     before(:each) do
+      demon_s = FactoryGirl.create(:meaning, name:'demon')
       @demon = FactoryGirl.create(:kanji, symbol:'鬼') 
+      @demon.meanings << demon_s
       @kanji.similars << @demon
       visit kanji_path(@kanji)
     end
@@ -62,6 +65,10 @@ describe "Kanji show" do
       li(:similar,0).span(:kanji).should have_link('鬼')
       click_link '鬼'
       page.current_path.should eq kanji_path(@demon)
+    end
+
+    it "has each meaning to similar listed" do
+      li(:similar,0).span(:kanji).should have_content('鬼 - demon')
     end
   end
 

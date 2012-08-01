@@ -2,6 +2,7 @@
   <%= title @kanji.symbol %>
 
   <div id="meanings">
+    <%= presenter.comma_separated_meanings %>
   </div>
 
   <%= render 'sentences/glossaries', glossaries:@kanji.glossaries if @kanji.glossaries.present? %>

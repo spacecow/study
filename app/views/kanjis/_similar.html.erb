@@ -1,3 +1,5 @@
-<li class="similar">
-  <span id="kanji"><%= link_to similar.symbol, similar %></span>
-</li>
+<% present similar do |presenter| %>
+  <li class="similar">
+    <span id="kanji"><%= link_to similar.symbol, similar %> - <%= presenter.comma_separated_meanings %></span>
+  </li>
+<% end %>

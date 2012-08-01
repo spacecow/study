@@ -7,6 +7,9 @@ class Kanji < ActiveRecord::Base
   has_many :similarities
   has_many :similars, :through => :similarities
 
+  has_many :kanjis_meanings
+  has_many :meanings, :through => :kanjis_meanings
+
   attr_accessible :symbol, :word_id, :similar_tokens
   attr_reader :similar_tokens
 
@@ -17,13 +20,18 @@ class Kanji < ActiveRecord::Base
   end
 
   class << self
-    def generate_db
-      file = File.open("data/kanjidic.utf", "r")
+    def generate_db(file = 'kanjidic.utf')
+      file = File.open("data/#{file}", "r")
       file.readline
       file.each_line do |line|
-        kanji = line.strip[0]
+        kanji = line.split[0]
         assert_equal(kanji.length, 1, "kanji file is of wrong format")
-        Kanji.create(symbol:kanji)
+        kanji = Kanji.create(symbol:kanji)
+
+        splits = line.split('{')
+        while data = splits.pop.match(/(.+)\}/)
+          kanji.meanings << Meaning.find_or_create_by_name(data[1])
+        end
       end
     end
 

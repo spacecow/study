@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120731084205) do
+ActiveRecord::Schema.define(:version => 20120801051819) do
 
   create_table "glossaries", :force => true do |t|
     t.string   "content"
@@ -33,6 +33,13 @@ ActiveRecord::Schema.define(:version => 20120731084205) do
     t.datetime "updated_at", :null => false
   end
 
+  create_table "kanjis_meanings", :force => true do |t|
+    t.integer  "kanji_id"
+    t.integer  "meaning_id"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
   create_table "locales", :force => true do |t|
     t.string   "name"
     t.datetime "created_at", :null => false
@@ -44,6 +51,12 @@ ActiveRecord::Schema.define(:version => 20120731084205) do
     t.integer  "sentence_id"
     t.datetime "created_at",  :null => false
     t.datetime "updated_at",  :null => false
+  end
+
+  create_table "meanings", :force => true do |t|
+    t.string   "name"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
   end
 
   create_table "projects", :force => true do |t|
