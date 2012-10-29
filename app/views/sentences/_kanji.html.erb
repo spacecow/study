@@ -1,1 +1,6 @@
+<% present kanji do |presenter| %>
+
 <%= link_to kanji.symbol, kanji %>
+<%= presenter.similars %>
+
+<% end %>

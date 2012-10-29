@@ -1,10 +1,11 @@
+# -*- coding: utf-8 -*-
 FactoryGirl.define do
   factory :glossary do
     content "a"
   end
 
   factory :kanji do
-    symbol "a"
+    symbol "魔"
   end
 
   factory :locale do

@@ -19,6 +19,8 @@ class Kanji < ActiveRecord::Base
     self.similar_ids = Kanji.ids_from_tokens(tokens)
   end
 
+  def to_s; symbol end
+
   class << self
     def generate_db(file = 'kanjidic.utf')
       file = File.open("data/#{file}", "r")
