@@ -34,6 +34,9 @@ Spork.prefork do
     #shorten factory girl syntax
     #---------------------------
     config.include FactoryGirl::Syntax::Methods
+
+    # --------- Testing presenters ---------
+    config.include ActionView::TestCase::Behavior, example_group: {file_path: %r{spec/presenters}}
   end
 
   def controller_actions(controller)

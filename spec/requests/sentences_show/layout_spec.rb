@@ -50,11 +50,11 @@ describe "Sentence show" do
     end
 
     it "has a glossary list" do
-      page.should have_ul(:glossaries)
+      page.should have_ul(:glossaries,0)
     end
 
     it "has a each glossary listed" do
-      ul(:glossaries).lis_no(:glossary).should eq(1)
+      ul(:glossaries,0).lis_no(:glossary).should eq(1)
     end
 
     it "has each glossary listed as a link" do

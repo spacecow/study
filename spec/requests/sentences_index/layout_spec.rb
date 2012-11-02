@@ -126,22 +126,10 @@ describe "Sentences index" do
         visit sentences_path
       end
 
-      it "has a glossaries list" do
-        div(:sentence_container,0).should have_ul(:glossaries)
-      end
-
-      it "has a div for each glossary" do
-        ul(:glossaries).lis_no(:glossary).should eq(1)
-      end
-
       it "has japanese glossary displayed as a link" do
         li(:glossary,0).div(:content).should have_content('洪水(こうずい)')
         click_link('洪水')
         page.current_path.should eq glossary_path(@glossary)
-      end
-
-      it "has no kanjis span" do
-        div(:content).should_not have_span("kanjis")
       end
     end
 
@@ -153,11 +141,11 @@ describe "Sentences index" do
       end
 
       it "has a kanjis span" do
-        div(:content).should have_span("kanjis")
+        div(:content).should have_ul(:kanjis,0)
       end
 
       it "has kanji displayed as a link to the kanji show page" do
-        span(:kanjis).should have_link('洪') 
+        ul(:kanjis,0).should have_link('洪') 
         click_link('洪')
         page.current_path.should eq kanji_path(@kanji)
       end
