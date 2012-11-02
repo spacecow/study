@@ -47,4 +47,27 @@ describe KanjiPresenter do
       end # two, where one is taken
     end # with glossaries
   end # #random_glossary 
+
+  describe '#similars' do
+    context 'without similars' do
+      it{ presenter.similars.should be_nil }
+    end
+
+    context 'with similars' do
+      let(:similar){ create(:kanji, symbol:'鬼')}
+      before{ kanji.similars << similar }
+      subject{ Capybara.string(presenter.similars)}
+      it{ should have_selector('span.similars', count:1)}
+
+      describe 'span.similars' do
+        subject{ Capybara.string(presenter.similars).find('span.similars')}
+        it{ should have_selector('span.similar.kanji', count:1)}
+
+        describe 'span.similar.kanji' do
+          subject{ Capybara.string(presenter.similars).find('span.similars span.similar.kanji')}
+          it{ should have_xpath "//a[@href='#{kanji_path(similar)}']", text:'鬼' }
+        end
+      end
+    end # with similars
+  end
 end

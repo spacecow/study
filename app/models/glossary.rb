@@ -14,6 +14,7 @@ class Glossary < ActiveRecord::Base
     "#{content}(#{reading})"
   end
 
+  def link; [display, self] end
   def link_to_kanjis
     kanji_array.each{|e| kanjis << Kanji.find_by_symbol(e)} if kanjis.empty?
   end

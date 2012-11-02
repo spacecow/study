@@ -7,13 +7,21 @@ class KanjiPresenter < BasePresenter
   end
 
   def random_glossary(taken_glossary=nil)
-    r = kanji.random_glossary(taken_glossary)
+    link = kanji.random_glossary_link(taken_glossary)
     h.content_tag(:span, class:%w(glossary random).join(' ')) do
-      " - #{h.link_to *r}".html_safe
-    end unless r.nil? 
+      " - #{h.link_to *link}".html_safe
+    end unless link.nil? 
   end
 
   def similars
-    "(#{kanji.similars.join(' ')})" if kanji.similars.present?
+    h.content_tag(:span, class:'similars') do
+      ("("+
+      kanji.similars.map{|e|
+        h.content_tag(:span, class:%w(similar kanji).join(' ')) do
+          h.link_to *e.link
+        end
+      }.join(' ')+
+      ")").html_safe
+    end if kanji.similars.present?
   end
 end
