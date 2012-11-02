@@ -7,9 +7,10 @@ class KanjiPresenter < BasePresenter
   end
 
   def random_glossary(taken_glossary=nil)
+    r = kanji.random_glossary(taken_glossary)
     h.content_tag(:span, class:%w(glossary random).join(' ')) do
-      " - #{kanji.glossaries.reject{|e| e==taken_glossary}.map(&:content).sample}"
-    end if kanji.glossaries.present?
+      " - #{h.link_to *r}".html_safe
+    end unless r.nil? 
   end
 
   def similars

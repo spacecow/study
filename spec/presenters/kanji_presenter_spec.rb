@@ -11,20 +11,25 @@ describe KanjiPresenter do
     end # without glossaries 
 
     context 'with glossary' do
-      before{ kanji.glossaries << create(:glossary, content:'魔法')}
+      let(:glossary){ create(:glossary, content:'魔法', reading:'まほう')}
+      before{ kanji.glossaries << glossary }
       subject{ Capybara.string(presenter.random_glossary)}
       it{ should have_selector('span.glossary.random', count:1)} 
 
       context 'one' do
         subject{ Capybara.string(presenter.random_glossary).find('span.glossary.random')}
-        it{ should have_content '魔法' }
+        it{ should have_xpath "//a[@href='#{glossary_path(glossary)}']", text:'魔法(まほう)'}
       end # one
+
+      context 'one that is taken' do
+        it{ presenter.random_glossary(glossary).should be_nil }
+      end # one that is taken
 
       context 'two' do
         before{ kanji.glossaries << create(:glossary, content:'小悪魔')}
         subject{ Capybara.string(presenter.random_glossary).find('span.glossary.random')}
         it do
-          if subject.text == ' - 魔法'
+          if subject.text =~ /魔法/
             should_not have_content '小悪魔'
             should have_content '魔法'
           else
@@ -35,11 +40,10 @@ describe KanjiPresenter do
       end # two 
 
       context 'two, where one is taken' do
-        let(:glossary){ create(:glossary, content:'小悪魔')}
-        before{ kanji.glossaries << glossary }
+        before{ kanji.glossaries << create(:glossary, content:'小悪魔')}
         subject{ Capybara.string(presenter.random_glossary(glossary)).find('span.glossary.random')}
-        it{ should have_content '魔法' }
-        it{ should_not have_content '小悪魔' }
+        it{ should have_content '小悪魔' }
+        it{ should_not have_content '魔法' }
       end # two, where one is taken
     end # with glossaries
   end # #random_glossary 
