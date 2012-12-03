@@ -9,7 +9,11 @@ a94f0b: !ruby/object:Dooby::Task
   todo: translations :done
 4dfb8b: !ruby/object:Dooby::Task 
   todo: add similarity :done
-2669fd: !ruby/object:Dooby::Task 
-  todo: add meanings :doing
 04e0ca: !ruby/object:Dooby::Task 
   todo: add meanings :done
+4124e8: !ruby/object:Dooby::Task 
+  todo: dont show darkness unless asked for
+dc1ab9: !ruby/object:Dooby::Task 
+  todo: synonyms for glossaries
+089673: !ruby/object:Dooby::Task 
+  todo: new sentence on top :doing

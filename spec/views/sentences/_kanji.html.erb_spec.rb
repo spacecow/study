@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 require 'spec_helper'
 
-describe 'sentences/kanji.html.erb', focus:true do
+describe 'sentences/kanji.html.erb' do
   let(:kanji){ create(:kanji) }
 
   context "without similars" do
