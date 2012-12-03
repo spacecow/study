@@ -6,9 +6,13 @@ class SentencesController < ApplicationController
   end
 
   def index
-    @project = params[:project] unless params[:project] == '0'
+    @project_id = params[:project_id] unless params[:project] == '0'
     @sentences = Sentence.order(:japanese)
-    @sentences = @sentences.where("project_id = #{@project}") if @project
+    if @project_id.to_i != 0
+      @sentences = @sentences.where("project_id = ?", @project_id)
+    else
+      @sentences = @sentences.where("projects.name <> ?", 'Darkness').includes(:project)
+    end
     @projects = [['All',0]] | Project.all.map{|e| [e.name, e.id]}
     respond_to do |f|
       f.html

@@ -18,6 +18,8 @@ class Sentence < ActiveRecord::Base
 
   def owner; user end
 
+  def project_name; project.name end
+
   class << self
     def ids_from_tokens(tokens)
       tokens.gsub!(/<<<(.+?)>>>/){ create!(japanese:$1).id}

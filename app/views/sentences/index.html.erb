@@ -1,7 +1,7 @@
 <% present Sentence do |presenter| %>
   <%= form_tag sentences_path, :method => :get do %>
-    <%= label_tag :project, pl(:project,1) %>
-    <%= select_tag :project, options_for_select(@projects, @project) %>
+    <%= label_tag :project_id, pl(:project,1) %>
+    <%= select_tag :project_id, options_for_select(@projects, @project_id) %>
     <%= submit_tag t(:go) %>
   <% end %>
 
