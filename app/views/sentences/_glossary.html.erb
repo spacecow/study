@@ -1,6 +1,9 @@
+<% present glossary do |presenter| %>
+
 <li class="glossary">
-  <div id="content">
-    <%= link_to(glossary.display, glossary) unless glossary.content.blank? %>
+  <%= presenter.content %>
+    <%#= link_to(glossary.display, glossary) unless glossary.content.blank? %>
     <%= render 'sentences/kanjis', kanjis:glossary.kanjis if glossary.kanjis.present? %>
-  </div>
 </li>
+
+<% end %>

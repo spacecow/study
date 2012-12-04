@@ -1,3 +1,5 @@
+<% present sentence do |presenter| %>
+
 <div class="sentence_container">
   <div id="sentence">
     <div id="japanese">
@@ -7,6 +9,11 @@
       <%= link_to(sentence.english, sentence) %>
     </div>
   </div>
-  <%= render 'glossaries', glossaries:sentence.glossaries if sentence.glossaries.present? %>
+
+  <%= presenter.glossaries %>
+
+  <%#= render 'glossaries', glossaries:sentence.glossaries if sentence.glossaries.present? %>
   <div class="clear"></div>
 </div>
+
+<% end %>

@@ -2,6 +2,23 @@
 require 'spec_helper'
 
 describe Glossary do
+  describe "#ids_from_tokens" do
+    context "string of ids" do
+      it{ Glossary.ids_from_tokens("1,2").should eq %w(1 2) }
+    end
+
+    context "new glossary" do
+      it{ Glossary.ids_from_tokens("<<<cat>>>").should eq [Glossary.last.id.to_s] }
+    end
+
+    context "existing glossary" do
+      before{ create :glossary, content:'cat' }
+      it{ lambda{ Glossary.ids_from_tokens("<<<cat>>>")}.should raise_error(ActiveRecord::RecordInvalid, 'Validation failed: Content has already been taken')}
+    end
+  end
+end
+
+describe Glossary do
   describe "#kanji_array" do
     it "gets the kanjis in an array" do
       FactoryGirl.create(:kanji, symbol:'魔') 

@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 FactoryGirl.define do
   factory :glossary do
-    content "a"
+    sequence(:content){|n| "Factory content #{n}"}
   end
 
   factory :kanji do

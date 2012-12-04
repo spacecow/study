@@ -2,7 +2,8 @@
   <%= title @sentence.japanese %>
   <%= subtitle @sentence.english %>
 
-  <%= render 'glossaries', glossaries:@sentence.glossaries if @sentence.glossaries.present? %>
+  <%= presenter.glossaries %>
+  <%# render 'glossaries', glossaries:@sentence.glossaries if @sentence.glossaries.present? %>
   <div class="clear"></div>
 
   <div id="bottom_links">

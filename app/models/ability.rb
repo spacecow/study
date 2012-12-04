@@ -5,6 +5,7 @@ class Ability
     can :read, Glossary
     can :read, Sentence
     can :read, Kanji
+
     if user
       can [:create,:update], Glossary
       can [:create,:update], Sentence

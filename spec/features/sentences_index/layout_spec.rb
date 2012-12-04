@@ -39,8 +39,8 @@ describe "Sentences index" do
     end
 
     it "has a link to the new sentence page" do
-      page.should have_link('New Sentence')
-      click_link 'New Sentence'
+      page.should have_link('New Sentence',count:2)
+      div(:header,0).click_link 'New Sentence'
       page.current_path.should eq new_sentence_path
     end
   end
@@ -127,11 +127,11 @@ describe "Sentences index" do
       end
 
       it "has a glossaries list" do
-        div(:sentence_container,0).should have_ul(:glossaries)
+        div(:sentence_container,0).should have_ul(:glossaries,0)
       end
 
       it "has a div for each glossary" do
-        ul(:glossaries).lis_no(:glossary).should eq(1)
+        ul(:glossaries,0).lis_no(:glossary).should eq(1)
       end
 
       it "has japanese glossary displayed as a link" do
@@ -158,7 +158,7 @@ describe "Sentences index" do
 
       it "has kanji displayed as a link to the kanji show page" do
         span(:kanjis).should have_link('洪') 
-        click_link('洪')
+        span(:kanjis).click_link('洪')
         page.current_path.should eq kanji_path(@kanji)
       end
     end

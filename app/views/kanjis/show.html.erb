@@ -5,7 +5,8 @@
     <%= presenter.comma_separated_meanings %>
   </div>
 
-  <%= render 'sentences/glossaries', glossaries:@kanji.glossaries if @kanji.glossaries.present? %>
+  <%= presenter.glossaries %>
+  <%# render 'sentences/glossaries', glossaries:@kanji.glossaries if @kanji.glossaries.present? %>
 
   <%= render 'similars', similars:@kanji.similars if @kanji.similars.present? %>
 

@@ -1,6 +1,6 @@
 <%= title edit(@kanji.symbol) %>
 
 <%= simple_form_for @kanji do |f| %>
-  <%= f.input :similar_tokens, label:pl(:similar), input_html:{data:{pre:@kanji.similars, url:kanjis_path(:format=>:json)}} %>
+  <%= f.input :similar_tokens, input_html:{data:{pre:@kanji.similars, url:kanjis_path(:format=>:json)}} %>
   <%= f.submit %>
 <% end %>

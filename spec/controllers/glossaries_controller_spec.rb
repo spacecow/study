@@ -1,6 +1,18 @@
 require 'spec_helper'
 
 describe GlossariesController do
+  describe "#update" do
+    let(:glossary){ create :glossary }
+    let(:similar){ create :glossary }
+    context "" do
+      before do
+        put :update, id:glossary.id, glossary:{similar_glossary_tokens:similar.id}
+      end
+    end
+  end
+end
+
+describe GlossariesController do
   controller_actions = controller_actions("glossaries")
 
   before(:each) do

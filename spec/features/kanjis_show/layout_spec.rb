@@ -80,7 +80,7 @@ describe "Kanji show" do
     end
 
     it "has a glossaries list" do
-      page.should have_ul(:glossaries)
+      page.should have_ul(:glossaries,0)
     end
   end
 end

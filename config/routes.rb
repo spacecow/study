@@ -5,6 +5,7 @@ Study::Application.routes.draw do
   match 'fake_login', to:'sessions#create'
   match 'auth/:provider/callback', to:'sessions#create'
   match 'auth/failure', to:redirect('/')
+  get 'signin' => 'sessions#create'
   match 'signout', to:'sessions#destroy'
 
   resources :users, :only => :show

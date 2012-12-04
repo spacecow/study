@@ -11,9 +11,9 @@ a94f0b: !ruby/object:Dooby::Task
   todo: add similarity :done
 04e0ca: !ruby/object:Dooby::Task 
   todo: add meanings :done
-dc1ab9: !ruby/object:Dooby::Task 
-  todo: synonyms for glossaries
 d7d3d5: !ruby/object:Dooby::Task 
   todo: new sentence on top :done
 42dd14: !ruby/object:Dooby::Task 
   todo: dont show darkness unless asked for :done
+2ed093: !ruby/object:Dooby::Task 
+  todo: synonyms for glossaries :done

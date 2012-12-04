@@ -34,6 +34,11 @@ Spork.prefork do
     #shorten factory girl syntax
     #---------------------------
     config.include FactoryGirl::Syntax::Methods
+
+    # --------- Testing presenters ---------
+    config.include ActionView::TestCase::Behavior, example_group: {file_path: %r{spec/presenters}}
+
+   # I18n.default_locale = :qq
   end
 
   def controller_actions(controller)

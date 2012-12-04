@@ -43,9 +43,9 @@ describe "Sessions create" do
     end
 
     it "has a facebook signin link" do
-      site_nav.should have_link('Sign in')
-      click_link 'Sign in'
-      site_nav.should have_link('Sign out')
+      site_nav.should have_link('Signin')
+      click_link 'Signin'
+      site_nav.should have_link('Signout')
     end
   end
 

@@ -5,10 +5,15 @@ class Glossary < ActiveRecord::Base
   has_many :glossaries_kanjis
   has_many :kanjis, :through => :glossaries_kanjis
 
-  attr_accessible :content, :reading, :sentence_tokens
-  attr_reader :sentence_tokens
+  has_many :similar_glossaries
+  has_many :similars, through: :similar_glossaries
+  has_many :inverse_similar_glossaries, class_name:'SimilarGlossary', foreign_key:'similar_id'
+  has_many :inverse_similars, through: :inverse_similar_glossaries, source: :glossary
 
-  validates :content, presence:true
+  attr_accessible :content, :reading, :sentence_tokens, :similar_tokens
+  attr_reader :sentence_tokens, :similar_tokens
+
+  validates :content, presence:true, uniqueness:true
 
   def display
     "#{content}(#{reading})"
@@ -25,6 +30,12 @@ class Glossary < ActiveRecord::Base
   def sentence_tokens=(tokens)
     self.sentence_ids = Sentence.ids_from_tokens(tokens)
   end
+
+  def similar_tokens=(tokens)
+    self.similar_ids = Glossary.ids_from_tokens(tokens)
+  end
+
+  def similars_total; similars+inverse_similars end
 
   class << self
     def ids_from_tokens(tokens)

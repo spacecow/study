@@ -1,6 +1,26 @@
-# Sample localization file for English. Add more files in this directory for other locales.
-# See https://github.com/svenfuchs/rails-i18n/tree/master/rails%2Flocale for starting points.
-
 en:
   glossary:
-    one: 'Glossary'
+    one: Glossary
+    other: Glossaries
+  go: Go
+  project:
+    one: Project
+  sentence:
+    one: Sentence
+    other: Sentences
+
+  errors:
+    messages:
+      taken: has already been taken
+
+  labels:
+    edit: Edit %{o}
+    new: New %{o}
+
+  simple_form:
+    labels:
+      glossary:
+        sentence_tokens: Sentences
+        similar_tokens: Similars
+      kanji:
+        similar_tokens: Similars

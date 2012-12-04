@@ -7,13 +7,13 @@
 
   <%= title pl(:sentence) %>
 
-  <div id="header">
+  <div class="header">
     <%= presenter.new_link %>
   </div>
 
   <%= render 'sentences', sentences:@sentences if @sentences.present? %>
 
-  <div id="footer">
+  <div class="footer">
     <%= presenter.new_link %>
   </div>
 <% end %>

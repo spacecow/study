@@ -7,9 +7,9 @@ describe "Sessions destroy" do
     end
 
     it "has a signout link" do
-      site_nav.should have_link('Sign out')
-      click_link 'Sign out'
-      site_nav.should have_link('Sign in')
+      site_nav.should have_link('Signout')
+      click_link 'Signout'
+      site_nav.should have_link('Signin')
     end
   end
 end

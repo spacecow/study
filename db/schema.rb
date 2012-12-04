@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120801051819) do
+ActiveRecord::Schema.define(:version => 20121204062138) do
 
   create_table "glossaries", :force => true do |t|
     t.string   "content"
@@ -72,6 +72,13 @@ ActiveRecord::Schema.define(:version => 20120801051819) do
     t.datetime "updated_at", :null => false
     t.integer  "user_id"
     t.integer  "project_id"
+  end
+
+  create_table "similar_glossaries", :force => true do |t|
+    t.integer  "glossary_id"
+    t.integer  "similar_id"
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
   end
 
   create_table "similarities", :force => true do |t|
