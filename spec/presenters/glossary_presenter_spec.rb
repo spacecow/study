@@ -17,7 +17,7 @@ describe GlossaryPresenter do
         similar.should_receive(:content).once.and_return '胡椒'
       end
       subject{ rendered.find(@selector) }
-      its(:text){ should eq '故障 (こしょう; 胡椒)' } 
+      its(:text){ should eq '故障(こしょう; 胡椒)' } 
 
       describe "glossary link" do
         before{ @selector += " a" }
@@ -70,4 +70,31 @@ describe GlossaryPresenter do
       end
     end
   end
+end
+
+describe GlossaryPresenter do
+  let(:glossary){ create(:glossary) }
+  let(:presenter){ GlossaryPresenter.new(glossary, view) }
+
+  describe '#kanjis' do
+    context 'without kanjis' do
+      it{ presenter.kanjis.should be_nil }
+    end # without kanjis
+
+    context 'with kanjis' do
+      before{ glossary.kanjis << create(:kanji, symbol:'鬼')}
+      subject{ Capybara.string(presenter.kanjis)}
+      it{ should have_selector 'ul.kanjis', count:1 }
+
+      describe 'ul.kanjis' do
+        subject{ Capybara.string(presenter.kanjis).find('ul.kanjis')}
+        it{ should have_selector('li.kanji')}
+
+        describe 'li.kanji' do
+          subject{ Capybara.string(presenter.kanjis).find('ul.kanjis li.kanji')}
+          it{ should have_content '鬼' }
+        end
+      end # ul.kanjis
+    end # with kanjis
+  end # #kanjis
 end

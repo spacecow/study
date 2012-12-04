@@ -58,7 +58,7 @@ describe "Sentence show" do
     end
 
     it "has each glossary listed as a link" do
-      li(:glossary,0).div(:content).should have_link('kouzui')
+      li(:glossary,0).span(:content,0).should have_link('kouzui')
       click_link 'kouzui'
       page.current_path.should eq glossary_path(@glossary)
     end

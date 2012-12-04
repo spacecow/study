@@ -3,7 +3,8 @@
 <li class="glossary">
   <%= presenter.content %>
     <%#= link_to(glossary.display, glossary) unless glossary.content.blank? %>
-    <%= render 'sentences/kanjis', kanjis:glossary.kanjis if glossary.kanjis.present? %>
+    <%= presenter.kanjis(glossary) %>
+    <%#= render 'sentences/kanjis', kanjis:glossary.kanjis if glossary.kanjis.present? %>
 </li>
 
 <% end %>
