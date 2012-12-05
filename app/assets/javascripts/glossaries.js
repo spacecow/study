@@ -5,8 +5,20 @@ $(function(){
     preventDuplicates: true
   });
 
-  var glossary_id = "#glossary_similar_glossary_tokens";
-  $(glossary_id).tokenInput($(glossary_id).data('url'), {
+  var synonym_id = "#glossary_synonym_tokens";
+  $(synonym_id).tokenInput($(synonym_id).data('url'), {
+    propertyToSearch: 'content',
+    preventDuplicates: true
+  });
+
+  var similar_id = "#glossary_similar_tokens";
+  $(similar_id).tokenInput($(similar_id).data('url'), {
+    propertyToSearch: 'content',
+    preventDuplicates: true
+  });
+
+  var antonym_id = "#glossary_antonym_tokens";
+  $(antonym_id).tokenInput($(antonym_id).data('url'), {
     propertyToSearch: 'content',
     preventDuplicates: true
   });

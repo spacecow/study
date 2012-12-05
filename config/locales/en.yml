@@ -20,7 +20,9 @@ en:
   simple_form:
     labels:
       glossary:
+        antonym_tokens: Antonyms
         sentence_tokens: Sentences
         similar_tokens: Similars
+        synonym_tokens: Synonyms
       kanji:
         similar_tokens: Similars

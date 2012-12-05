@@ -6,8 +6,9 @@ class GlossaryPresenter < BasePresenter
       h.link_to(glossary.content, glossary) +
       "("+
       glossary.reading +
-      "; " +
+      synonym_links +
       similar_links +
+      antonym_links +
       ")"
     end 
   end
@@ -24,11 +25,17 @@ class GlossaryPresenter < BasePresenter
     end if glossary.kanjis.present?
   end
 
-  private
-
-    def similar_links
-      glossary.similars_total.map{|e|
-        h.link_to(e.content, e)
-      }.join(' ').html_safe
+  # ====== ASSOCIATION LINKS =================
+  LINKS = %w(synonym similar antonym)
+  LINKS.each do |link|
+    define_method("#{link}_links") do
+      h.content_tag :span, class:[link.pluralize, 'glossaries'].join(' ') do
+        ("; " +
+        glossary.send("#{link.pluralize}_total").map{|e|
+          h.link_to(e.content, e)
+        }.join(' ')).html_safe
+      end if glossary.send("#{link.pluralize}_total").present?
     end
+  end
+  # ==========================================
 end

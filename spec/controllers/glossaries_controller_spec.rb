@@ -3,10 +3,30 @@ require 'spec_helper'
 describe GlossariesController do
   describe "#update" do
     let(:glossary){ create :glossary }
-    let(:similar){ create :glossary }
-    context "" do
-      before do
-        put :update, id:glossary.id, glossary:{similar_glossary_tokens:similar.id}
+    let(:second){ create :glossary }
+    before{ session[:userid] = create(:user).id }
+
+    context "add synonym" do
+      before{ put :update, id:glossary.id, glossary:{synonym_tokens:second.id}}
+      describe SynonymGlossary do
+        subject{ SynonymGlossary }
+        its(:count){ should be 1 }
+      end
+    end
+
+    context "add similar" do
+      before{ put :update, id:glossary.id, glossary:{similar_tokens:second.id}}
+      describe SimilarGlossary do
+        subject{ SimilarGlossary }
+        its(:count){ should be 1 }
+      end
+    end
+
+    context "add antonym" do
+      before{ put :update, id:glossary.id, glossary:{antonym_tokens:second.id}}
+      describe AntonymGlossary do
+        subject{ AntonymGlossary }
+        its(:count){ should be 1 }
       end
     end
   end

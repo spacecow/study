@@ -2,10 +2,49 @@
 require 'spec_helper'
 
 describe GlossaryPresenter do
+  let(:glossary){ mock_model Glossary }
+  let(:presenter){ GlossaryPresenter.new(glossary,view)}
+
+  describe ".similar_links" do
+    let(:rendered){ Capybara.string(presenter.similar_links)}
+
+    context 'without similars' do
+      before{ glossary.should_receive(:similars_total).once.and_return [] }
+      it{ presenter.similar_links.should be_nil }
+    end
+    
+    context 'with similars' do
+      let(:peppar){ mock_model Glossary, content:'胡椒' }
+      let(:sugar){ mock_model Glossary, content:'砂糖' }
+      before do
+        glossary.should_receive(:similars_total).twice.and_return [peppar,sugar]
+      end
+
+      context "similars section" do
+        before{ @selector = 'span.similars' }
+        subject{ rendered.find(@selector) }
+        its(:text){ should eq '; 胡椒 砂糖' }
+        specify{ subject[:class].should eq 'similars glossaries' }
+
+        context "first link" do
+          before{ @selector += " a" }
+          subject{ rendered.all(@selector)[0] }
+          its(:text){ should eq '胡椒' }
+        end
+
+        context "first link" do
+          before{ @selector += " a" }
+          subject{ rendered.all(@selector)[1] }
+          its(:text){ should eq '砂糖' }
+        end
+      end
+    end
+  end
+
   describe '.content' do
-    let(:glossary){ mock_model Glossary }
+    let(:synonym){ mock_model Glossary }
     let(:similar){ mock_model Glossary }
-    let(:presenter){ GlossaryPresenter.new(glossary,view)}
+    let(:antonym){ mock_model Glossary }
     let(:rendered){ Capybara.string(presenter.content)}
 
     describe "content span" do
@@ -13,28 +52,49 @@ describe GlossaryPresenter do
         @selector = 'span.content'
         glossary.should_receive(:content).once.and_return '故障'
         glossary.should_receive(:reading).once.and_return 'こしょう'
-        glossary.should_receive(:similars_total).once.and_return [similar]
+        glossary.should_receive(:synonyms_total).twice.and_return [synonym]
+        glossary.should_receive(:similars_total).twice.and_return [similar]
+        glossary.should_receive(:antonyms_total).twice.and_return [antonym]
         similar.should_receive(:content).once.and_return '胡椒'
+        synonym.should_receive(:content).once.and_return 'ペッパー'
+        antonym.should_receive(:content).once.and_return '水'
       end
       subject{ rendered.find(@selector) }
-      its(:text){ should eq '故障(こしょう; 胡椒)' } 
+      its(:text){ should eq '故障(こしょう; ペッパー; 胡椒; 水)' } 
 
       describe "glossary link" do
         before{ @selector += " a" }
         subject{ rendered.all(@selector)[0]}
         its(:text){ should eq '故障' } 
-        specify{ subject[:href].should eq glossary_path(glossary) }
+        specify{ subject[:href].should eq glossary_path(glossary)}
+      end
+
+      describe "synonym link" do
+        before{ @selector += " a" }
+        subject{ rendered.all(@selector)[1]}
+        its(:text){ should eq 'ペッパー' } 
+        specify{ subject[:href].should eq glossary_path(synonym)}
       end
 
       describe "similar link" do
         before{ @selector += " a" }
-        subject{ rendered.all(@selector)[1]}
+        subject{ rendered.all(@selector)[2]}
         its(:text){ should eq '胡椒' } 
-        specify{ subject[:href].should eq glossary_path(similar) }
+        specify{ subject[:href].should eq glossary_path(similar)}
+      end
+
+      describe "antonym link" do
+        before{ @selector += " a" }
+        subject{ rendered.all(@selector)[3]}
+        its(:text){ should eq '水' } 
+        specify{ subject[:href].should eq glossary_path(antonym)}
       end
     end
-  end
+  end # .content
+end
 
+
+describe GlossaryPresenter do
   describe '.form' do
     let(:glossary){ create :glossary, content:'飲み込む', reading:'のみこむ' }
     let(:presenter){ GlossaryPresenter.new(glossary,view)}
@@ -61,8 +121,18 @@ describe GlossaryPresenter do
           its(:value){ should be_nil } 
         end
 
+        describe "Synonyms" do
+          subject{ rendered.find_field 'Synonyms' }
+          its(:value){ should be_nil } 
+        end
+
         describe "Similars" do
           subject{ rendered.find_field 'Similars' }
+          its(:value){ should be_nil } 
+        end
+
+        describe "Antonym" do
+          subject{ rendered.find_field 'Antonyms' }
           its(:value){ should be_nil } 
         end
 

@@ -11,7 +11,14 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121204062138) do
+ActiveRecord::Schema.define(:version => 20121205065404) do
+
+  create_table "antonym_glossaries", :force => true do |t|
+    t.integer  "glossary_id"
+    t.integer  "antonym_id"
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
+  end
 
   create_table "glossaries", :force => true do |t|
     t.string   "content"
@@ -86,6 +93,13 @@ ActiveRecord::Schema.define(:version => 20121204062138) do
     t.integer  "similar_id"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
+  end
+
+  create_table "synonym_glossaries", :force => true do |t|
+    t.integer  "glossary_id"
+    t.integer  "synonym_id"
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
   end
 
   create_table "translations", :force => true do |t|

@@ -135,7 +135,7 @@ describe "Sentences index" do
       end
 
       it "has japanese glossary displayed as a link" do
-        li(:glossary,0).span(:content,0).text.should eq '洪水(こうずい; )'
+        li(:glossary,0).span(:content,0).text.should eq '洪水(こうずい)'
         click_link('洪水')
         page.current_path.should eq glossary_path(@glossary)
       end
