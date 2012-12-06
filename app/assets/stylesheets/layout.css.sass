@@ -53,6 +53,19 @@ span.synonyms
   a
     color: green 
 
+$blue: #4B7399
+.actions
+  a
+    color: $blue
+    text-shadow: 1px 1px 1px #aaa
+    font-size: 12px
+    &:hover
+      color: #eee
+      text-shadow: 1px 1px 1px $blue 
+
+body
+  font-family: "Lucida Grande",arial,helvetica,sans-serif
+
 $label_width: 100px
 $label_full_width: 100px + 5px
 $input_width: 400px

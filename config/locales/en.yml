@@ -1,10 +1,13 @@
 en:
+  delete: Delete
   glossary:
     one: Glossary
     other: Glossaries
   go: Go
   project:
     one: Project
+  relation:
+    one: Relation
   sentence:
     one: Sentence
     other: Sentences
@@ -21,6 +24,9 @@ en:
     edit: Edit %{o}
     new: New %{o}
 
+  messages:
+    sure?: 'Are you sure?'
+
   simple_form:
     labels:
       glossary:
@@ -30,3 +36,6 @@ en:
         synonym_tokens: Synonyms
       kanji:
         similar_tokens: Similars
+
+  successes:
+    deleted: '%{o} deleted'

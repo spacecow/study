@@ -1,0 +1,2 @@
+class AntonymGlossaryPresenter < RelativeGlossaryPresenter
+end

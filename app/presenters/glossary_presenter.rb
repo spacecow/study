@@ -31,17 +31,17 @@ class GlossaryPresenter < BasePresenter
     define_method("#{link}_links") do
       h.content_tag :span, class:[link.pluralize, 'glossaries'].join(' ') do
         ("; " +
-        glossary.send("#{link.pluralize}_total").map{|e|
+        glossary.send("#{link}_glossaries_total").map{|e|
           h.link_to(e.content, e)
         }.join(' ')).html_safe
-      end if glossary.send("#{link.pluralize}_total").present?
+      end if glossary.send("#{link}_glossaries_total").present?
     end
 
-    define_method link.pluralize do 
+    define_method link.pluralize do
       h.content_tag :div, class:[link.pluralize, 'glossaries'].join(' ') do
         h.minititle(h.pl(link)) +
         h.content_tag(:ul, class:[link.pluralize, 'glossaries'].join(' ')) do
-          h.render partial:'sentences/glossary_simple', collection:glossary.send("#{link.pluralize}_total")
+          h.render glossary.send("#{link}_glossaries_total"), main:glossary
           #glossary.send("#{link.pluralize}_total").map{|e|
           #  h.content_tag(:li, class:[link, 'glossary'].join(' ')) do
           #    h.link_to(e.content, e)
@@ -49,7 +49,7 @@ class GlossaryPresenter < BasePresenter
           #}.join.html_safe
         end +
         clear_div
-      end if glossary.send("#{link.pluralize}_total").present?
+      end if glossary.send("#{link}_glossaries_total").present?
     end
   end
   # ==========================================

@@ -11,6 +11,7 @@ class Ability
       can [:create,:update], Sentence
       can [:create,:update], Kanji
       can :show, User
+      can :destroy, [SynonymGlossary,SimilarGlossary,AntonymGlossary]
       if user.role? :admin
         can [:index, :create, :update_multiple], Translation
         can [:create, :update], Project

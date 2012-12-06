@@ -15,6 +15,11 @@ Study::Application.routes.draw do
   resources :sentences, :only => [:show,:index,:new,:create,:edit,:update]
   resources :projects, :only => [:new,:create,:edit,:update]
 
+  #-- Relations
+  resources :synonym_glossaries, only: :destroy
+  resources :similar_glossaries, only: :destroy
+  resources :antonym_glossaries, only: :destroy
+
   #-- Translations
   resources :locales, :only => :index
   resources :translations, :only => [:index,:create] do

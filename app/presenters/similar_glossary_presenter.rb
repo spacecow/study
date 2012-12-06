@@ -1,0 +1,2 @@
+class SimilarGlossaryPresenter < RelativeGlossaryPresenter
+end

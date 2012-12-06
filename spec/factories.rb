@@ -22,6 +22,10 @@ FactoryGirl.define do
     project
   end
 
+  factory :synonym_glossary do
+    glossary
+  end
+
   factory :translation do
     key "Factory Key"
     locale
