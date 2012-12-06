@@ -1,0 +1,8 @@
+<% present glossary_simple do |presenter| %>
+
+<li class="glossary">
+  <%= link_to glossary_simple.content, glossary_simple %>
+  <%= presenter.kanjis(glossary_simple) %>
+</li>
+
+<% end %>
