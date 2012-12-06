@@ -6,6 +6,10 @@ class BasePresenter
 
   def h; @template end
 
+  def clear_div
+    "<div class='clear'></div>".html_safe
+  end
+
   def new_link
     dcase = @object.to_s.downcase
     h.link_to h.new(dcase.to_sym), h.send("new_#{dcase}_path") if h.can? :new, @object

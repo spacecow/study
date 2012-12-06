@@ -29,7 +29,7 @@ class GlossariesController < ApplicationController
 
   def update
     if @glossary.update_attributes(params[:glossary])
-      redirect_to glossaries_path
+      redirect_to @glossary
     else
     end
   end

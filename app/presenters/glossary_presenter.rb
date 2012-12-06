@@ -36,6 +36,21 @@ class GlossaryPresenter < BasePresenter
         }.join(' ')).html_safe
       end if glossary.send("#{link.pluralize}_total").present?
     end
+
+    define_method link.pluralize do 
+      h.content_tag :div, class:[link.pluralize, 'glossaries'].join(' ') do
+        h.minititle(h.pl(link)) +
+        h.content_tag(:ul, class:[link.pluralize, 'glossaries'].join(' ')) do
+          h.render partial:'sentences/glossary_simple', collection:glossary.send("#{link.pluralize}_total")
+          #glossary.send("#{link.pluralize}_total").map{|e|
+          #  h.content_tag(:li, class:[link, 'glossary'].join(' ')) do
+          #    h.link_to(e.content, e)
+          #  end
+          #}.join.html_safe
+        end +
+        clear_div
+      end if glossary.send("#{link.pluralize}_total").present?
+    end
   end
   # ==========================================
 end

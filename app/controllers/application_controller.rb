@@ -14,6 +14,6 @@ class ApplicationController < ActionController::Base
 
   protect_from_forgery
 
-  helper_method :pl, :jt, :current_user
+  helper_method :jt, :current_user
 
 end

@@ -8,6 +8,10 @@ en:
   sentence:
     one: Sentence
     other: Sentences
+  similar:
+    other: Similars
+  synonym:
+    other: Synonyms
 
   errors:
     messages:

@@ -4,6 +4,10 @@
   <%= render 'sentences', sentences:@glossary.sentences if @glossary.sentences.present? %>
   <div class="clear"></div>
 
+  <%= presenter.synonyms %>
+  <%= presenter.similars %>
+  <%= presenter.antonyms %>
+
   <div id="bottom_links">
     <%= presenter.edit_link %>
   </div>

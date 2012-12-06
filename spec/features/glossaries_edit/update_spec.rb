@@ -30,7 +30,7 @@ describe "Glossary" do
       end
 
       it "redirects to the glossaries index" do
-        page.current_path.should eq glossaries_path
+        page.current_path.should eq glossary_path(@glossary)
       end
     end
 
