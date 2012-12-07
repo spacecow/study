@@ -1,11 +1,12 @@
+<%= title @sentence.japanese %>
+<%= subtitle @sentence.english %>
+
 <% present @sentence do |presenter| %>
-  <%= title @sentence.japanese %>
-  <%= subtitle @sentence.english %>
 
-  <%= presenter.glossaries %>
-  <div class="clear"></div>
+<%= presenter.glossaries %>
 
-  <div id="bottom_links">
-    <%= presenter.edit_link %>
-  </div>
+<div id="footer">
+  <%= presenter.edit_link %>
+</div>
+
 <% end %>

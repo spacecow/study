@@ -25,21 +25,31 @@ class GlossaryPresenter < BasePresenter
     end if glossary.kanjis.present?
   end
 
+  def present
+    content
+  end
+
+  def sentences
+    h.content_tag :ul, class:'sentences' do
+      h.render partial:'glossaries/sentence', collection:glossary.sentences
+    end if glossary.sentences.present?
+  end
+
   # ====== ASSOCIATION LINKS =================
   LINKS = %w(synonym similar antonym)
   LINKS.each do |link|
     define_method("#{link}_links") do
       h.content_tag :span, class:[link.pluralize, 'glossaries'].join(' ') do
         ("; " +
-        glossary.send("#{link}_glossaries_total").map{|e|
+        glossary.send("#{link.pluralize}_total").map{|e|
           h.link_to(e.content, e)
         }.join(' ')).html_safe
-      end if glossary.send("#{link}_glossaries_total").present?
+      end if glossary.send("#{link.pluralize}_total").present?
     end
 
     define_method link.pluralize do
       h.content_tag :div, class:[link.pluralize, 'glossaries'].join(' ') do
-        h.minititle(h.pl(link)) +
+        h.subminititle(h.pl(link)) +
         h.content_tag(:ul, class:[link.pluralize, 'glossaries'].join(' ')) do
           h.render glossary.send("#{link}_glossaries_total"), main:glossary
           #glossary.send("#{link.pluralize}_total").map{|e|
@@ -49,7 +59,7 @@ class GlossaryPresenter < BasePresenter
           #}.join.html_safe
         end +
         clear_div
-      end if glossary.send("#{link}_glossaries_total").present?
+      end if glossary.send("#{link}_glossaries_total?")
     end
   end
   # ==========================================

@@ -5,54 +5,11 @@ describe "Glossary show" do
     @glossary = FactoryGirl.create(:glossary, content:'kouzui')
   end
 
-  context "no user, without glossary" do
-    before(:each) do
-      visit glossary_path(@glossary)
-    end
-
-    it "has the glossary info in the title" do
-      page.should have_title("kouzui")
-    end
-
-    it "displays no info as divs" do
-      page.should_not have_div(:content)
-    end
-
-    it "has no sentence list" do
-      page.should_not have_ul(:sentences)
-    end
-
-    it "has no edit link" do
-      page.should_not have_link('Edit')
-    end
-  end
-
-  context "signed in user, without glossary" do
-    before(:each) do
-      signin_member
-      visit glossary_path(@glossary)
-    end
-
-    it "has an edit link" do
-      bottom_links.should have_link('Edit')
-      click_link 'Edit'
-      page.current_path.should eq edit_glossary_path(@glossary)
-    end
-  end
-
   context "with sentences" do
     before(:each) do
       @sentence = FactoryGirl.create(:sentence, english:'The flood overwhelmed the village', japanese:'kouzui ga sono mura wo nomikonde shimatta')
       @glossary.sentences << @sentence
       visit glossary_path(@glossary)
-    end
-
-    it "has a sentence list" do
-      page.should have_ul(:sentences)
-    end
-
-    it "has a each glossary listed" do
-      ul(:sentences).lis_no(:sentence).should eq(1)
     end
 
     it "has each japanese sentence listed as a link" do

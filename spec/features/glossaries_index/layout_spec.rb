@@ -57,11 +57,11 @@ describe "Glossaries index" do
     end
 
     it "has a sentences list" do
-      div(:glossary_container,0).should have_ul(:sentences)
+      div(:glossary_container,0).should have_ul(:sentences,0)
     end
 
     it "has a div for each sentence" do
-      ul(:sentences).lis_no(:sentence).should eq(1)
+      ul(:sentences,0).lis_no(:sentence).should eq(1)
     end
 
     it "has english sentence displayed as a link" do

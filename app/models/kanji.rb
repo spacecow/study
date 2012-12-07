@@ -15,6 +15,7 @@ class Kanji < ActiveRecord::Base
 
   validates :symbol, uniqueness:true, presence:true
 
+  def character; symbol end
   def link; [symbol,self] end
   def random_glossary_link(taken_glossary=nil)
    # glossaries.reject{|e| e==taken_glossary}.map{|e| [e.display, e]}.sample

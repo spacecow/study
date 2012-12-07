@@ -1,14 +1,15 @@
 <% present @glossary do |presenter| %>
   <%= title @glossary.content %>
 
-  <%= render 'sentences', sentences:@glossary.sentences if @glossary.sentences.present? %>
-  <div class="clear"></div>
+  <div class="glossary">
+    <%= presenter.sentences %>
 
-  <%= presenter.synonyms %>
-  <%= presenter.similars %>
-  <%= presenter.antonyms %>
+    <%= presenter.synonyms %>
+    <%= presenter.similars %>
+    <%= presenter.antonyms %>
 
-  <div id="bottom_links">
-    <%= presenter.edit_link %>
+    <div class="footer">
+      <%= presenter.edit_link %>
+    </div>
   </div>
 <% end %>

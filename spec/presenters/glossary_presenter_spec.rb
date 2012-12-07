@@ -5,9 +5,36 @@ describe GlossaryPresenter do
   let(:glossary){ mock_model Glossary }
   let(:presenter){ GlossaryPresenter.new(glossary,view)}
 
+  # Template -------------------
+  describe ".present" do
+    subject{ Capybara.string(presenter.present)}
+  end
+
+  describe ".content" do
+    let(:rendered){ Capybara.string(presenter.content)}
+  end
+  # ----------------------------
+
+  describe ".sentences" do
+    context "without sentence" do
+      before{ glossary.should_receive(:sentences).and_return [] }
+      it{ presenter.sentences.should be_nil }
+    end
+
+    context "with sentences" do
+      before do
+        glossary.should_receive(:sentences).twice.and_return ['sentence']
+        view.should_receive(:render).once.and_return nil
+      end
+
+      subject{ Capybara.string(presenter.sentences)} 
+      it{ should have_selector 'ul.sentences' }
+    end
+  end
+
   describe ".synonyms" do
     context "without synonyms" do
-      before{ glossary.should_receive(:synonym_glossaries_total).once.and_return [] }
+      before{ glossary.should_receive(:synonym_glossaries_total?).once.and_return false }
       it{ presenter.synonyms.should be_nil }
     end
 
@@ -15,7 +42,8 @@ describe GlossaryPresenter do
       let(:synonym){ mock_model Glossary, content:'化け物屋敷' }
       let(:rendered){ Capybara.string(presenter.synonyms)}
       before do
-        glossary.should_receive(:synonym_glossaries_total).twice.and_return [[]]
+        glossary.should_receive(:synonym_glossaries_total).once.and_return [[]]
+        glossary.should_receive(:synonym_glossaries_total?).once.and_return true 
         view.should_receive(:render).once.and_return nil 
       end
 
@@ -24,7 +52,7 @@ describe GlossaryPresenter do
         subject{ rendered.find(@selector)}
 
         context "header" do
-          before{ @selector += ' h2' }
+          before{ @selector += ' h4' }
           subject{ rendered.find(@selector)}
           its(:text){ should eq 'Synonyms' }
         end
@@ -36,7 +64,7 @@ describe GlossaryPresenter do
 
   describe ".similar_links" do
     context 'without similars' do
-      before{ glossary.should_receive(:similar_glossaries_total).once.and_return [] }
+      before{ glossary.should_receive(:similars_total).once.and_return [] }
       it{ presenter.similar_links.should be_nil }
     end
     
@@ -44,7 +72,7 @@ describe GlossaryPresenter do
       let(:rendered){ Capybara.string(presenter.similar_links)}
       let(:peppar){ mock_model Glossary, content:'胡椒' }
       let(:sugar){ mock_model Glossary, content:'砂糖' }
-      before{ glossary.should_receive(:similar_glossaries_total).twice.and_return [peppar,sugar]}
+      before{ glossary.should_receive(:similars_total).twice.and_return [peppar,sugar]}
 
       context "similars section" do
         before{ @selector = 'span.similars' }
@@ -78,9 +106,9 @@ describe GlossaryPresenter do
         @selector = 'span.content'
         glossary.should_receive(:content).once.and_return '故障'
         glossary.should_receive(:reading).once.and_return 'こしょう'
-        glossary.should_receive(:synonym_glossaries_total).twice.and_return [synonym]
-        glossary.should_receive(:similar_glossaries_total).twice.and_return [similar]
-        glossary.should_receive(:antonym_glossaries_total).twice.and_return [antonym]
+        glossary.should_receive(:synonyms_total).twice.and_return [synonym]
+        glossary.should_receive(:similars_total).twice.and_return [similar]
+        glossary.should_receive(:antonyms_total).twice.and_return [antonym]
         similar.should_receive(:content).once.and_return '胡椒'
         synonym.should_receive(:content).once.and_return 'ペッパー'
         antonym.should_receive(:content).once.and_return '水'

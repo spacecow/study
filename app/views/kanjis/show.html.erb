@@ -1,14 +1,13 @@
 <% present @kanji do |presenter| %>
   <%= title @kanji.symbol %>
 
-  <div id="meanings">
-    <%= presenter.comma_separated_meanings %>
-  </div>
+  <%= presenter.meanings(:div) %>
 
   <%= presenter.glossaries %>
   <%# render 'sentences/glossaries', glossaries:@kanji.glossaries if @kanji.glossaries.present? %>
 
-  <%= render 'similars', similars:@kanji.similars if @kanji.similars.present? %>
+  <%= presenter.similars %>
+  <%#= render 'similars', similars:@kanji.similars if @kanji.similars.present? %>
 
   <div id="bottom_links">
     <%= presenter.edit_link %>

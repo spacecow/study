@@ -2,7 +2,7 @@
 
 <li class='kanji'>
   <%= link_to kanji.symbol, kanji %>
-  <%= presenter.similars %>
+  <%= presenter.similars(:span) %>
   <%= presenter.random_glossary(taken_glossary) %>
 </li>
 

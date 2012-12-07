@@ -29,7 +29,6 @@ class Glossary < ActiveRecord::Base
   def antonym_tokens=(tokens)
     self.antonym_ids = Glossary.ids_from_tokens(tokens)
   end
-  def antonym_glossaries_total; antonym_glossaries+inverse_antonym_glossaries end
 
   def display
     "#{content}(#{reading})"
@@ -52,8 +51,15 @@ class Glossary < ActiveRecord::Base
     self.similar_ids = Glossary.ids_from_tokens(tokens)
   end
 
+  def antonym_glossaries_total; antonym_glossaries+inverse_antonym_glossaries end
+  def antonyms_total; antonyms+inverse_antonyms end
+  def antonym_glossaries_total?; antonym_glossaries.present? or inverse_antonym_glossaries.present? end
   def similar_glossaries_total; similar_glossaries+inverse_similar_glossaries end
+  def similars_total; similars+inverse_similars end
+  def similar_glossaries_total?; similar_glossaries.present? or inverse_similar_glossaries.present? end
   def synonym_glossaries_total; synonym_glossaries+inverse_synonym_glossaries end
+  def synonyms_total; synonyms+inverse_synonyms end
+  def synonym_glossaries_total?; synonym_glossaries.present? or inverse_synonym_glossaries.present? end
 
   def synonym_tokens=(tokens)
     self.synonym_ids = Glossary.ids_from_tokens(tokens)

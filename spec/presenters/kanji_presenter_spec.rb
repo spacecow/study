@@ -47,27 +47,86 @@ describe KanjiPresenter do
       end # two, where one is taken
     end # with glossaries
   end # #random_glossary 
+end
 
-  describe '#similars' do
+describe KanjiPresenter do
+  let(:kanji){ mock_model Kanji }
+  let(:presenter){ KanjiPresenter.new(kanji,view)}
+
+  def setup_character
+    kanji.should_receive(:character).once.and_return '鬼'
+  end
+  def setup_meanings
+    @devil = mock_model(Meaning, name:'devil')
+    @demon = mock_model(Meaning, name:'demon')
+    kanji.should_receive(:meanings).once.and_return [@devil, @demon]
+  end
+
+  describe '.present' do
+    before{ setup_character; setup_meanings }
+    subject{ Capybara.string(presenter.present)}
+    it{ should have_selector 'span.character' }
+    it{ should have_selector 'span.meanings' }
+    its(:text){ should eq '鬼 - devil, demon' }
+  end
+
+  describe '.character' do
+    before{ setup_character }
+    let(:rendered){ Capybara.string(presenter.character)}
+    subject{ rendered }
+    its(:text){ should eq '鬼' }
+
+    context "link" do
+      subject{ rendered.find('a')}
+      its(:text){ should eq '鬼' }
+      specify{ subject[:href].should eq kanji_path(kanji)}
+    end
+  end
+
+  describe '.meanings' do
+    before{ setup_meanings }
+    let(:rendered){ Capybara.string(presenter.meanings)}
+    subject{ rendered }
+    its(:text){ should eq 'devil, demon' }
+
+    context "first link" do
+      subject{ rendered.all('a')[0]}
+      its(:text){ should eq 'devil' }
+      specify{ subject[:href].should eq meaning_path(@devil)}
+    end
+
+    context "second link" do
+      subject{ rendered.all('a')[1]}
+      its(:text){ should eq 'demon' }
+      specify{ subject[:href].should eq meaning_path(@demon)}
+    end
+  end
+
+  describe '.similars' do
     context 'without similars' do
+      before{ kanji.should_receive(:similars).once.and_return []}
       it{ presenter.similars.should be_nil }
     end
 
     context 'with similars' do
-      let(:similar){ create(:kanji, symbol:'鬼')}
-      before{ kanji.similars << similar }
-      subject{ Capybara.string(presenter.similars)}
-      it{ should have_selector('span.similars', count:1)}
-
-      describe 'span.similars' do
-        subject{ Capybara.string(presenter.similars).find('span.similars')}
-        it{ should have_selector('span.similar.kanji', count:1)}
-
-        describe 'span.similar.kanji' do
-          subject{ Capybara.string(presenter.similars).find('span.similars span.similar.kanji')}
-          it{ should have_xpath "//a[@href='#{kanji_path(similar)}']", text:'鬼' }
-        end
+      before do
+        kanji.should_receive(:similars).twice.and_return ['whatever']
+        view.should_receive(:render).once.and_return nil
       end
+
+      subject{ Capybara.string(presenter.similars)}
+      it{ should have_selector 'h4' }
+      it{ should have_selector 'ul.similars'}
+
+      #describe 'span.similars' do
+      #  subject{ Capybara.string(presenter.similars).find('span.similars')}
+      #  it{ should have_selector('span.similar.kanji', count:1)}
+
+      #  describe 'span.similar.kanji' do
+      #    subject{ Capybara.string(presenter.similars).find('span.similars span.similar.kanji')}
+      #    it{ should have_xpath "//a[@href='#{kanji_path(similar)}']", text:'鬼' }
+      #  end
+      #end
     end # with similars
   end
 end
