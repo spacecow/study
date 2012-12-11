@@ -7,8 +7,11 @@ class KanjiPresenter < BasePresenter
   end
 
   def glossaries
-    h.content_tag :ul, class:'glossaries' do
-      h.render partial:'kanjis/glossary', collection:kanji.glossaries
+    h.content_tag :div, class:'glossaries' do
+      h.content_tag(:ul, class:'glossaries') do
+        h.render partial:'kanjis/glossary', collection:kanji.glossaries
+      end +
+      clear_div
     end if kanji.glossaries.present?
   end
 
@@ -19,7 +22,7 @@ class KanjiPresenter < BasePresenter
     end
   end
   def meanings(tag=:div)
-    h.content_tag tag, class:'meanings' do
+    h.content_tag(tag, class:'meanings') do
       kanji.meanings.map{|e| h.link_to e.name,e}.join(', ').html_safe
     end
   end

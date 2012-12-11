@@ -27,6 +27,9 @@ en:
   messages:
     sure?: 'Are you sure?'
 
+  notices:
+    signed_in: 'Signed in'
+
   simple_form:
     labels:
       glossary:

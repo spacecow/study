@@ -8,9 +8,8 @@ describe 'sentences/show.html.erb' do
   end
 
   subject{ Capybara.string(rendered)}
-  it do p subject.text end
   it{ should have_selector 'h1', text:'japanese sentence' }
   it{ should have_selector 'h3', text:'english sentence' }
   it{ should have_selector 'div.glossaries' }
-  it{ should have_selector 'div#footer', text:'Edit' }
+  it{ should have_selector 'div.footer', text:'Edit' }
 end

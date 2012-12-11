@@ -29,19 +29,6 @@ describe "Sentence show" do
     end
   end
 
-  context "signed in user, without glossary" do
-    before(:each) do
-      signin_member
-      visit sentence_path(@sentence)
-    end
-
-    it "has an edit link" do
-      bottom_links.should have_link('Edit')
-      click_link 'Edit'
-      page.current_path.should eq edit_sentence_path(@sentence)
-    end
-  end
-
   context "with glossary" do
     before(:each) do
       @glossary = FactoryGirl.create(:glossary, content:'kouzui')
