@@ -17,7 +17,7 @@ class ProjectsController < ApplicationController
 
   def update
     if @project.update_attributes(params[:project])
-      redirect_to root_url
+      redirect_to root_url, notice:updated(:project)
     else
       render :edit
     end

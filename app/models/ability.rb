@@ -7,14 +7,15 @@ class Ability
     can :read, Kanji
 
     if user
-      can [:create,:update], Glossary
+      can :update, Glossary
       can [:create,:update], Sentence
-      can [:create,:update], Kanji
+      can :update, Kanji
       can :show, User
       can :destroy, [SynonymGlossary,SimilarGlossary,AntonymGlossary]
       if user.role? :admin
-        can [:index, :create, :update_multiple], Translation
-        can [:create, :update], Project
+        can :manage, :all
+        #can [:index, :create, :update_multiple], Translation
+        #can [:create, :update], Project
       end
     end
   end

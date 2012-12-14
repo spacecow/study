@@ -1,7 +1,7 @@
 <% present glossary do |presenter| %>
 
-<li class="glossary">
-  <%= presenter.present %>
-</li>
+<span class="glossary <%= extra_class %>">
+  <%= presenter.present(:span) %>
+</span>
 
 <% end %>

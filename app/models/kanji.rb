@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 require 'assert'
 
 class Kanji < ActiveRecord::Base
@@ -17,9 +18,13 @@ class Kanji < ActiveRecord::Base
 
   def character; symbol end
   def link; [symbol,self] end
-  def random_glossary_link(taken_glossary=nil)
-   # glossaries.reject{|e| e==taken_glossary}.map{|e| [e.display, e]}.sample
-   glossaries.reject{|e| e==taken_glossary}.map(&:link).sample
+  #def random_glossary_link(taken_glossary=nil)
+  # # glossaries.reject{|e| e==taken_glossary}.map{|e| [e.display, e]}.sample
+  # glossaries.reject{|e| e==taken_glossary}.map(&:link).sample
+  #end
+  def random_glossary(taken_glossary=nil)
+    glossaries.reject{|e| e==taken_glossary}.sample
+    #glossaries.reject{|e| e==taken_glossary}.sample
   end
 
   def similar_tokens=(tokens)
@@ -47,6 +52,11 @@ class Kanji < ActiveRecord::Base
     def ids_from_tokens(tokens)
       #tokens.gsub!(/<<<(.+?)>>>/){ create!(symbol:$1).id}
       tokens.split(",")
+    end
+
+    def kanji_array(s)
+      return [] if s.nil?
+      s.split('').select{|e| Kanji.exists? symbol:e}
     end
 
     def tokens(query)

@@ -1,9 +1,0 @@
-<% present kanji do |presenter| %>
-
-<li class='kanji'>
-  <%= link_to kanji.symbol, kanji %>
-  <%= presenter.similars(:span) %>
-  <%= presenter.random_glossary(taken_glossary) %>
-</li>
-
-<% end %>

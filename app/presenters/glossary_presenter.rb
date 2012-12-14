@@ -1,17 +1,19 @@
+# -*- coding: utf-8 -*-
+
 class GlossaryPresenter < BasePresenter
   presents :glossary
 
-  def content
-    h.content_tag :span, class:'content' do
-      h.link_to(glossary.content, glossary) +
-      "("+
-      glossary.reading +
-      synonym_links +
-      similar_links +
-      antonym_links +
-      ")"
-    end 
-  end
+  #def content_old
+  #  h.content_tag :span, class:'content' do
+  #    h.link_to(glossary.content, glossary) +
+  #    "("+
+  #    glossary.reading +
+  #    synonym_links +
+  #    similar_links +
+  #    antonym_links +
+  #    ")"
+  #  end 
+  #end
 
   def form
     h.content_tag :div, class:%w(form glossary).join(' ') do
@@ -19,14 +21,40 @@ class GlossaryPresenter < BasePresenter
     end
   end
 
-  def kanjis(taken_glossary=nil)
-    h.content_tag(:ul, class:'kanjis') do
-      h.render partial:'sentences/kanji', collection:glossary.kanjis, locals:{taken_glossary:taken_glossary}
+  def kanjis(taken_glossary=nil, tag=:div)
+    if tag == :div
+      h.subminititle(h.pl :kanji) +
+      h.content_tag(:div, class:'kanjis') do
+        kanji_list(taken_glossary)
+      end
+    elsif tag == :ul
+      kanji_list(taken_glossary)
     end if glossary.kanjis.present?
   end
 
-  def present
-    content
+  def kanji_list(taken_glossary=nil)
+    h.content_tag(:ul, class:'kanjis') do
+      h.render partial:'glossaries/kanji', collection:glossary.kanjis, locals:{taken_glossary:taken_glossary}
+    end
+  end
+
+  def content(tag)
+    h.content_tag tag, class:'content' do
+      h.link_to glossary.content, glossary
+    end
+  end
+
+  def reading(tag)
+    reading = glossary.reading
+    (h.content_tag tag, class:'reading' do
+      reading 
+    end unless reading.nil?).to_s
+  end
+
+  def present(tag)
+    extra = reading(tag) + synonym_links + similar_links + antonym_links
+    content(tag) + 
+    "(#{extra})".html_safe
   end
 
   def sentences
@@ -39,12 +67,13 @@ class GlossaryPresenter < BasePresenter
   LINKS = %w(synonym similar antonym)
   LINKS.each do |link|
     define_method("#{link}_links") do
+      (glossaries = glossary.send("#{link.pluralize}_total")
       h.content_tag :span, class:[link.pluralize, 'glossaries'].join(' ') do
         ("; " +
-        glossary.send("#{link.pluralize}_total").map{|e|
+        glossaries.map{|e|
           h.link_to(e.content, e)
         }.join(' ')).html_safe
-      end if glossary.send("#{link.pluralize}_total").present?
+      end if glossaries.present?).to_s
     end
 
     define_method link.pluralize do

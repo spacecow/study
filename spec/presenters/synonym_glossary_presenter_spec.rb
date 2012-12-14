@@ -60,25 +60,25 @@ describe SynonymGlossaryPresenter do
     end
   end
 
-  #describe ".content", focus:true do
-  #  let(:secondary){ mock_model Glossary }
-  #  before do
-  #    relative.should_receive(:secondary_content).once.with(glossary).and_return '胡椒'
-  #    relative.should_receive(:secondary).once.with(glossary).and_return secondary 
-  #  end
-  #  let(:rendered){ Capybara.string(presenter.content)}
+  describe ".content" do
+    let(:secondary){ mock_model Glossary }
+    before do
+      relative.should_receive(:secondary_content).once.with(glossary).and_return '胡椒'
+      relative.should_receive(:secondary).once.with(glossary).and_return secondary 
+    end
+    let(:rendered){ Capybara.string(presenter.content)}
 
-  #  context "content section" do
-  #    before{ @selector = "span.content" }
-  #    subject{ rendered.find(@selector)}
-  #    its(:text){ should eq '胡椒' }
+    context "content section" do
+      before{ @selector = "span.content" }
+      subject{ rendered.find(@selector)}
+      its(:text){ should eq '胡椒' }
 
-  #    context "secondary link" do
-  #      before{ @selector += " a" }
-  #      subject{ rendered.find(@selector)}
-  #      its(:text){ should eq '胡椒' }
-  #      specify{ subject[:href].should eq glossary_path(secondary)}
-  #    end
-  #  end
-  #end
+      context "secondary link" do
+        before{ @selector += " a" }
+        subject{ rendered.find(@selector)}
+        its(:text){ should eq '胡椒' }
+        specify{ subject[:href].should eq glossary_path(secondary)}
+      end
+    end
+  end
 end

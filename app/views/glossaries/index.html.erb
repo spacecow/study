@@ -1,5 +1,7 @@
-<% present Glossary do |presenter| %>
-  <%= title pl(:glossary) %>
+<%= title pl(:glossary) %>
 
-  <%= render 'glossaries', glossaries:@glossaries if @glossaries.present? %>
+<% present Glossary do |presenter| %>
+
+<%= render 'glossaries', glossaries:@glossaries if @glossaries.present? %>
+
 <% end %>

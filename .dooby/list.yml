@@ -17,3 +17,5 @@ d7d3d5: !ruby/object:Dooby::Task
   todo: dont show darkness unless asked for :done
 2ed093: !ruby/object:Dooby::Task 
   todo: synonyms for glossaries :done
+12edf5: !ruby/object:Dooby::Task 
+  todo: kanji listing on glossary page :doing

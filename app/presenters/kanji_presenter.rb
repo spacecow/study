@@ -9,7 +9,7 @@ class KanjiPresenter < BasePresenter
   def glossaries
     h.content_tag :div, class:'glossaries' do
       h.content_tag(:ul, class:'glossaries') do
-        h.render partial:'kanjis/glossary', collection:kanji.glossaries
+        h.render partial:'kanjis/glossary', collection:kanji.glossaries, locals:{extra_class:''}
       end +
       clear_div
     end if kanji.glossaries.present?
@@ -29,13 +29,19 @@ class KanjiPresenter < BasePresenter
   def present
     character + " - " + meanings(:span)
   end
+  def present_full
+    character + " - " + meanings(:span) + " - " + random_glossary
+  end
   # ----------------------------
 
   def random_glossary(taken_glossary=nil)
-    link = kanji.random_glossary_link(taken_glossary)
-    h.content_tag(:span, class:%w(glossary random).join(' ')) do
-      " - #{h.link_to *link}".html_safe
-    end unless link.nil? 
+    glossary = kanji.random_glossary(taken_glossary)
+    h.render 'kanjis/glossary', glossary:glossary, extra_class:'random' unless glossary.nil? 
+    #link = kanji.random_glossary_link(taken_glossary)
+    #return nil if link.nil? 
+    #h.content_tag(:span, class:%w(glossary random).join(' ')) do
+    #  " - #{h.link_to *link}".html_safe
+    #end 
   end
 
   def similars(tag=:div)

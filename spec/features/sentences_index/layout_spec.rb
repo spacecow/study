@@ -135,7 +135,8 @@ describe "Sentences index" do
       end
 
       it "has japanese glossary displayed as a link" do
-        li(:glossary,0).span(:content,0).text.should eq '洪水(こうずい)'
+        li(:glossary,0).span(:content,0).text.should eq '洪水'
+        li(:glossary,0).span(:reading,0).text.should eq 'こうずい'
         click_link('洪水')
         page.current_path.should eq glossary_path(@glossary)
       end
@@ -154,7 +155,7 @@ describe "Sentences index" do
 
       it "has kanji displayed as a link to the kanji show page" do
         ul(:kanjis,0).should have_link('洪') 
-        ul(:kanjis,0).click_link('洪')
+        ul(:kanjis,0).span(:character,0).click_link('洪')
         page.current_path.should eq kanji_path(@kanji)
       end
     end

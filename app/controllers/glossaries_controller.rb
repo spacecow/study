@@ -29,8 +29,9 @@ class GlossariesController < ApplicationController
 
   def update
     if @glossary.update_attributes(params[:glossary])
-      redirect_to @glossary
+     redirect_to  @glossary, notice:updated(:glossary)
     else
+      render :edit
     end
   end
 end

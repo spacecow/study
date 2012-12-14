@@ -2,54 +2,6 @@
 require 'spec_helper'
 
 describe KanjiPresenter do
-  let(:kanji){ create(:kanji) }
-  let(:presenter){ KanjiPresenter.new(kanji, view) }
-
-  describe '#random_glossary' do
-    context 'without glossaries' do
-      it{ presenter.random_glossary.should be_nil }
-    end # without glossaries 
-
-    context 'with glossary' do
-      let(:glossary){ create(:glossary, content:'魔法', reading:'まほう')}
-      before{ kanji.glossaries << glossary }
-      subject{ Capybara.string(presenter.random_glossary)}
-      it{ should have_selector('span.glossary.random', count:1)} 
-
-      context 'one' do
-        subject{ Capybara.string(presenter.random_glossary).find('span.glossary.random')}
-        it{ should have_xpath "//a[@href='#{glossary_path(glossary)}']", text:'魔法(まほう)'}
-      end # one
-
-      context 'one that is taken' do
-        it{ presenter.random_glossary(glossary).should be_nil }
-      end # one that is taken
-
-      context 'two' do
-        before{ kanji.glossaries << create(:glossary, content:'小悪魔')}
-        subject{ Capybara.string(presenter.random_glossary).find('span.glossary.random')}
-        it do
-          if subject.text =~ /魔法/
-            should_not have_content '小悪魔'
-            should have_content '魔法'
-          else
-            should_not have_content '魔法'
-            should have_content '小悪魔'
-          end
-        end
-      end # two 
-
-      context 'two, where one is taken' do
-        before{ kanji.glossaries << create(:glossary, content:'小悪魔')}
-        subject{ Capybara.string(presenter.random_glossary(glossary)).find('span.glossary.random')}
-        it{ should have_content '小悪魔' }
-        it{ should_not have_content '魔法' }
-      end # two, where one is taken
-    end # with glossaries
-  end # #random_glossary 
-end
-
-describe KanjiPresenter do
   let(:kanji){ mock_model Kanji }
   let(:presenter){ KanjiPresenter.new(kanji,view)}
 
@@ -61,13 +13,35 @@ describe KanjiPresenter do
     @demon = mock_model(Meaning, name:'demon')
     kanji.should_receive(:meanings).once.and_return [@devil, @demon]
   end
+  def setup_random_glossary
+    kanji.should_receive(:random_glossary).once.and_return "glossary" 
+    view.should_receive(:render).once.and_return '<span class="glossary">鬼婆(おにばば)</span>'.html_safe 
+  end
 
   describe '.present' do
-    before{ setup_character; setup_meanings }
+    before do
+      setup_character
+      setup_meanings
+    end
+
     subject{ Capybara.string(presenter.present)}
     it{ should have_selector 'span.character' }
     it{ should have_selector 'span.meanings' }
     its(:text){ should eq '鬼 - devil, demon' }
+  end
+
+  describe '.present_full' do
+    before do
+      setup_character
+      setup_meanings
+      setup_random_glossary
+    end
+
+    subject{ Capybara.string(presenter.present_full)}
+    it{ should have_selector 'span.character' }
+    it{ should have_selector 'span.meanings' }
+    it{ should have_selector 'span.glossary' }
+    its(:text){ should eq '鬼 - devil, demon - 鬼婆(おにばば)' }
   end
 
   describe '.character' do
@@ -99,6 +73,22 @@ describe KanjiPresenter do
       subject{ rendered.all('a')[1]}
       its(:text){ should eq 'demon' }
       specify{ subject[:href].should eq meaning_path(@demon)}
+    end
+  end
+
+  describe '.random_glossary' do
+    context "without glossaries" do
+      before{ kanji.should_receive(:random_glossary).once.and_return nil}
+      it{ presenter.random_glossary.should be_nil }
+    end
+
+    context "with glossaries" do
+      before do
+        kanji.should_receive(:random_glossary).once.and_return "glossary"
+        view.should_receive(:render).once.and_return nil
+      end
+
+      it{ presenter.random_glossary.should be_nil }
     end
   end
 

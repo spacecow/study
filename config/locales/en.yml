@@ -1,5 +1,7 @@
 en:
   delete: Delete
+  kanji:
+    other: Kanjis
   glossary:
     one: Glossary
     other: Glossaries
@@ -42,3 +44,4 @@ en:
 
   successes:
     deleted: '%{o} deleted'
+    updated: '%{o} updated'

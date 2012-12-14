@@ -1,10 +1,72 @@
+# -*- coding: utf-8 -*-
 require 'spec_helper'
 
 describe GlossariesController do
+  def send_put(content, reading)
+    put :update, id:glossary.id, glossary:{content:content, reading:reading}
+  end
+
   describe "#update" do
     let(:glossary){ create :glossary }
     let(:second){ create :glossary }
     before{ session[:userid] = create(:user).id }
+
+    context "update" do
+      before{ send_put('日本語', 'にほんご')}
+      
+      describe Glossary do
+        subject{ Glossary }
+        its(:count){ should be 1 } 
+        # second is not initialized yet
+      end
+
+      describe "updated glossary" do
+        subject{ Glossary.last }
+        its(:content){ should eq '日本語' }
+        its(:reading){ should eq 'にほんご' }
+      end
+
+      describe "response" do
+        subject{ response }
+        it{ should redirect_to glossary_path(glossary) }
+      end
+
+      describe "flash" do
+        subject{ flash }
+        its(:notice){ should eq 'Glossary updated' }
+      end
+    end
+
+    context "error" do
+      before{ send_put '', '' }
+
+      describe "response" do
+        subject{ response }
+        it{ should render_template :edit }
+      end
+    end
+
+    context "add lookup" do
+      let(:sentence){ create :sentence }
+      before{ put :update, id:glossary.id, glossary:{sentence_tokens:sentence.id}}
+
+      describe Lookup do
+        subject{ Lookup }
+        its(:count){ should be 1 } 
+      end
+    end
+
+    context "add link between glossary & kanji" do
+      let(:sentence){ create :sentence }
+      let(:kanji){ create :kanji, symbol:'日' }
+      before{ put :update, id:glossary.id, glossary:{content:'日本語', sentence_tokens:sentence.id}}
+
+      describe GlossariesKanji do
+        subject{ GlossariesKanji }
+        it "should have a count of 1"
+        #its(:count){ should be 1 } 
+      end
+    end 
 
     context "add synonym" do
       before{ put :update, id:glossary.id, glossary:{synonym_tokens:second.id}}
@@ -29,57 +91,5 @@ describe GlossariesController do
         its(:count){ should be 1 }
       end
     end
-  end
-end
-
-describe GlossariesController do
-  controller_actions = controller_actions("glossaries")
-
-  before(:each) do
-    @model = FactoryGirl.create(:glossary)
-  end
-
-  describe "a user is not logged in" do
-    controller_actions.each do |action,req|
-      if %w(index show).include?(action)
-        it "should reach the #{action} page" do
-          send("#{req}", "#{action}", :id => @model.id)
-          response.redirect_url.should_not eq root_url 
-        end
-      else
-        it "should not reach the #{action} page" do
-          send("#{req}", "#{action}", :id => @model.id)
-          response.redirect_url.should eq root_url 
-        end
-      end
-    end
-  end
-
-  context "a user is logged in as" do
-    describe "member" do
-      before(:each) do
-        session[:userid] = create_member.id
-      end
-
-      controller_actions.each do |action,req|
-        it "should reach the #{action} page" do
-          send(req, action, :id => @model.id)
-          response.redirect_url.should_not eq welcome_url
-        end
-      end
-    end 
-
-    describe "admin" do
-      before(:each) do
-        session[:userid] = create_admin.id
-      end
-
-      controller_actions.each do |action,req|
-        it "should reach the #{action} page" do
-          send(req, action, :id => @model.id)
-          response.redirect_url.should_not eq welcome_url
-        end
-      end
-    end 
   end
 end

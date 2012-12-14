@@ -5,13 +5,102 @@ describe GlossaryPresenter do
   let(:glossary){ mock_model Glossary }
   let(:presenter){ GlossaryPresenter.new(glossary,view)}
 
-  # Template -------------------
+  # PRESENT -------------------
+
+  def setup_content
+    glossary.should_receive(:content).once.and_return '魔法'
+  end
+  def setup_reading
+    glossary.should_receive(:reading).once.and_return 'まほう'
+  end
+  def setup_synonyms
+    synonym = mock_model Glossary, content:'魔法使い'
+    glossary.should_receive(:synonyms_total).once.and_return [synonym]
+  end
+  def setup_similars
+    peppar =  mock_model Glossary, content:'胡椒'
+    sugar = mock_model Glossary, content:'砂糖'
+    glossary.should_receive(:similars_total).once.and_return [peppar,sugar]
+  end
+  def setup_antonyms
+    antonym = mock_model Glossary, content:'馬鹿'
+    glossary.should_receive(:antonyms_total).once.and_return [antonym]
+  end
+
   describe ".present" do
-    subject{ Capybara.string(presenter.present)}
+    before do
+      setup_content
+      setup_reading
+      setup_synonyms
+      setup_similars
+      setup_antonyms
+    end
+
+    subject{ Capybara.string(presenter.present :span)}
+    it{ should have_selector 'span.content' }
+    it{ should have_selector 'span.reading' }
+    it{ should have_selector 'span.glossaries.synonyms' }
+    it{ should have_selector 'span.glossaries.similars' }
+    it{ should have_selector 'span.glossaries.antonyms' }
+    its(:text){ should eq '魔法(まほう; 魔法使い; 胡椒 砂糖; 馬鹿)' }
   end
 
   describe ".content" do
-    let(:rendered){ Capybara.string(presenter.content)}
+    before{ setup_content }
+    let(:rendered){ Capybara.string(presenter.content :span)}
+    subject{ rendered }
+    its(:text){ should eq '魔法' }
+
+    context "link" do
+      subject{ rendered.find 'a' }
+      its(:text){ should eq '魔法' }
+      specify{ subject[:href].should eq glossary_path(glossary) }
+    end
+  end
+
+  describe ".reading" do
+    context "without reading" do
+      before{ glossary.should_receive(:reading).once.and_return nil }  
+      it{ presenter.reading(:span).should be_blank }
+    end
+
+    context "with reading" do
+      before{ setup_reading }
+      let(:rendered){ Capybara.string(presenter.reading :span)}
+      subject{ rendered }
+      its(:text){ should eq 'まほう' }
+    end
+  end
+
+  describe ".similar_links" do
+    context 'without similars' do
+      before{ glossary.should_receive(:similars_total).once.and_return [] }
+      it{ presenter.similar_links.should be_blank }
+    end
+    
+    context 'with similars' do
+      before{ setup_similars }
+      let(:rendered){ Capybara.string(presenter.similar_links)}
+
+      context "similars section" do
+        before{ @selector = 'span.similars' }
+        subject{ rendered.find(@selector) }
+        its(:text){ should eq '; 胡椒 砂糖' }
+        specify{ subject[:class].should eq 'similars glossaries' }
+
+        context "first link" do
+          before{ @selector += " a" }
+          subject{ rendered.all(@selector)[0] }
+          its(:text){ should eq '胡椒' }
+        end
+
+        context "first link" do
+          before{ @selector += " a" }
+          subject{ rendered.all(@selector)[1] }
+          its(:text){ should eq '砂糖' }
+        end
+      end
+    end
   end
   # ----------------------------
 
@@ -61,90 +150,6 @@ describe GlossaryPresenter do
       end 
     end
   end
-
-  describe ".similar_links" do
-    context 'without similars' do
-      before{ glossary.should_receive(:similars_total).once.and_return [] }
-      it{ presenter.similar_links.should be_nil }
-    end
-    
-    context 'with similars' do
-      let(:rendered){ Capybara.string(presenter.similar_links)}
-      let(:peppar){ mock_model Glossary, content:'胡椒' }
-      let(:sugar){ mock_model Glossary, content:'砂糖' }
-      before{ glossary.should_receive(:similars_total).twice.and_return [peppar,sugar]}
-
-      context "similars section" do
-        before{ @selector = 'span.similars' }
-        subject{ rendered.find(@selector) }
-        its(:text){ should eq '; 胡椒 砂糖' }
-        specify{ subject[:class].should eq 'similars glossaries' }
-
-        context "first link" do
-          before{ @selector += " a" }
-          subject{ rendered.all(@selector)[0] }
-          its(:text){ should eq '胡椒' }
-        end
-
-        context "first link" do
-          before{ @selector += " a" }
-          subject{ rendered.all(@selector)[1] }
-          its(:text){ should eq '砂糖' }
-        end
-      end
-    end
-  end
-
-  describe '.content' do
-    let(:synonym){ mock_model Glossary }
-    let(:similar){ mock_model Glossary }
-    let(:antonym){ mock_model Glossary }
-    let(:rendered){ Capybara.string(presenter.content)}
-
-    describe "content span" do
-      before do
-        @selector = 'span.content'
-        glossary.should_receive(:content).once.and_return '故障'
-        glossary.should_receive(:reading).once.and_return 'こしょう'
-        glossary.should_receive(:synonyms_total).twice.and_return [synonym]
-        glossary.should_receive(:similars_total).twice.and_return [similar]
-        glossary.should_receive(:antonyms_total).twice.and_return [antonym]
-        similar.should_receive(:content).once.and_return '胡椒'
-        synonym.should_receive(:content).once.and_return 'ペッパー'
-        antonym.should_receive(:content).once.and_return '水'
-      end
-      subject{ rendered.find(@selector) }
-      its(:text){ should eq '故障(こしょう; ペッパー; 胡椒; 水)' } 
-
-      describe "glossary link" do
-        before{ @selector += " a" }
-        subject{ rendered.all(@selector)[0]}
-        its(:text){ should eq '故障' } 
-        specify{ subject[:href].should eq glossary_path(glossary)}
-      end
-
-      describe "synonym link" do
-        before{ @selector += " a" }
-        subject{ rendered.all(@selector)[1]}
-        its(:text){ should eq 'ペッパー' } 
-        specify{ subject[:href].should eq glossary_path(synonym)}
-      end
-
-      describe "similar link" do
-        before{ @selector += " a" }
-        subject{ rendered.all(@selector)[2]}
-        its(:text){ should eq '胡椒' } 
-        specify{ subject[:href].should eq glossary_path(similar)}
-      end
-
-      describe "antonym link" do
-        before{ @selector += " a" }
-        subject{ rendered.all(@selector)[3]}
-        its(:text){ should eq '水' } 
-        specify{ subject[:href].should eq glossary_path(antonym)}
-      end
-    end
-  end # .content
 end
 
 
@@ -197,28 +202,25 @@ describe GlossaryPresenter do
 end
 
 describe GlossaryPresenter do
-  let(:glossary){ create(:glossary) }
+  let(:glossary){ mock_model Glossary }
   let(:presenter){ GlossaryPresenter.new(glossary, view) }
 
   describe '#kanjis' do
     context 'without kanjis' do
+      before{ glossary.should_receive(:kanjis).once.and_return []}
       it{ presenter.kanjis.should be_nil }
+      it{ presenter.kanjis(:ul).should be_nil }
     end # without kanjis
 
     context 'with kanjis' do
-      before{ glossary.kanjis << create(:kanji, symbol:'鬼')}
-      subject{ Capybara.string(presenter.kanjis)}
-      it{ should have_selector 'ul.kanjis', count:1 }
+      before do
+        glossary.should_receive(:kanjis).twice.and_return [glossary]
+        view.should_receive(:render).once.and_return nil
+      end
 
-      describe 'ul.kanjis' do
-        subject{ Capybara.string(presenter.kanjis).find('ul.kanjis')}
-        it{ should have_selector('li.kanji')}
-
-        describe 'li.kanji' do
-          subject{ Capybara.string(presenter.kanjis).find('ul.kanjis li.kanji')}
-          it{ should have_content '鬼' }
-        end
-      end # ul.kanjis
+      subject{ Capybara.string(presenter.kanjis) }
+      it{ should have_selector 'h4', text:'Kanjis' }
+      it{ should have_selector 'ul.kanjis' }
     end # with kanjis
   end # #kanjis
 end

@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 class Glossary < ActiveRecord::Base
   has_many :lookups
   has_many :sentences, :through => :lookups
@@ -20,9 +21,10 @@ class Glossary < ActiveRecord::Base
   has_many :inverse_antonym_glossaries, class_name:'AntonymGlossary', foreign_key:'antonym_id'
   has_many :inverse_antonyms, through: :inverse_antonym_glossaries, source: :glossary
 
-
   attr_accessible :content, :reading, :sentence_tokens, :similar_tokens, :synonym_tokens, :antonym_tokens
   attr_reader :sentence_tokens, :similar_tokens, :synonym_tokens, :antonym_tokens
+
+  after_save :link_kanjis
 
   validates :content, presence:true, uniqueness:true
 
@@ -35,13 +37,11 @@ class Glossary < ActiveRecord::Base
   end
 
   def link; [display, self] end
-  def link_to_kanjis
-    kanji_array.each{|e| kanjis << Kanji.find_by_symbol(e)} if kanjis.empty?
+  def link_kanjis
+    (kanji_array - kanjis.map(&:symbol)).each{|e| self.kanjis << Kanji.find_by_symbol(e)}
   end
 
-  def kanji_array
-    content.split('').select{|e| Kanji.exists?(symbol:e)} unless content.nil?
-  end
+  def kanji_array; Kanji.kanji_array(content) end
 
   def sentence_tokens=(tokens)
     self.sentence_ids = Sentence.ids_from_tokens(tokens)

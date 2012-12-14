@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe 'projects/_form.html.erb', focus:true do
+describe 'projects/_form.html.erb' do
   let(:project){ mock_model Project, name:'General' }
   before{ render 'projects/form', project:project }
   
