@@ -1,13 +1,12 @@
 require 'spec_helper'
 
 describe 'kanjis/kanji.html.erb' do
-  let(:kanji){ mock_model Kanji }
-  before do
-    kanji.stub(:character){ nil }
-    kanji.stub(:meanings){ [] }
-    render 'kanjis/kanji', kanji:kanji, klass:'similar'
-  end
+  let(:glossary){ stub_model Glossary }
+  let(:kanji){ stub_model Kanji, glossaries:[glossary] }
+  before{ render kanji, extra_class:'similar', taken_glossary:nil }
 
-  subject{ Capybara.string(rendered) }
-  it{ should have_selector 'li.kanji.similar' }
+  subject{ Capybara.string(rendered).find('li.kanji.similar') }
+  it{ should have_selector 'span.character' }
+  it{ should have_selector 'span.meanings' }
+  it{ should have_selector 'span.random.glossary' }
 end

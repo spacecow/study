@@ -15,12 +15,8 @@ class KanjisController < ApplicationController
 
   def update
     if @kanji.update_attributes(params[:kanji]) 
-      @kanji.similars.each do |similar|
-        unless similar.similars.include?(@kanji)
-          similar.similars << @kanji
-        end
-      end
-      redirect_to @kanji
+      redirect_to @kanji, notice:updated(:kanji)
+    else
     end
   end
 end

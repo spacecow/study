@@ -5,29 +5,6 @@ describe "Sentence show" do
     @sentence = FactoryGirl.create(:sentence, english:'The flood overwhelmed the village', japanese:'kouzui ga sono mura wo nomikonde shimatta')
   end
 
-  context "no user, without glossary" do
-    before(:each) do
-      visit sentence_path(@sentence)
-    end
-
-    it "has the glossary info in the title" do
-      page.should have_title("kouzui ga sono mura wo nomikonde shimatta")
-      page.should have_subtitle("The flood overwhelmed the village")
-    end
-
-    it "displays no info as divs" do
-      page.should_not have_div(:english)
-      page.should_not have_div(:japanese)
-    end
-
-    it "has no glossary list" do
-      page.should_not have_ul(:glossaries)
-    end
-
-    it "has no edit link" do
-      page.should_not have_link('Edit')
-    end
-  end
 
   context "with glossary" do
     before(:each) do

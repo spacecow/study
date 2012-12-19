@@ -1,19 +1,21 @@
+<%= title pl(:sentence) %>
+
 <% present Sentence do |presenter| %>
-  <%= form_tag sentences_path, :method => :get do %>
-    <%= label_tag :project_id, pl(:project,1) %>
-    <%= select_tag :project_id, options_for_select(@projects, @project_id) %>
-    <%= submit_tag t(:go) %>
-  <% end %>
 
-  <%= title pl(:sentence) %>
+<%= form_tag sentences_path, :method => :get do %>
+  <%= label_tag :project_id, pl(:project,1) %>
+  <%= select_tag :project_id, options_for_select(@projects, @project_id) %>
+  <%= submit_tag t(:go) %>
+<% end %>
 
-  <div class="header">
-    <%= presenter.new_link %>
-  </div>
+<div class="header">
+  <%= presenter.new_link %>
+</div>
 
-  <%= render 'sentences', sentences:@sentences if @sentences.present? %>
+<%= presenter.sentences(@sentences) %>
 
-  <div class="footer">
-    <%= presenter.new_link %>
-  </div>
+<div class="footer">
+  <%= presenter.new_link %>
+</div>
+
 <% end %>

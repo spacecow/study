@@ -1,7 +1,10 @@
 <% present kanji do |presenter| %>
 
-<li class='kanji <%= klass %>'>
-  <%= presenter.present %>
+<li class='kanji <%= extra_class %>'>
+  <%#= presenter.present %>
+  <%= presenter.character %>
+  <%= presenter.meanings(:span) %>
+  <%= presenter.random_glossary(taken_glossary) %>
 </li>
 
 <% end %>

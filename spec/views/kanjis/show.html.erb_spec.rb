@@ -3,9 +3,10 @@
 require 'spec_helper'
 
 describe 'kanjis/show.html.erb' do
+  let(:kanji){ stub_model(Kanji, symbol:'魔')}
   before do
     controller.stub(:current_user){ create :user }
-    assign(:kanji, mock_model(Kanji, symbol:'魔').as_null_object)
+    assign(:kanji, kanji)
     render 
   end
 

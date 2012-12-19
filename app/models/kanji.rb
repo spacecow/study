@@ -7,6 +7,8 @@ class Kanji < ActiveRecord::Base
 
   has_many :similarities
   has_many :similars, :through => :similarities
+  has_many :inverse_similarities, class_name: 'Similarity', foreign_key:'similar_id'
+  has_many :inverse_similars, :through => :inverse_similarities, source: :kanji
 
   has_many :kanjis_meanings
   has_many :meanings, :through => :kanjis_meanings
@@ -18,18 +20,14 @@ class Kanji < ActiveRecord::Base
 
   def character; symbol end
   def link; [symbol,self] end
-  #def random_glossary_link(taken_glossary=nil)
-  # # glossaries.reject{|e| e==taken_glossary}.map{|e| [e.display, e]}.sample
-  # glossaries.reject{|e| e==taken_glossary}.map(&:link).sample
-  #end
   def random_glossary(taken_glossary=nil)
     glossaries.reject{|e| e==taken_glossary}.sample
-    #glossaries.reject{|e| e==taken_glossary}.sample
   end
 
   def similar_tokens=(tokens)
     self.similar_ids = Kanji.ids_from_tokens(tokens)
   end
+  def similars_total; similars+inverse_similars end
 
   def to_s; symbol end
 

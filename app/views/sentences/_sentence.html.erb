@@ -1,19 +1,9 @@
 <% present sentence do |presenter| %>
 
-<div class="sentence_container">
-  <div id="sentence">
-    <div id="japanese">
-      <%= link_to(sentence.japanese, sentence) %>
-    </div>
-    <div id="english">
-      <%= link_to(sentence.english, sentence) %>
-    </div>
-  </div>
-
-  <%= presenter.glossaries %>
-
-  <%#= render 'glossaries', glossaries:sentence.glossaries if sentence.glossaries.present? %>
-  <div class="clear"></div>
-</div>
+<li class="sentence">
+  <%= presenter.japanese %>
+  <%= presenter.english %>
+  <%= presenter.glossaries if glossaries %>
+</li>
 
 <% end %>

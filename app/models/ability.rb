@@ -7,7 +7,7 @@ class Ability
     can :read, Kanji
 
     if user
-      can :update, Glossary
+      can [:create,:update], Glossary
       can [:create,:update], Sentence
       can :update, Kanji
       can :show, User

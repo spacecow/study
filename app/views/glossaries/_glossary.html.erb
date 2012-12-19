@@ -1,9 +1,10 @@
-<div class="glossary_container">
-  <div id="glossary">
-    <div id="content">
-      <%= link_to(glossary.content, glossary) unless glossary.content.blank?  %>
-    </div>
-  </div>
-  <%= render 'sentences', sentences:glossary.sentences if glossary.sentences.present? %>
-  <div class="clear"></div>
-</div>
+<% present glossary do |presenter| %>
+
+<<%= glossary_tag %> class="glossary <%= extra_class %>">
+  <%= presenter.content %>
+  <%= presenter.parenthesis %>
+  <%= presenter.sentences if sentences %>
+  <%= presenter.kanjis(glossary,:ul) if kanjis %>
+</<%= glossary_tag %>>
+
+<% end %>

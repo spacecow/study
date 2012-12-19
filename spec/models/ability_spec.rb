@@ -161,7 +161,7 @@ describe Ability do
       end
     end
     glossary_actions.each do |action,req|
-      if %(index show edit update).include? action
+      if %(index show new create edit update).include? action
         it "able to #{action} glossary" do
           should be_able_to action.to_sym, Glossary
         end

@@ -21,46 +21,55 @@ class GlossaryPresenter < BasePresenter
     end
   end
 
-  def kanjis(taken_glossary=nil, tag=:div)
-    if tag == :div
-      h.subminititle(h.pl :kanji) +
-      h.content_tag(:div, class:'kanjis') do
-        kanji_list(taken_glossary)
-      end
-    elsif tag == :ul
-      kanji_list(taken_glossary)
-    end if glossary.kanjis.present?
+  def glossaries(glossaries)
+    h.content_tag :ul, class:'glossaries' do
+      h.render glossaries, sentences:true, kanjis:true, extra_class:'', glossary_tag:'li'
+    end if glossaries.present?
   end
 
-  def kanji_list(taken_glossary=nil)
+  def kanjis(taken_glossary=nil, tag=:div)
+    kanjis = glossary.kanjis
+    if tag == :div
+      h.content_tag(:div, class:'kanjis') do
+        (h.subminititle(h.pl :kanji) +
+        kanji_list(kanjis,taken_glossary)) if kanjis.present?
+      end
+    elsif tag == :ul
+      kanji_list(kanjis,taken_glossary)
+    end 
+  end
+
+  def kanji_list(kanjis, taken_glossary=nil)
     h.content_tag(:ul, class:'kanjis') do
-      h.render partial:'glossaries/kanji', collection:glossary.kanjis, locals:{taken_glossary:taken_glossary}
+      h.render kanjis, taken_glossary:taken_glossary, extra_class:'' if kanjis.present?
     end
   end
 
-  def content(tag)
-    h.content_tag tag, class:'content' do
+  def content
+    h.content_tag :span, class:'content' do
       h.link_to glossary.content, glossary
     end
   end
 
-  def reading(tag)
+  def reading
     reading = glossary.reading
-    (h.content_tag tag, class:'reading' do
+    (h.content_tag :span, class:'reading' do
       reading 
     end unless reading.nil?).to_s
   end
 
-  def present(tag)
-    extra = reading(tag) + synonym_links + similar_links + antonym_links
-    content(tag) + 
-    "(#{extra})".html_safe
+  def parenthesis
+    a = [reading, synonym_links, similar_links, antonym_links].reject(&:blank?)
+    h.content_tag :span, class:'parenthesis' do
+      "(#{a.join('; ')})".html_safe
+    end unless a.empty?
   end
 
   def sentences
+    sentences = glossary.sentences
     h.content_tag :ul, class:'sentences' do
-      h.render partial:'glossaries/sentence', collection:glossary.sentences
-    end if glossary.sentences.present?
+      h.render sentences, glossaries:false if sentences.present?
+    end
   end
 
   # ====== ASSOCIATION LINKS =================
@@ -69,26 +78,21 @@ class GlossaryPresenter < BasePresenter
     define_method("#{link}_links") do
       (glossaries = glossary.send("#{link.pluralize}_total")
       h.content_tag :span, class:[link.pluralize, 'glossaries'].join(' ') do
-        ("; " +
         glossaries.map{|e|
           h.link_to(e.content, e)
-        }.join(' ')).html_safe
+        }.join(' ').html_safe
       end if glossaries.present?).to_s
     end
 
     define_method link.pluralize do
+      glossaries = glossary.send("#{link}_glossaries_total")
       h.content_tag :div, class:[link.pluralize, 'glossaries'].join(' ') do
-        h.subminititle(h.pl(link)) +
+        (h.subminititle(h.pl(link)) +
         h.content_tag(:ul, class:[link.pluralize, 'glossaries'].join(' ')) do
-          h.render glossary.send("#{link}_glossaries_total"), main:glossary
-          #glossary.send("#{link.pluralize}_total").map{|e|
-          #  h.content_tag(:li, class:[link, 'glossary'].join(' ')) do
-          #    h.link_to(e.content, e)
-          #  end
-          #}.join.html_safe
+          h.render glossaries, main:glossary #, glossary_tag:'li', extra_class:link, sentences:false, kanjis:true #main:glossary
         end +
-        clear_div
-      end if glossary.send("#{link}_glossaries_total?")
+        clear_div) if glossaries.present?
+      end
     end
   end
   # ==========================================

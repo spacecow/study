@@ -2,6 +2,8 @@
 
 <% present Glossary do |presenter| %>
 
-<%= render 'glossaries', glossaries:@glossaries if @glossaries.present? %>
+<%= presenter.glossaries(@glossaries) %>
+
+<%= presenter.new_link %>
 
 <% end %>

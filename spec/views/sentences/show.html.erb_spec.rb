@@ -1,15 +1,21 @@
 require 'spec_helper'
 
 describe 'sentences/show.html.erb' do
+  let(:sentence){ stub_model(Sentence, english:'english sentence', japanese:'japanese sentence')}
+  let(:glossary){ stub_model Glossary }
+
   before do
     controller.stub(:current_user){ create :user }
-    assign(:sentence, mock_model(Sentence, english:'english sentence', japanese:'japanese sentence').as_null_object)
+    sentence.should_receive(:glossaries).and_return [glossary]
+    assign(:sentence, sentence)
     render
   end
 
   subject{ Capybara.string(rendered)}
   it{ should have_selector 'h1', text:'japanese sentence' }
   it{ should have_selector 'h3', text:'english sentence' }
-  it{ should have_selector 'div.glossaries' }
+  it{ should_not have_selector 'div.japanese' }
+  it{ should_not have_selector 'div.english' }
+  it{ should have_selector 'ul.glossaries' }
   it{ should have_selector 'div.footer', text:'Edit' }
 end

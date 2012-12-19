@@ -2,6 +2,26 @@
 require 'spec_helper'
 
 describe KanjiPresenter do
+  let(:kanji){ stub_model Kanji }
+  let(:presenter){ KanjiPresenter.new(kanji,view)}
+
+  describe '.random_glossary' do
+    context "without glossaries" do
+      before{ kanji.should_receive(:random_glossary).once.and_return nil}
+      it{ presenter.random_glossary.should be_nil }
+    end
+
+    context "with glossaries" do
+      let(:glossary){ stub_model Glossary }
+      before{ kanji.should_receive(:random_glossary).once.and_return glossary }
+
+      subject{ Capybara.string(presenter.random_glossary) }
+      it{ should have_selector 'span.random.glossary' }
+    end
+  end
+end
+
+describe KanjiPresenter do
   let(:kanji){ mock_model Kanji }
   let(:presenter){ KanjiPresenter.new(kanji,view)}
 
@@ -18,31 +38,31 @@ describe KanjiPresenter do
     view.should_receive(:render).once.and_return '<span class="glossary">鬼婆(おにばば)</span>'.html_safe 
   end
 
-  describe '.present' do
-    before do
-      setup_character
-      setup_meanings
-    end
+  #describe '.present' do
+  #  before do
+  #    setup_character
+  #    setup_meanings
+  #  end
 
-    subject{ Capybara.string(presenter.present)}
-    it{ should have_selector 'span.character' }
-    it{ should have_selector 'span.meanings' }
-    its(:text){ should eq '鬼 - devil, demon' }
-  end
+  #  subject{ Capybara.string(presenter.present)}
+  #  it{ should have_selector 'span.character' }
+  #  it{ should have_selector 'span.meanings' }
+  #  its(:text){ should eq '鬼 - devil, demon' }
+  #end
 
-  describe '.present_full' do
-    before do
-      setup_character
-      setup_meanings
-      setup_random_glossary
-    end
+  #describe '.present_full' do
+  #  before do
+  #    setup_character
+  #    setup_meanings
+  #    setup_random_glossary
+  #  end
 
-    subject{ Capybara.string(presenter.present_full)}
-    it{ should have_selector 'span.character' }
-    it{ should have_selector 'span.meanings' }
-    it{ should have_selector 'span.glossary' }
-    its(:text){ should eq '鬼 - devil, demon - 鬼婆(おにばば)' }
-  end
+  #  subject{ Capybara.string(presenter.present_full)}
+  #  it{ should have_selector 'span.character' }
+  #  it{ should have_selector 'span.meanings' }
+  #  it{ should have_selector 'span.glossary' }
+  #  its(:text){ should eq '鬼 - devil, demon - 鬼婆(おにばば)' }
+  #end
 
   describe '.character' do
     before{ setup_character }
@@ -76,47 +96,35 @@ describe KanjiPresenter do
     end
   end
 
-  describe '.random_glossary' do
-    context "without glossaries" do
-      before{ kanji.should_receive(:random_glossary).once.and_return nil}
-      it{ presenter.random_glossary.should be_nil }
-    end
+  describe '#similars' do
+    subject{ Capybara.string(presenter.similars)}
 
-    context "with glossaries" do
-      before do
-        kanji.should_receive(:random_glossary).once.and_return "glossary"
-        view.should_receive(:render).once.and_return nil
-      end
-
-      it{ presenter.random_glossary.should be_nil }
-    end
-  end
-
-  describe '.similars' do
     context 'without similars' do
-      before{ kanji.should_receive(:similars).once.and_return []}
-      it{ presenter.similars.should be_nil }
+      before{ kanji.should_receive(:similars_total).and_return []}
+      its(:text){ should be_blank }
     end
 
     context 'with similars' do
-      before do
-        kanji.should_receive(:similars).twice.and_return ['whatever']
-        view.should_receive(:render).once.and_return nil
-      end
+      let(:similar){ stub_model Kanji }
+      before{ kanji.should_receive(:similars_total).and_return [similar] }
+      it{ should have_selector 'h4', text:'Similars' }
+      it{ should have_selector 'ul.similars li.similar.kanji', count:1}
+    end 
+  end # #similars
 
-      subject{ Capybara.string(presenter.similars)}
-      it{ should have_selector 'h4' }
-      it{ should have_selector 'ul.similars'}
+  describe '#glossaries' do
+    subject{ Capybara.string(presenter.glossaries)}
 
-      #describe 'span.similars' do
-      #  subject{ Capybara.string(presenter.similars).find('span.similars')}
-      #  it{ should have_selector('span.similar.kanji', count:1)}
+    context "without glossaries" do
+      before{ kanji.should_receive(:glossaries).and_return []}
+      its(:text){ should be_blank }
+    end
 
-      #  describe 'span.similar.kanji' do
-      #    subject{ Capybara.string(presenter.similars).find('span.similars span.similar.kanji')}
-      #    it{ should have_xpath "//a[@href='#{kanji_path(similar)}']", text:'鬼' }
-      #  end
-      #end
-    end # with similars
-  end
+    context "with glossaries" do
+      let(:glossary){ stub_model Glossary }
+      before{ kanji.should_receive(:glossaries).and_return [glossary] }
+      it{ should have_selector 'h4', text:'Glossaries' }
+      it{ should have_selector 'ul.glossaries li.glossary' } 
+    end
+  end # #glossaries
 end

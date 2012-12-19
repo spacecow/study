@@ -7,12 +7,13 @@ class KanjiPresenter < BasePresenter
   end
 
   def glossaries
+    glossaries = kanji.glossaries
     h.content_tag :div, class:'glossaries' do
+      (h.subminititle( h.pl :glossary ) +
       h.content_tag(:ul, class:'glossaries') do
-        h.render partial:'kanjis/glossary', collection:kanji.glossaries, locals:{extra_class:''}
-      end +
-      clear_div
-    end if kanji.glossaries.present?
+        h.render glossaries, extra_class:'', glossary_tag:'li', sentences:false, kanjis:false
+      end) if glossaries.present?
+    end
   end
 
   # Template -------------------
@@ -27,42 +28,36 @@ class KanjiPresenter < BasePresenter
     end
   end
   def present
-    character + " - " + meanings(:span)
+    character + " - " + meanings
   end
   def present_full
-    character + " - " + meanings(:span) + " - " + random_glossary
+    character + " - " + meanings + " - " + random_glossary
   end
   # ----------------------------
 
   def random_glossary(taken_glossary=nil)
     glossary = kanji.random_glossary(taken_glossary)
-    h.render 'kanjis/glossary', glossary:glossary, extra_class:'random' unless glossary.nil? 
-    #link = kanji.random_glossary_link(taken_glossary)
-    #return nil if link.nil? 
-    #h.content_tag(:span, class:%w(glossary random).join(' ')) do
-    #  " - #{h.link_to *link}".html_safe
-    #end 
+    (" - " + h.render(glossary, extra_class:'random', glossary_tag:'span', sentences:false, kanjis:false)).html_safe unless glossary.nil?
   end
 
   def similars(tag=:div)
-    if kanji.similars.present?
-      if tag == :div
-        h.content_tag :div, class:%w(similars kanjis).join(' ') do
-          h.subminititle( h.pl :similar ) +
-          h.content_tag(:ul, class:'similars') do
-            h.render partial:'kanjis/kanji', collection:kanji.similars, locals:{klass:'similar'}
+    similars = kanji.similars_total
+    if tag == :div
+      h.content_tag :div, class:%w(similars kanjis).join(' ') do
+        (h.subminititle( h.pl :similar ) +
+        h.content_tag(:ul, class:'similars') do
+          h.render similars, extra_class:'similar', taken_glossary:nil
+        end) if similars.present?
+      end
+    elsif tag == :span
+      h.content_tag(:span, class:%w(similars kanjis).join(' ')) do
+        ("("+
+        similars.map{|e|
+          h.content_tag(:span, class:%w(similar kanji).join(' ')) do
+            h.link_to *e.link
           end
-        end
-      elsif tag == :span
-        h.content_tag(:span, class:%w(similars kanjis).join(' ')) do
-          ("("+
-          kanji.similars.map{|e|
-            h.content_tag(:span, class:%w(similar kanji).join(' ')) do
-              h.link_to *e.link
-            end
-          }.join(' ')+
-          ")").html_safe
-        end
+        }.join(' ')+
+        ")").html_safe if similars.present?
       end # :div/:span
     end # kanji.similars.present?
   end # .similars

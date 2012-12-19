@@ -1,17 +1,19 @@
+<%= title @glossary.content %>
+
 <% present @glossary do |presenter| %>
-  <%= title @glossary.content %>
 
-  <div class="glossary">
-    <%= presenter.sentences %>
+<div class="glossary">
+  <%= presenter.sentences %>
 
-    <%= presenter.kanjis(@glossary) %>
+  <%= presenter.kanjis(@glossary) %>
 
-    <%= presenter.synonyms %>
-    <%= presenter.similars %>
-    <%= presenter.antonyms %>
+  <%= presenter.synonyms %>
+  <%= presenter.similars %>
+  <%= presenter.antonyms %>
 
-    <div class="footer">
-      <%= presenter.edit_link %>
-    </div>
+  <div class="footer">
+    <%= presenter.edit_link %>
   </div>
+</div>
+
 <% end %>
