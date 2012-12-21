@@ -17,8 +17,8 @@ describe 'Kanji show' do
 
     context "inverse" do
       before{ visit kanji_path(devil) }
-      it{ should_not have_content '鬼' }
       it{ should have_content '竜' }
+      it{ should_not have_content '鬼' }
     end
   end
 end

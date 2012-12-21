@@ -22,6 +22,9 @@ FactoryGirl.define do
     project
   end
 
+  factory :similarity do
+  end
+
   factory :synonym_glossary do
     glossary
   end

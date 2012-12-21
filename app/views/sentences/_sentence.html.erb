@@ -1,9 +1,12 @@
 <% present sentence do |presenter| %>
 
 <li class="sentence">
-  <%= presenter.japanese %>
-  <%= presenter.english %>
+  <div class="content">
+    <%= presenter.japanese %>
+    <%= presenter.english %>
+  </div>
   <%= presenter.glossaries if glossaries %>
+  <div class="clear"></div>
 </li>
 
 <% end %>

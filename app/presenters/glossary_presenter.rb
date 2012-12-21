@@ -62,7 +62,7 @@ class GlossaryPresenter < BasePresenter
     a = [reading, synonym_links, similar_links, antonym_links].reject(&:blank?)
     h.content_tag :span, class:'parenthesis' do
       "(#{a.join('; ')})".html_safe
-    end unless a.empty?
+    end
   end
 
   def sentences

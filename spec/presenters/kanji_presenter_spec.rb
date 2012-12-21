@@ -97,18 +97,42 @@ describe KanjiPresenter do
   end
 
   describe '#similars' do
-    subject{ Capybara.string(presenter.similars)}
-
     context 'without similars' do
-      before{ kanji.should_receive(:similars_total).and_return []}
-      its(:text){ should be_blank }
+      context "section" do
+        before{ kanji.should_receive(:similarities_total).and_return []}
+        subject{ Capybara.string(presenter.similars)}
+        its(:text){ should be_blank }
+      end
+
+      context "inline" do
+        before{ kanji.should_receive(:similars_total).and_return []}
+        subject{ Capybara.string(presenter.similars :span)}
+        its(:text){ should be_blank }
+      end
     end
 
     context 'with similars' do
       let(:similar){ stub_model Kanji }
-      before{ kanji.should_receive(:similars_total).and_return [similar] }
-      it{ should have_selector 'h4', text:'Similars' }
-      it{ should have_selector 'ul.similars li.similar.kanji', count:1}
+      context "section" do
+        before do
+          controller.stub(:current_user){ create :user }
+          kanji.should_receive(:similarities_total).and_return [similarity]
+        end
+        let(:similarity){ stub_model Similarity, secondary:similar }
+
+        subject{ Capybara.string(presenter.similars)}
+        it{ should have_selector 'h4', text:'Similars' }
+        it{ should have_selector 'ul.similars.kanjis li.similar.kanji', count:1}
+      end
+
+      context "inline" do
+        let(:similar){ stub_model Kanji }
+        before{ kanji.should_receive(:similars_total).and_return [similar] }
+        subject{ Capybara.string(presenter.similars :span)}
+      
+        it{ should_not have_selector 'h4', text:'Similars' }
+        it{ should have_selector 'span.similars.kanjis span.similar.kanji', count:1}
+      end
     end 
   end # #similars
 

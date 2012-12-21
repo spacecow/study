@@ -12,6 +12,7 @@ Study::Application.routes.draw do
 
   resources :kanjis, :only => [:show,:index,:edit,:update]
   resources :meanings, only: :show  
+  resources :similarities, only: :destroy
 
   resources :glossaries, :only => [:show,:index,:new,:create,:edit,:update]
   resources :sentences, :only => [:show,:index,:new,:create,:edit,:update]

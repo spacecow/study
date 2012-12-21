@@ -19,7 +19,7 @@ class Kanji < ActiveRecord::Base
   validates :symbol, uniqueness:true, presence:true
 
   def character; symbol end
-  def link; [symbol,self] end
+#  def link; [symbol,self] end
   def random_glossary(taken_glossary=nil)
     glossaries.reject{|e| e==taken_glossary}.sample
   end
@@ -28,6 +28,7 @@ class Kanji < ActiveRecord::Base
     self.similar_ids = Kanji.ids_from_tokens(tokens)
   end
   def similars_total; similars+inverse_similars end
+  def similarities_total; similarities+inverse_similarities end
 
   def to_s; symbol end
 

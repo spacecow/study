@@ -12,6 +12,7 @@ class Ability
       can :update, Kanji
       can :show, User
       can :destroy, [SynonymGlossary,SimilarGlossary,AntonymGlossary]
+      can :destroy, Similarity
       if user.role? :admin
         can :manage, :all
         #can [:index, :create, :update_multiple], Translation

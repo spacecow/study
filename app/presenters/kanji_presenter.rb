@@ -41,20 +41,21 @@ class KanjiPresenter < BasePresenter
   end
 
   def similars(tag=:div)
-    similars = kanji.similars_total
     if tag == :div
+      similarities = kanji.similarities_total
       h.content_tag :div, class:%w(similars kanjis).join(' ') do
         (h.subminititle( h.pl :similar ) +
-        h.content_tag(:ul, class:'similars') do
-          h.render similars, extra_class:'similar', taken_glossary:nil
-        end) if similars.present?
+        h.content_tag(:ul, class:%w(similars kanjis).join(' ')) do
+          h.render similarities, main:kanji 
+        end) if similarities.present?
       end
     elsif tag == :span
+      similars = kanji.similars_total
       h.content_tag(:span, class:%w(similars kanjis).join(' ')) do
         ("("+
         similars.map{|e|
           h.content_tag(:span, class:%w(similar kanji).join(' ')) do
-            h.link_to *e.link
+            h.link_to(e.symbol,e)
           end
         }.join(' ')+
         ")").html_safe if similars.present?

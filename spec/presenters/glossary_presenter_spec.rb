@@ -30,13 +30,14 @@ describe GlossaryPresenter do
   describe ".parenthesis" do
     context "without content" do
       before do
-        glossary.should_receive(:reading).once.and_return nil
-        glossary.should_receive(:synonyms_total).once.and_return nil
-        glossary.should_receive(:similars_total).once.and_return nil
-        glossary.should_receive(:antonyms_total).once.and_return nil
+        glossary.should_receive(:reading).and_return nil
+        glossary.should_receive(:synonyms_total).and_return nil
+        glossary.should_receive(:similars_total).and_return nil
+        glossary.should_receive(:antonyms_total).and_return nil
       end
 
-      specify{ presenter.parenthesis.should be_nil }
+      subject{ Capybara.string(presenter.parenthesis)}
+      its(:text){ should eq "()" }
     end
 
     context "with content" do

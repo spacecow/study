@@ -42,7 +42,7 @@ class SentencesController < ApplicationController
 
   def update
     if @sentence.update_attributes(params[:sentence])
-      redirect_to sentences_path
+      redirect_to @sentence, notice:updated(:sentence)
     end
   end
 end
