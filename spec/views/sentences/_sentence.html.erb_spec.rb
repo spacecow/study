@@ -20,7 +20,10 @@ describe "sentences/sentence.html.erb" do
   end
 
   context "with glossaries" do
-    before{ render sentence, glossaries:true }
+    before do
+      controller.stub(:current_user){ nil }
+      render sentence, glossaries:true
+    end
 
     subject{ Capybara.string(rendered) }
     it{ should have_selector 'ul.glossaries' }

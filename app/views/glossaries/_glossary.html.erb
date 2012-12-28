@@ -3,6 +3,7 @@
 <<%= glossary_tag %> class="glossary <%= extra_class %>">
   <%= presenter.content %>
   <%= presenter.parenthesis %>
+  <%= presenter.actions %>
   <%= presenter.sentences if sentences %>
   <%= presenter.kanjis(glossary,:ul) if kanjis %>
 </<%= glossary_tag %>>

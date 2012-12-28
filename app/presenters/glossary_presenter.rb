@@ -3,17 +3,11 @@
 class GlossaryPresenter < BasePresenter
   presents :glossary
 
-  #def content_old
-  #  h.content_tag :span, class:'content' do
-  #    h.link_to(glossary.content, glossary) +
-  #    "("+
-  #    glossary.reading +
-  #    synonym_links +
-  #    similar_links +
-  #    antonym_links +
-  #    ")"
-  #  end 
-  #end
+  def actions
+    h.content_tag :span, class:'actions' do
+      h.link_to h.t(:edit), h.edit_glossary_path(glossary) if h.can? :edit, glossary
+    end
+  end
 
   def form
     h.content_tag :div, class:%w(form glossary).join(' ') do

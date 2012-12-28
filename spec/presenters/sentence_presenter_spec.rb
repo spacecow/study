@@ -41,7 +41,10 @@ describe SentencePresenter do
 
     context 'with glossaries' do
       let(:glossary){ stub_model Glossary }
-      before{ sentence.should_receive(:glossaries).once.and_return [glossary] }
+      before do
+        controller.stub(:current_user){ nil }
+        sentence.should_receive(:glossaries).once.and_return [glossary]
+      end
 
       subject{ Capybara.string(presenter.glossaries)}
       it{ should have_selector 'li.glossary', count:1 }

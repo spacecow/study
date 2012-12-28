@@ -4,7 +4,7 @@
   <% if current_user %>
     <%= link_to t(:signout), signout_path %>
   <% else %>
-    <%= link_to t(:signin), '/auth/facebook' %>
+    <%= link_to t(:signin), 'auth/facebook' %>
     <%# link_to t(:signin), fake_login_path %>
   <% end %>
 </div>

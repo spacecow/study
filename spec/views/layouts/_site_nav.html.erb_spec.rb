@@ -28,7 +28,7 @@ describe "layouts/_site_nav.html.erb" do
     context "last link" do
       subject{ Capybara.string(rendered).all('a')[-1] }
       its(:text){ should eq 'Signin' }
-      specify{ subject[:href].should eq '/auth/facebook' }
+      specify{ subject[:href].should eq 'auth/facebook' }
     end
   end
 

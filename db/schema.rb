@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121205065404) do
+ActiveRecord::Schema.define(:version => 20121226072559) do
 
   create_table "antonym_glossaries", :force => true do |t|
     t.integer  "glossary_id"
@@ -121,6 +121,7 @@ ActiveRecord::Schema.define(:version => 20121205065404) do
     t.integer  "roles_mask"
     t.datetime "created_at",       :null => false
     t.datetime "updated_at",       :null => false
+    t.string   "password_digest"
   end
 
 end

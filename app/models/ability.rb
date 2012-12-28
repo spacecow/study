@@ -13,7 +13,7 @@ class Ability
       can :show, User
       can :destroy, [SynonymGlossary,SimilarGlossary,AntonymGlossary]
       can :destroy, Similarity
-      if user.role? :admin
+      if Authorization.role?(user,:admin)
         can :manage, :all
         #can [:index, :create, :update_multiple], Translation
         #can [:create, :update], Project

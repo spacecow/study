@@ -27,7 +27,28 @@ describe GlossaryPresenter do
     glossary.should_receive(:antonyms_total).once.and_return [antonym]
   end
 
-  describe ".parenthesis" do
+  describe "#actions" do
+    let(:rendered){ Capybara.string(presenter.actions) }
+    subject{ rendered }
+
+    context "user as guest" do
+      before{ controller.stub(:current_user){ nil }}
+      its(:text){ should be_blank }
+    end
+
+    context "logged in user" do
+      before{ controller.stub(:current_user){ create :user }}
+      its(:text){ should eq 'Edit' }
+
+      context "link" do
+        subject{ rendered.find('a') }
+        its(:text){ should eq 'Edit' } 
+        specify{ subject[:href].should eq edit_glossary_path glossary }
+      end
+    end
+  end
+
+  describe "#parenthesis" do
     context "without content" do
       before do
         glossary.should_receive(:reading).and_return nil
@@ -122,6 +143,7 @@ describe GlossaryPresenter do
     end
 
     context "with glossaries" do
+      before{ controller.stub(:current_user){ nil }}
       let(:glossaries){ [stub_model(Glossary)] }
       subject{ Capybara.string(presenter.glossaries(glossaries))}
       it{ should have_selector 'li.glossary', count:1 }  

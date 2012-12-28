@@ -10,7 +10,6 @@ class SentencePresenter < BasePresenter
   def glossaries
     glossaries = sentence.glossaries
     h.content_tag :ul, class:'glossaries' do
-      #h.render partial:'sentences/glossary', collection:sentence.glossaries
       h.render glossaries, sentences:false, kanjis:true, glossary_tag:'li', extra_class:''
     end if glossaries.present?
   end

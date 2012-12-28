@@ -9,6 +9,8 @@ gem 'simple_form'
 gem 'omniauth-facebook'
 gem 'cancan'
 gem 'rb-inotify', '~> 0.8.8'
+gem 'libv8', '~> 3.11.8'
+gem 'bcrypt-ruby'
 
 group :assets do
   gem 'sass-rails',   '~> 3.2.3'

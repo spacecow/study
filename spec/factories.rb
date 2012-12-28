@@ -35,5 +35,6 @@ FactoryGirl.define do
   end
 
   factory :user do
+    password 'secret'
   end
 end

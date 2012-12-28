@@ -13,7 +13,10 @@ describe KanjiPresenter do
 
     context "with glossaries" do
       let(:glossary){ stub_model Glossary }
-      before{ kanji.should_receive(:random_glossary).once.and_return glossary }
+      before do
+        controller.stub(:current_user){ nil }
+        kanji.should_receive(:random_glossary).once.and_return glossary
+      end
 
       subject{ Capybara.string(presenter.random_glossary) }
       it{ should have_selector 'span.random.glossary' }
@@ -146,7 +149,10 @@ describe KanjiPresenter do
 
     context "with glossaries" do
       let(:glossary){ stub_model Glossary }
-      before{ kanji.should_receive(:glossaries).and_return [glossary] }
+      before do
+        controller.stub(:current_user){ nil }
+        kanji.should_receive(:glossaries).and_return [glossary]
+      end
       it{ should have_selector 'h4', text:'Glossaries' }
       it{ should have_selector 'ul.glossaries li.glossary' } 
     end
