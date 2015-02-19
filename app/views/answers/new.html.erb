@@ -1,0 +1,5 @@
+<%= form_for @answer do |f| %>
+  <%= f.hidden_field :quiz_id %>
+  <%= f.hidden_field :question_id %>
+  <%= f.submit "next" %>
+<% end %>

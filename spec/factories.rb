@@ -18,6 +18,9 @@ FactoryGirl.define do
     name 'Factory Name'
   end
 
+  factory :quiz do
+  end
+
   factory :sentence do
     project
   end

@@ -11,7 +11,16 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121226072559) do
+ActiveRecord::Schema.define(:version => 20150219092905) do
+
+  create_table "answers", :force => true do |t|
+    t.integer "quiz_id",     :null => false
+    t.integer "question_id", :null => false
+    t.string  "string"
+  end
+
+  add_index "answers", ["question_id"], :name => "question_id"
+  add_index "answers", ["quiz_id"], :name => "quiz_id"
 
   create_table "antonym_glossaries", :force => true do |t|
     t.integer  "glossary_id"
@@ -68,6 +77,16 @@ ActiveRecord::Schema.define(:version => 20121226072559) do
 
   create_table "projects", :force => true do |t|
     t.string   "name"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  create_table "questions", :force => true do |t|
+    t.integer "quiz_id", :null => false
+    t.string  "string"
+  end
+
+  create_table "quizzes", :force => true do |t|
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
   end
