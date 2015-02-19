@@ -1,0 +1,9 @@
+<div id="question"><%= @question %></div>
+<div id="correct" style="color:white"><%= @correct %></div>
+<div id="solution"><%= @solution %></div>
+<div id="kuk"></div>
+
+<%= form_tag '/quizes' do %>
+  <%= text_field_tag :answer %>
+  <%= submit_tag "next" %>
+<% end %>

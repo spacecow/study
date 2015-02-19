@@ -20,6 +20,8 @@ Study::Application.routes.draw do
   resources :sentences, :only => [:show,:index,:new,:create,:edit,:update]
   resources :projects, :only => [:new,:create,:edit,:update]
 
+  resources :quizes, :only => [:new,:create]
+
   #-- Relations
   resources :synonym_glossaries, only: :destroy
   resources :similar_glossaries, only: :destroy
