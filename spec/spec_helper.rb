@@ -1,5 +1,6 @@
 require 'rubygems'
 require 'spork'
+require 'factory_girl'
 
 Spork.prefork do
   require File.expand_path("../../config/environment", __FILE__)
