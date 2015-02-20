@@ -3,6 +3,7 @@ require 'spec_helper'
 describe 'Quiz new' do
   before do
     signin_member
+    create :sentence
     visit new_quiz_path
   end
 

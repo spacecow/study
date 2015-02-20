@@ -1,4 +1,6 @@
 class Sentence < ActiveRecord::Base
+  include Kuk
+
   belongs_to :project
 
   has_many :lookups
@@ -26,4 +28,5 @@ class Sentence < ActiveRecord::Base
       tokens.split(",")
     end
   end
+
 end

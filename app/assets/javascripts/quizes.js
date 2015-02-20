@@ -1,9 +1,9 @@
 $(function(){
-  if( $("#answer").length ){
-    $("#answer").focus();
-    $("#answer").keyup(function(e) {
+  if( $("#answer_string").length ){
+    $("#answer_string").focus();
+    $("#answer_string").keyup(function(e) {
       var correct = $("#correct").text();
-      var answer = $("#answer").val();
+      var answer = $("#answer_string").val();
       var index = correct.indexOf(answer);
       var solution = $("#solution").text();
       var kuk;

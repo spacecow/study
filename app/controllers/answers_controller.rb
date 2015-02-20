@@ -2,9 +2,10 @@ class AnswersController < ApplicationController
   
   def new
     quiz = Quiz.find params[:quiz_id]
-    question = quiz.questions.create
+    @question = quiz.questions.create(Sentence.first.question_params)
+    @solution = @question.mask 
     @answer = quiz.answers.build
-    @answer.question_id = question.id
+    @answer.question_id = @question.id
   end
 
   def create
@@ -17,3 +18,20 @@ class AnswersController < ApplicationController
   end
 
 end
+
+
+  #def new
+  #  sentence = Sentence.first
+  #  @question = sentence.english 
+  #  @correct = sentence.japanese 
+  #  @solution = "*"*@correct.length 
+  #end
+  #
+  #def create
+  #  sentence = Sentence.first
+  #  @question = sentence.english 
+  #  @correct = sentence.japanese 
+  #  @solution = "*"*@correct.length 
+  #  render :new
+  #end
+

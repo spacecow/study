@@ -3,8 +3,9 @@ class CreateQuestions < ActiveRecord::Migration
     create_table :questions do |t|
       t.integer :quiz_id, null:false
       t.string :string
+      t.string :correct
     end
-    #execute "alter table questions add foreign key (quiz_id) references quizzes (id)"
+    execute "alter table questions add foreign key (quiz_id) references quizzes (id)"
   end
 
   def down

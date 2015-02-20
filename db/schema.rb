@@ -84,7 +84,10 @@ ActiveRecord::Schema.define(:version => 20150219092905) do
   create_table "questions", :force => true do |t|
     t.integer "quiz_id", :null => false
     t.string  "string"
+    t.string  "correct"
   end
+
+  add_index "questions", ["quiz_id"], :name => "quiz_id"
 
   create_table "quizzes", :force => true do |t|
     t.datetime "created_at", :null => false
