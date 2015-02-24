@@ -1,17 +1,18 @@
 require 'spec_helper'
 
 describe AnswersController do
+  let(:question){ quiz.questions.create string:english, correct:japanese }
   let(:quiz){ create :quiz }
 
   describe "#new" do
-    let(:method){ get :new, quiz_id:quiz.id }
+    let(:method){ get :new, quiz_id:quiz.id, question_id:question.id }
     let(:english){ "what's up?"  }
     let(:japanese){ "genki" }
     let(:mask){ "*****" }
-    before{ create :sentence, english:english, japanese:japanese }
+    before{ question }
 
-    it "creates a question" do
-      expect{ method }.to change(Question, :count).from(0).to(1)
+    it "creates no new question" do
+      expect{ method }.not_to change(Question, :count)
     end
 
     context "assigned question" do

@@ -20,7 +20,7 @@ Study::Application.routes.draw do
   resources :sentences, :only => [:show,:index,:new,:create,:edit,:update]
   resources :projects, :only => [:new,:create,:edit,:update]
 
-  resources :quizzes, :only => [:new,:create]
+  resources :quizzes, :only => [:show,:new,:create]
   resources :answers, :only => [:new,:create]
 
   #-- Relations

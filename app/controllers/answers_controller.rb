@@ -2,7 +2,7 @@ class AnswersController < ApplicationController
   
   def new
     quiz = Quiz.find params[:quiz_id]
-    @question = quiz.questions.create(Sentence.first.question_params)
+    @question = quiz.questions.find(params[:question_id])
     @solution = @question.mask 
     @answer = quiz.answers.build
     @answer.question_id = @question.id
@@ -14,7 +14,9 @@ class AnswersController < ApplicationController
     answer = quiz.answers.build params[:answer]
     answer.question_id = question.id
     answer.save
-    redirect_to new_answer_url quiz_id:answer.quiz_id
+    next_question_id = quiz.next_question_id(current_question_id:question.id)
+    redirect_to quiz and return if next_question_id.nil?
+    redirect_to new_answer_url quiz_id:answer.quiz_id, question_id:next_question_id
   end
 
 end
