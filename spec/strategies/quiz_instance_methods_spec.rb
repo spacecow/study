@@ -31,7 +31,19 @@ describe QuizInstanceMethods do
       let(:current_id){ nil }
       it{ should be_nil }
     end
+  end
 
+  describe "#factory" do
+    let(:questions){ double :questions }
+    let(:elem){ double :elem }
+    let(:arr){ [elem] }
+    before do
+      quiz.should_receive(:questions){ questions }
+      questions.should_receive(:create).with(:params)
+      elem.should_receive(:question_params){ :params }
+    end
+    subject{ quiz.send :factory, questionables:arr }
+    it{ should eq quiz }
   end
 
 end
