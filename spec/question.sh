@@ -1,5 +1,5 @@
 while true;
-  do RAILS_ENV=test rspec
+  do rspec
   spec/features/quizzes/
   spec/features/answers/
   spec/models/answer_spec.rb
