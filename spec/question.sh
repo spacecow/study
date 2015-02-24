@@ -8,6 +8,7 @@ while true;
   spec/controllers/answers_controller_spec.rb
   spec/views/answers/new.html.erb_spec.rb
   spec/strategies/kuk_spec.rb
+  spec/strategies/quiz_instance_methods_spec.rb
   --fail-fast
   --format documentation;
   echo -e \'\\a\';
