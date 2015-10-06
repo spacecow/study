@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20150219092905) do
+ActiveRecord::Schema.define(:version => 20151006233111) do
 
   create_table "answers", :force => true do |t|
     t.integer "quiz_id",     :null => false
@@ -34,6 +34,7 @@ ActiveRecord::Schema.define(:version => 20150219092905) do
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
     t.string   "reading"
+    t.string   "meaning"
   end
 
   create_table "glossaries_kanjis", :force => true do |t|
