@@ -12,4 +12,4 @@ test:
  database: study_test
  pool: 5
  username: root
- password:
+ password: root
