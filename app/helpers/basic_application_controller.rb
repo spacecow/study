@@ -62,7 +62,7 @@ module BasicApplicationController
   def updated_adv(o,name); succ_adv(:updated,o,name) end
 
   def current_user
-    @current_user ||= User.find(session_userid) if session_userid
+    @current_user ||= User.first #User.find(session_userid) if session_userid
   end
 
   def session_original_url(*opt)
