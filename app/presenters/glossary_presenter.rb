@@ -59,6 +59,12 @@ class GlossaryPresenter < BasePresenter
     end
   end
 
+  def meaning
+    h.content_tag :div, class:'meaning' do
+      glossary.meaning 
+    end
+  end
+
   def sentences
     sentences = glossary.sentences
     h.content_tag :ul, class:'sentences' do
