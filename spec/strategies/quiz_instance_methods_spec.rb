@@ -40,7 +40,7 @@ describe QuizInstanceMethods do
     before do
       quiz.should_receive(:questions){ questions }
       questions.should_receive(:create).with(:params)
-      elem.should_receive(:question_params){ :params }
+      elem.should_receive(:question_params){ [:params] }
     end
     subject{ quiz.send :factory, questionables:arr }
     it{ should eq quiz }

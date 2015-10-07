@@ -6,8 +6,8 @@ describe QuizzesController do
     let(:method){ get :new }
     before do
       project = create :project
-      create :sentence, project:project, english:'huh'
-      create :sentence, project:project, english:'yeah'
+      create :sentence, project:project, english:'huh', japanese:'huh'
+      create :sentence, project:project, english:'yeah', japanese:'yeah'
     end
 
     it "creates a quiz" do

@@ -4,12 +4,12 @@ describe 'Quiz new' do
   before do
     signin_member
     project = create :project
-    create :sentence, english:'first question',
-      project:project
-    create :sentence, english:'second question',
-      project:project
-    create :sentence, english:'third question',
-      project:project
+    create :sentence, english:'first real question',
+      japanese:'first', project:project
+    create :sentence, english:'second real question',
+      japanese:'second', project:project
+    create :sentence, english:'third real question',
+      japanese:'third', project:project
     visit new_quiz_path
   end
 
@@ -17,7 +17,7 @@ describe 'Quiz new' do
     describe "page text" do
       subject{ page.text }
       it{ should_not match /error/i }
-      it{ should match /first question/ }
+      it{ should match /real question/ }
     end
     describe "current path" do
       subject{ current_path }
@@ -30,7 +30,7 @@ describe 'Quiz new' do
     describe "page text" do
       subject{ page.text }
       it{ should_not match /error/i }
-      it{ should match /second question/ }
+      it{ should match /real question/ }
     end
   end
 
@@ -42,7 +42,7 @@ describe 'Quiz new' do
     describe "page text" do
       subject{ page.text }
       it{ should_not match /error/i }
-      it{ should match /third question/ }
+      it{ should match /real question/ }
     end
   end
 

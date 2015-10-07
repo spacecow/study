@@ -1,8 +1,14 @@
 module Kuk
   
   def question_params
-    { string:english,
-      correct:japanese }
+    meaning = english
+    content = japanese
+    if meaning.present?
+      [{ string:meaning,
+        correct:content }]
+    else
+      []
+    end
   end
 
 end

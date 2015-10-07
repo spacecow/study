@@ -18,7 +18,7 @@ module Jerb
     def hidden_field s 
       "<input id='answer_#{s}' type='hidden' value='#{object.public_send s}'></input>"
     end
-    def text_field s
+    def text_field s, options={}
       "<input id='answer_#{s}' type='text' value='#{object.public_send s}'></input>"
     end
     def submit s
@@ -65,7 +65,7 @@ describe 'answers/new.html.erb' do
     before{ question.should_receive(:correct){ correct }}
     subject{ doc.find '#correct' }
     its(:text){ should eq correct }
-    its([:style]){ should eq "color:white" }
+    its([:class]){ should eq "white" }
   end
 
   describe 'Solution' do

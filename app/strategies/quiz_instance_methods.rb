@@ -11,7 +11,9 @@ module QuizInstanceMethods
     def factory questionables:fail
       tap do |quiz|
         questionables.each do |q|
-          quiz.questions.create q.question_params
+          q.question_params.each do |params|
+            quiz.questions.create params
+          end
         end
       end
     end
