@@ -6,5 +6,6 @@
 /tmp
 /config/database.yml
 *.swp
+*.swo
 /config/application.yml
 /vendor/bundle
