@@ -4,7 +4,9 @@ class QuizzesController < ApplicationController
   end
 
   def new
-    quiz = Quiz.factory questionables:Sentence.where('english != ?','')
+    quiz = Quiz.factory questionables:
+      Sentence.where('english != ?','') +
+      Glossary.where('meaning != ?','')
     redirect_to new_answer_url(quiz_id:quiz.id, question_id:quiz.questions.first.id)
   end
 

@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
 class Glossary < ActiveRecord::Base
+  include Penis
+
   has_many :lookups
   has_many :sentences, :through => :lookups
 
