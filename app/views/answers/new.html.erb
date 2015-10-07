@@ -7,7 +7,7 @@
   <%= form_for @answer do |f| %>
     <%= f.hidden_field :quiz_id %>
     <%= f.hidden_field :question_id %>
-    <%= f.text_field :string %>
+    <%= f.text_field :string, autocomplete:"off" %>
     <%= f.submit "next" %>
   <% end %>
 </div>
