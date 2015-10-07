@@ -14,7 +14,8 @@ $(function(){
         solution = $("#solution").text();
       }
       if(correct == solution){
-        $("form").submit();
+        //$("form").submit();
+        $("#reading").removeClass("white");
       }
     });
   }

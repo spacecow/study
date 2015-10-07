@@ -1,10 +1,13 @@
-<div id='question'><%= @question.string %></div>
-<div id='correct' style="color:white"><%= @question.correct %></div>
-<div id='solution'><%= @solution %></div>
+<div class="answer">
+  <div id='question'><%= @question.string %></div>
+  <div id='correct' class="white"><%= @question.correct %></div>
+  <div id='reading' class="white"><%= @question.reading %></div>
+  <div id='solution'><%= @solution %></div>
 
-<%= form_for @answer do |f| %>
-  <%= f.hidden_field :quiz_id %>
-  <%= f.hidden_field :question_id %>
-  <%= f.text_field :string %>
-  <%= f.submit "next" %>
-<% end %>
+  <%= form_for @answer do |f| %>
+    <%= f.hidden_field :quiz_id %>
+    <%= f.hidden_field :question_id %>
+    <%= f.text_field :string %>
+    <%= f.submit "next" %>
+  <% end %>
+</div>
