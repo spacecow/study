@@ -24,14 +24,32 @@ describe Kuk do
       its([:correct]){ should eq "what the deuce" }
     end
     
-    context "meaning is blank" do
+    context "meaning is blank without glossaries" do
       let(:meaning){ "" }
+      before do
+        fitta.should_receive(:glossaries){ [] }
+      end
       it{ should be nil }
     end
 
-    context "meaning is nil" do
+    context "meaning is nil without glossaries" do
       let(:meaning){ nil }
+      before do
+        fitta.should_receive(:glossaries){ [] }
+      end
       it{ should be nil }
+    end
+
+    context "meaning is blank with one glossary" do
+      let(:meaning){ "" }
+      let(:glossary){ double :glossary, content:'deuce', meaning:'even in tennis', reading:'du:s' }
+      before do
+        fitta.should_receive(:glossaries){ [glossary] }
+      end
+      its([:string]){ should eq "what the *****" }
+      its([:content2]){ should eq "even in tennis" }
+      its([:correct]){ should eq "deuce" }
+      its([:reading]){ should eq "du:s" }
     end
 
   end

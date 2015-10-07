@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20151007125600) do
+ActiveRecord::Schema.define(:version => 20151007220514) do
 
   create_table "answers", :force => true do |t|
     t.integer "quiz_id",     :null => false
@@ -83,10 +83,11 @@ ActiveRecord::Schema.define(:version => 20151007125600) do
   end
 
   create_table "questions", :force => true do |t|
-    t.integer "quiz_id", :null => false
+    t.integer "quiz_id",  :null => false
     t.string  "string"
     t.string  "correct"
     t.string  "reading"
+    t.string  "content2"
   end
 
   add_index "questions", ["quiz_id"], :name => "quiz_id"
