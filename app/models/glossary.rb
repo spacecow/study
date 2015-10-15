@@ -23,12 +23,16 @@ class Glossary < ActiveRecord::Base
   has_many :inverse_antonym_glossaries, class_name:'AntonymGlossary', foreign_key:'antonym_id'
   has_many :inverse_antonyms, through: :inverse_antonym_glossaries, source: :glossary
 
-  attr_accessible :content, :reading, :meaning, :sentence_tokens, :similar_tokens, :synonym_tokens, :antonym_tokens
+  attr_accessible :content, :reading, :meaning, :forms, :sentence_tokens, :similar_tokens, :synonym_tokens, :antonym_tokens
   attr_reader :sentence_tokens, :similar_tokens, :synonym_tokens, :antonym_tokens
 
   after_save :link_kanjis
 
   validates :content, presence:true, uniqueness:true
+
+  def all_forms
+    [content] + forms.to_s.split(",")
+  end
 
   def antonym_tokens=(tokens)
     self.antonym_ids = Glossary.ids_from_tokens(tokens)

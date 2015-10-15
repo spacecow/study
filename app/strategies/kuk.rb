@@ -8,7 +8,7 @@ module Kuk
         correct:content }]
     else
       glossaries.map do |glossary|
-        { string:Masker.mask(content,glossary.content),
+        { string:Masker.mask(content,glossary.all_forms),
           content2:glossary.meaning,
           correct:glossary.content,
           reading:glossary.reading }

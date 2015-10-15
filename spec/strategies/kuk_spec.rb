@@ -1,4 +1,5 @@
-require File.expand_path '../../../app/strategies/kuk', __FILE__
+require './app/strategies/kuk'
+require './lib/masker'
 require 'active_support/all'
 
 class Fitta
@@ -42,14 +43,26 @@ describe Kuk do
 
     context "meaning is blank with one glossary" do
       let(:meaning){ "" }
-      let(:glossary){ double :glossary, content:'deuce', meaning:'even in tennis', reading:'du:s' }
+      let(:glossary){ double :glossary, content:'deuce', all_forms:forms, meaning:'even in tennis', reading:'du:s' }
       before do
         fitta.should_receive(:glossaries){ [glossary] }
       end
-      its([:string]){ should eq "what the *****" }
-      its([:content2]){ should eq "even in tennis" }
-      its([:correct]){ should eq "deuce" }
-      its([:reading]){ should eq "du:s" }
+
+      context "glossary has one form" do
+        let(:forms){ ["deuce"] } 
+        its([:string]){ should eq "what the *****" }
+        its([:content2]){ should eq "even in tennis" }
+        its([:correct]){ should eq "deuce" }
+        its([:reading]){ should eq "du:s" }
+      end
+
+      context "glossary has two form" do
+        let(:forms){ ["deuc","deuce"] } 
+        its([:string]){ should eq "what the *****" }
+        its([:content2]){ should eq "even in tennis" }
+        its([:correct]){ should eq "deuce" }
+        its([:reading]){ should eq "du:s" }
+      end
     end
 
   end
