@@ -17,7 +17,7 @@ class GlossaryPresenter < BasePresenter
 
   def glossaries(glossaries)
     h.content_tag :ul, class:'glossaries' do
-      h.render glossaries, sentences:true, kanjis:true, extra_class:'', glossary_tag:'li'
+      h.render glossaries, sentences:true, kanjis:true, extra_class:'', glossary_tag:'li', meaning:nil
     end if glossaries.present?
   end
 
@@ -59,16 +59,16 @@ class GlossaryPresenter < BasePresenter
     end
   end
 
-  def meaning
+  def meaning s=nil
     h.content_tag :div, class:'meaning' do
-      glossary.meaning 
+      h.link_to(s.nil? ? glossary.meaning : s)
     end
   end
 
   def sentences
-    sentences = glossary.sentences
+    lookups = glossary.lookups
     h.content_tag :ul, class:'sentences' do
-      h.render sentences, glossaries:false if sentences.present?
+      h.render lookups, glossaries:false, meaning:true if lookups.present?
     end
   end
 

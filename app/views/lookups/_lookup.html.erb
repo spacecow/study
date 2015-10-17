@@ -1,0 +1,13 @@
+<% present lookup do |presenter| %>
+
+<li class="sentence">
+  <div class="content">
+    <%= presenter.japanese %>
+    <%= presenter.english %>
+    <%= presenter.meaning if meaning %>
+  </div>
+  <%= presenter.glossaries if glossaries %>
+  <div class="clear"></div>
+</li>
+
+<% end %>

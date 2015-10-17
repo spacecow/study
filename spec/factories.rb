@@ -11,6 +11,9 @@ FactoryGirl.define do
   factory :locale do
   end
 
+  factory :lookup do
+  end
+
   factory :meaning do
   end
 

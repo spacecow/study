@@ -1,5 +1,5 @@
 class Lookup < ActiveRecord::Base
-  attr_accessible :glossary_id, :sentence_id
+  attr_accessible :glossary_id, :sentence_id, :meaning
 
   belongs_to :glossary
   belongs_to :sentence

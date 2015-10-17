@@ -18,6 +18,7 @@ Study::Application.routes.draw do
 
   resources :glossaries, :only => [:show,:index,:new,:create,:edit,:update]
   resources :sentences, :only => [:show,:index,:new,:create,:edit,:update]
+  resources :lookups, :only => [:edit,:update]
   resources :projects, :only => [:new,:create,:edit,:update]
 
   resources :quizzes, :only => [:show,:new,:create]

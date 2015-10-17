@@ -150,24 +150,6 @@ describe GlossaryPresenter do
     end
   end
 
-  describe ".sentences" do
-    context "without sentence" do
-      before{ glossary.should_receive(:sentences).and_return [] }
-      subject{ Capybara.string(presenter.sentences)}
-      its(:text){ should be_blank }
-    end
-
-    context "with sentences" do
-      let(:sentence){ stub_model Sentence }
-      before do
-        glossary.should_receive(:sentences).once.and_return [sentence] 
-      end
-
-      subject{ Capybara.string(presenter.sentences)} 
-      it{ should have_selector 'li.sentence', count:1 }
-    end
-  end
-
   describe ".synonyms" do
     context "without synonyms" do
       before{ glossary.should_receive(:synonym_glossaries_total).and_return [] }
