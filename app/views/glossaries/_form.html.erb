@@ -1,7 +1,6 @@
 <%= simple_form_for glossary do |f| %>
   <%= f.input :content %>
   <%= f.input :reading %>
-  <%= f.input :meaning %>
   <%= f.input :forms %>
   <%= f.input :sentence_tokens, input_html:{data:{pre:glossary.sentences, url:sentences_path(:format=>:json)}} %>
   <%= f.input :synonym_tokens, input_html:{data:{pre:glossary.synonyms, url:glossaries_path(format: :json)}} %>

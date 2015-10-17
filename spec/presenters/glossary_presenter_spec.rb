@@ -144,8 +144,10 @@ describe GlossaryPresenter do
 
     context "with glossaries" do
       before{ controller.stub(:current_user){ nil }}
-      let(:glossaries){ [stub_model(Glossary)] }
-      subject{ Capybara.string(presenter.glossaries(glossaries))}
+      let(:glossary){ create :glossary }
+      let(:sentence){ create :sentence }
+      let(:lookups){ [create(:lookup, glossary:glossary, sentence:sentence)] }
+      subject{ Capybara.string(presenter.glossaries(lookups))}
       it{ should have_selector 'li.glossary', count:1 }  
     end
   end

@@ -35,15 +35,16 @@ describe SentencePresenter do
 
   describe '#glossaries' do
     context 'without glossaries' do
-      before{ sentence.should_receive(:glossaries).once.and_return [] }
+      before{ sentence.should_receive(:lookups).once.and_return [] }
       it{ presenter.glossaries.should be_nil } 
     end
 
     context 'with glossaries' do
-      let(:glossary){ stub_model Glossary }
+      let(:glossary){ Glossary.new }
+      let(:lookup){ double :lookup, glossary:glossary, meaning:'meaning' }
       before do
         controller.stub(:current_user){ nil }
-        sentence.should_receive(:glossaries).once.and_return [glossary]
+        sentence.should_receive(:lookups).once.and_return [lookup]
       end
 
       subject{ Capybara.string(presenter.glossaries)}

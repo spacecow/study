@@ -7,11 +7,12 @@ class KanjiPresenter < BasePresenter
   end
 
   def glossaries
+    lookup = Struct.new(:meaning).new("?")
     glossaries = kanji.glossaries
     h.content_tag :div, class:'glossaries' do
       (h.subminititle( h.pl :glossary ) +
       h.content_tag(:ul, class:'glossaries') do
-        h.render glossaries, extra_class:'', glossary_tag:'li', sentences:false, kanjis:false
+        h.render glossaries, extra_class:'', glossary_tag:'li', sentences:false, kanjis:false, lookup:lookup
       end) if glossaries.present?
     end
   end
@@ -36,8 +37,9 @@ class KanjiPresenter < BasePresenter
   # ----------------------------
 
   def random_glossary(taken_glossary=nil)
+    lookup = Struct.new(:meaning).new("?")
     glossary = kanji.random_glossary(taken_glossary)
-    (" - " + h.render(glossary, extra_class:'random', glossary_tag:'span', sentences:false, kanjis:false)).html_safe unless glossary.nil?
+    (" - " + h.render(glossary, extra_class:'random', glossary_tag:'span', sentences:false, kanjis:false, lookup:lookup)).html_safe unless glossary.nil?
   end
 
   def similars(tag=:div)

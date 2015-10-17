@@ -7,6 +7,7 @@ class LookupsController < ApplicationController
   def update
     @lookup = Lookup.find params[:id]
     if @lookup.update_attributes(params[:lookup])
+      redirect_to @lookup.glossary
     else
       render :edit
     end 

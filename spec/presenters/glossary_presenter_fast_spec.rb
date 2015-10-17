@@ -23,7 +23,7 @@ describe GlossaryPresenter do
 
     context "with sentences" do
       let(:lookups){ [lookup] }
-      let(:lookup){ double :lookup }
+      let(:lookup){ create :lookup }
       before do
         view.should_receive(:render).
         with(lookups, glossaries:false, meaning:true)

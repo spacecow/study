@@ -8,12 +8,12 @@ class SentencePresenter < BasePresenter
   end
 
   def glossaries
-    glossaries = sentence.glossaries
+    lookups = sentence.lookups
     h.content_tag :ul, class:'glossaries' do
-      sentence.lookups.map do |lookup|
-        h.render lookup.glossary, sentences:false, kanjis:true, glossary_tag:'li', extra_class:'', meaning:lookup.meaning.nil? ? 'kuk' : lookup.meaning
+      lookups.map do |lookup|
+        h.render lookup.glossary, sentences:false, kanjis:true, glossary_tag:'li', extra_class:'', lookup:lookup
       end.join.html_safe
-    end if glossaries.present?
+    end if lookups.present?
   end
 
   def japanese

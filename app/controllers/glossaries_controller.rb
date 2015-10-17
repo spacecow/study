@@ -7,6 +7,7 @@ class GlossariesController < ApplicationController
 
   def index
     @glossaries = Glossary.order(:content)
+    @lookups = Lookup.all
     respond_to do |f|
       f.html
       f.json {render json:@glossaries.tokens(params[:q])}

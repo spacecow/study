@@ -3,8 +3,11 @@ require 'spec_helper'
 describe "glossaries/index.html.erb" do
   before  do
     controller.stub(:current_user){ create :user }
-    glossary = stub_model(Glossary)
+    glossary = create :glossary
+    sentence = create :sentence
+    lookup = create :lookup, glossary:glossary, sentence:sentence
     assign(:glossaries,[glossary])
+    assign(:lookups,[lookup])
     render
   end
 
