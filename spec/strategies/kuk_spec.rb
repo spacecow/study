@@ -25,43 +25,43 @@ describe Kuk do
       its([:correct]){ should eq "what the deuce" }
     end
     
-    context "meaning is blank without glossaries" do
-      let(:meaning){ "" }
-      before do
-        fitta.should_receive(:glossaries){ [] }
-      end
-      it{ should be nil }
-    end
+    context "no meaning" do
+      before{ fitta.should_receive(:lookups){ lookups }}
 
-    context "meaning is nil without glossaries" do
-      let(:meaning){ nil }
-      before do
-        fitta.should_receive(:glossaries){ [] }
-      end
-      it{ should be nil }
-    end
-
-    context "meaning is blank with one glossary" do
-      let(:meaning){ "" }
-      let(:glossary){ double :glossary, content:'deuce', all_forms:forms, meaning:'even in tennis', reading:'du:s' }
-      before do
-        fitta.should_receive(:glossaries){ [glossary] }
+      context "meaning is blank without glossaries" do
+        let(:lookups){ [] }
+        let(:meaning){ "" }
+        it{ should be nil }
       end
 
-      context "glossary has one form" do
-        let(:forms){ ["deuce"] } 
-        its([:string]){ should eq "what the *****" }
-        its([:content2]){ should eq "even in tennis" }
-        its([:correct]){ should eq "deuce" }
-        its([:reading]){ should eq "du:s" }
+      context "meaning is nil without glossaries" do
+        let(:lookups){ [] }
+        let(:meaning){ nil }
+        it{ should be nil }
       end
 
-      context "glossary has two form" do
-        let(:forms){ ["deuc","deuce"] } 
-        its([:string]){ should eq "what the *****" }
-        its([:content2]){ should eq "even in tennis" }
-        its([:correct]){ should eq "deuce" }
-        its([:reading]){ should eq "du:s" }
+      context "meaning is blank with one glossary" do
+        let(:meaning){ "" }
+        let(:lookup){ double :lookup, meaning:'even in tennis' }
+        let(:glossary){ double :glossary, content:'deuce', all_forms:forms, reading:'du:s' }
+        let(:lookups){ [lookup] }
+        before{ lookup.should_receive(:glossary){ glossary }}
+
+        context "glossary has one form" do
+          let(:forms){ ["deuce"] } 
+          its([:string]){ should eq "what the *****" }
+          its([:content2]){ should eq "even in tennis" }
+          its([:correct]){ should eq "deuce" }
+          its([:reading]){ should eq "du:s" }
+        end
+
+        context "glossary has two form" do
+          let(:forms){ ["deuc","deuce"] } 
+          its([:string]){ should eq "what the *****" }
+          its([:content2]){ should eq "even in tennis" }
+          its([:correct]){ should eq "deuce" }
+          its([:reading]){ should eq "du:s" }
+        end
       end
     end
 

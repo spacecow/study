@@ -7,9 +7,10 @@ module Kuk
       [{ string:meaning,
         correct:content }]
     else
-      glossaries.map do |glossary|
+      lookups.map do |lookup|
+        glossary = lookup.glossary
         { string:Masker.mask(content,glossary.all_forms),
-          content2:glossary.meaning,
+          content2:lookup.meaning,
           correct:glossary.content,
           reading:glossary.reading }
       end
