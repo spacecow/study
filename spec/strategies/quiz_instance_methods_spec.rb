@@ -1,4 +1,5 @@
-require File.expand_path '../../../app/strategies/quiz_instance_methods', __FILE__
+require './lib/masker'
+require './app/strategies/quiz_instance_methods'
 
 class Fitta
   include QuizInstanceMethods
@@ -37,10 +38,13 @@ describe QuizInstanceMethods do
     let(:questions){ double :questions }
     let(:elem){ double :elem }
     let(:arr){ [elem] }
+    let(:qparams){ [{string:"a *",meaning:"a"},
+                    {string:"* b",meaning:"b"}] }
     before do
-      quiz.should_receive(:questions){ questions }
-      questions.should_receive(:create).with(:params)
-      elem.should_receive(:question_params){ [:params] }
+      quiz.should_receive(:questions).twice{ questions }
+      questions.should_receive(:create).with({string:"* *",meaning:"a"})
+      questions.should_receive(:create).with({string:"* *",meaning:"b"})
+      elem.should_receive(:question_params){ qparams }
     end
     subject{ quiz.send :factory, questionables:arr }
     it{ should eq quiz }

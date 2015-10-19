@@ -11,8 +11,10 @@ module QuizInstanceMethods
     def factory questionables:fail
       tap do |quiz|
         questionables.each do |q|
-          q.question_params.each do |params|
-            quiz.questions.create params
+          qparams = q.question_params
+          string = Masker.combine qparams.map{|e| e[:string]}
+          qparams.each do |params|
+            quiz.questions.create params.merge({string:string})
           end
         end
       end
