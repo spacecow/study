@@ -21,7 +21,7 @@ class Masker
   private
 
     def self.mask_word s, w
-      s.sub w, "*"*w.size
+      s.sub w, w.gsub(/\w/,'*')
     end
 
 end

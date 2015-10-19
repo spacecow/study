@@ -30,6 +30,11 @@ describe Masker do
       it{ should eq 'what the *****' }
     end
 
+    context "mask one word that is actually two" do
+      let(:word){ "the deuce" }
+      it{ should eq 'what *** *****' }
+    end
+
     context "mask one of two words" do
       let(:word){ ["deuc","deuce"] }
       it{ should eq 'what the *****' }

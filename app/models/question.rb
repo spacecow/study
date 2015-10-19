@@ -4,6 +4,6 @@ class Question < ActiveRecord::Base
   has_one :answer
 
   def mask
-    correct ? "*" * correct.length : ""
+    correct ? correct.gsub(/\w/,'*') : ""
   end
 end
