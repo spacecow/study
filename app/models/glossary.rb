@@ -31,7 +31,7 @@ class Glossary < ActiveRecord::Base
   validates :content, presence:true, uniqueness:true
 
   def all_forms
-    [content] + forms.to_s.split(",")
+    [content] + forms.to_s.split(",").map(&:strip)
   end
 
   def antonym_tokens=(tokens)
