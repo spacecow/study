@@ -31,7 +31,7 @@ describe AnswersController do
   end
 
   describe "#create" do
-    let(:question){ quiz.questions.create }
+    let(:question){ quiz.questions.create correct:"wow" }
     let(:method){ post :create, answer:{
       quiz_id:quiz.id,
       question_id:question.id,

@@ -26,7 +26,10 @@ describe 'Quiz new' do
   end
 
   context "go to the next question" do
-    before{ click_button 'next' }
+    before do
+      fill_in "answer_string", with:find("#correct").text
+      click_button 'next'
+    end
     describe "page text" do
       subject{ page.text }
       it{ should_not match /error/i }
@@ -36,7 +39,9 @@ describe 'Quiz new' do
 
   context "go to the next-next question" do
     before do
+      fill_in "answer_string", with:find("#correct").text
       click_button 'next'
+      fill_in "answer_string", with:find("#correct").text
       click_button 'next'
     end
     describe "page text" do
@@ -48,8 +53,11 @@ describe 'Quiz new' do
 
   context "finish the quiz" do
     before do
+      fill_in "answer_string", with:find("#correct").text
       click_button 'next'
+      fill_in "answer_string", with:find("#correct").text
       click_button 'next'
+      fill_in "answer_string", with:find("#correct").text
       click_button 'next'
     end
     describe "page text" do
