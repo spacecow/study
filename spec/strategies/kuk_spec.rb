@@ -43,7 +43,7 @@ describe Kuk do
       context "meaning is blank with one glossary" do
         let(:meaning){ "" }
         let(:lookup){ double :lookup, meaning:'even in tennis' }
-        let(:glossary){ double :glossary, content:'deuce', all_forms:forms, reading:'du:s' }
+        let(:glossary){ double :glossary, content:'deuce', all_forms:forms, reading:'du:s', sound_url:'yeah' }
         let(:lookups){ [lookup] }
         before{ lookup.should_receive(:glossary){ glossary }}
 

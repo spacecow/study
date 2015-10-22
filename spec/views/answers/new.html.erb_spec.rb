@@ -48,6 +48,7 @@ describe 'answers/new.html.erb' do
 
   before do
     def erb_binding.form_for obj; end
+    def erb_binding.audio_tag obj, opt={}; end
     erb_binding.should_receive(:form_for).and_yield form
     erb_binding.instance_variable_set "@question",question
     erb_binding.instance_variable_set "@solution",solution

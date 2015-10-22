@@ -2,6 +2,8 @@
 class Glossary < ActiveRecord::Base
   include Penis
 
+  mount_uploader :sound, SoundUploader
+
   has_many :lookups
   has_many :sentences, :through => :lookups
 
@@ -23,7 +25,7 @@ class Glossary < ActiveRecord::Base
   has_many :inverse_antonym_glossaries, class_name:'AntonymGlossary', foreign_key:'antonym_id'
   has_many :inverse_antonyms, through: :inverse_antonym_glossaries, source: :glossary
 
-  attr_accessible :content, :reading, :meaning, :forms, :sentence_tokens, :similar_tokens, :synonym_tokens, :antonym_tokens
+  attr_accessible :content, :reading, :meaning, :forms, :sound, :sentence_tokens, :similar_tokens, :synonym_tokens, :antonym_tokens
   attr_reader :sentence_tokens, :similar_tokens, :synonym_tokens, :antonym_tokens
 
   after_save :link_kanjis

@@ -12,7 +12,8 @@ module Kuk
         { string:Masker.mask(content,glossary.all_forms),
           content2:lookup.meaning,
           correct:glossary.content,
-          reading:glossary.reading }
+          reading:glossary.reading,
+          sound:glossary.sound_url }
       end
     end
   end

@@ -1,5 +1,5 @@
 class Question < ActiveRecord::Base
-  attr_accessible :string, :content2, :correct, :reading
+  attr_accessible :string, :content2, :correct, :reading, :sound
 
   has_one :answer
 

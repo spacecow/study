@@ -12,3 +12,5 @@
     <%= f.submit "next" %>
   <% end %>
 </div>
+
+<%= audio_tag @question.sound, controls:true if @question.sound %>

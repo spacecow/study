@@ -15,6 +15,7 @@ $(function(){
       }
       if(correct == solution){
         //$("form").submit();
+        $("audio").trigger("play");
         $("#reading").removeClass("white");
       }
     });
