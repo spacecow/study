@@ -26,6 +26,7 @@ FactoryGirl.define do
 
   factory :sentence do
     project
+    japanese:"factory japanese"
   end
 
   factory :similarity do

@@ -10,7 +10,7 @@ module Kuk
       lookups.map do |lookup|
         glossary = lookup.glossary
         { string:Masker.mask(content,glossary.all_forms),
-          content2:lookup.meaning,
+          content2:glossary.meaning(lookup.meaning),
           correct:glossary.content,
           reading:glossary.reading,
           sound:glossary.sound_url }

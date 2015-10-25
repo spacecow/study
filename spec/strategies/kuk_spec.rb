@@ -28,24 +28,28 @@ describe Kuk do
     context "no meaning" do
       before{ fitta.should_receive(:lookups){ lookups }}
 
-      context "meaning is blank without glossaries" do
+      context "sentence meaning is blank without glossaries" do
         let(:lookups){ [] }
         let(:meaning){ "" }
         it{ should be nil }
       end
 
-      context "meaning is nil without glossaries" do
+      context "sentence meaning is nil without glossaries" do
         let(:lookups){ [] }
         let(:meaning){ nil }
         it{ should be nil }
       end
 
-      context "meaning is blank with one glossary" do
+      context "sentence meaning is blank with one glossary" do
         let(:meaning){ "" }
-        let(:lookup){ double :lookup, meaning:'even in tennis' }
+        let(:lookup){ double :lookup }
         let(:glossary){ double :glossary, content:'deuce', all_forms:forms, reading:'du:s', sound_url:'yeah' }
         let(:lookups){ [lookup] }
-        before{ lookup.should_receive(:glossary){ glossary }}
+        before do
+          lookup.should_receive(:glossary){ glossary }
+          glossary.should_receive(:meaning).with(:lookup_meaning){ "even in tennis" } 
+          lookup.should_receive(:meaning){ :lookup_meaning } 
+        end
 
         context "glossary has one form" do
           let(:forms){ ["deuce"] } 

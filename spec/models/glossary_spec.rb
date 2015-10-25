@@ -1,55 +1,34 @@
-# -*- coding: utf-8 -*-
-require 'spec_helper'
+module Penis; end
+class SoundUploader; end
+module ActiveRecord
+  class Base 
+    def self.mount_uploader *args; end
+  end
+end
+
+require './spec/helpers/model_helper'
+require './app/models/glossary'
 
 describe Glossary do
-  describe "#ids_from_tokens" do
-    context "string of ids" do
-      it{ Glossary.ids_from_tokens("1,2").should eq %w(1 2) }
+  let(:mdl){ Glossary.new }
+  subject{ mdl.send function, params }
+
+  describe "#meaning" do
+    let(:function){ :meaning }
+    let(:params){ "contempt" } 
+
+    let(:titles){ ["disdain"] }
+    before do
+      mdl.should_receive(:synonym_titles){ titles }
     end
 
-    context "new glossary" do
-      it{ Glossary.ids_from_tokens("<<<cat>>>").should eq [Glossary.last.id.to_s] }
+    context "glossary has no synonyms" do
+      let(:titles){ [] }
+      it{ should eq "contempt" }
     end
 
-    context "existing glossary" do
-      before{ create :glossary, content:'cat' }
-      it{ lambda{ Glossary.ids_from_tokens("<<<cat>>>")}.should raise_error(ActiveRecord::RecordInvalid, 'Validation failed: Content has already been taken')}
+    context "glossary has synonyms" do
+      it{ should eq "contempt; disdain" }
     end
   end
-
-	describe "#link_kanjis" do
-		let!(:day){ create :kanji, symbol:'日' }
-		let!(:book){ create :kanji, symbol:'本' }
-
-		describe "#create" do
-			context "two new kanjis" do
-				before { create :glossary, content:'日本' }
-
-				describe GlossariesKanji do
-					subject{ GlossariesKanji }
-					its(:count){ should be 2 }
-				end
-			end
-		end # #create
-
-		describe "#update" do
-			let(:glossary){ create :glossary, content:'日'}
-			context "two kanjis, where one is old" do
-				before{ glossary.update_attributes(content:'日本')}
-
-				describe GlossariesKanji do
-					subject{ GlossariesKanji }
-					its(:count){ should be 2 }
-				end
-			end
-
-			context "change kanji" do
-				before{ glossary.update_attributes(content:'本')}
-				describe GlossariesKanji do
-					subject{ GlossariesKanji }
-					its(:count){ should be 2 }
-				end
-			end
-		end # update
-	end # #link_kanjis
 end

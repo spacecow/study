@@ -25,7 +25,7 @@ class Glossary < ActiveRecord::Base
   has_many :inverse_antonym_glossaries, class_name:'AntonymGlossary', foreign_key:'antonym_id'
   has_many :inverse_antonyms, through: :inverse_antonym_glossaries, source: :glossary
 
-  attr_accessible :content, :reading, :meaning, :forms, :sound, :sentence_tokens, :similar_tokens, :synonym_tokens, :antonym_tokens
+  attr_accessible :content, :reading, :forms, :sound, :sentence_tokens, :similar_tokens, :synonym_tokens, :antonym_tokens
   attr_reader :sentence_tokens, :similar_tokens, :synonym_tokens, :antonym_tokens
 
   after_save :link_kanjis
@@ -55,6 +55,10 @@ class Glossary < ActiveRecord::Base
     self.sentence_ids = Sentence.ids_from_tokens(tokens)
   end
 
+  def meaning lookup_meaning
+    ([lookup_meaning] + synonym_titles).join("; ")
+  end
+
   def similar_tokens=(tokens)
     self.similar_ids = Glossary.ids_from_tokens(tokens)
   end
@@ -68,6 +72,10 @@ class Glossary < ActiveRecord::Base
   def synonym_glossaries_total; synonym_glossaries+inverse_synonym_glossaries end
   def synonyms_total; synonyms+inverse_synonyms end
   def synonym_glossaries_total?; synonym_glossaries.present? or inverse_synonym_glossaries.present? end
+
+  def synonym_titles
+    synonyms.map(&:content) + inverse_synonyms.map(&:content)
+  end
 
   def synonym_tokens=(tokens)
     self.synonym_ids = Glossary.ids_from_tokens(tokens)

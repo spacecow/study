@@ -4,6 +4,8 @@ class Lookup < ActiveRecord::Base
   belongs_to :glossary
   belongs_to :sentence
 
+  def synonym_titles; glossary.synonym_titles end
+
 #  after_create :link_kanji
 
   private
