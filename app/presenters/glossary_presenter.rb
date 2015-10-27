@@ -55,7 +55,7 @@ class GlossaryPresenter < BasePresenter
   end
 
   def parenthesis
-    a = [reading, synonym_links, similar_links, antonym_links].reject(&:blank?)
+    a = [reading].reject(&:blank?)
     h.content_tag :span, class:'parenthesis' do
       "(#{a.join('; ')})".html_safe
     end

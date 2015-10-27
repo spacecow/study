@@ -52,9 +52,9 @@ describe GlossaryPresenter do
     context "without content" do
       before do
         glossary.should_receive(:reading).and_return nil
-        glossary.should_receive(:synonyms_total).and_return nil
-        glossary.should_receive(:similars_total).and_return nil
-        glossary.should_receive(:antonyms_total).and_return nil
+        #glossary.should_receive(:synonyms_total).and_return nil
+        #glossary.should_receive(:similars_total).and_return nil
+        #glossary.should_receive(:antonyms_total).and_return nil
       end
 
       subject{ Capybara.string(presenter.parenthesis)}
@@ -64,17 +64,18 @@ describe GlossaryPresenter do
     context "with content" do
       before do
         setup_reading
-        setup_synonyms
-        setup_similars
-        setup_antonyms
+        #setup_synonyms
+        #setup_similars
+        #setup_antonyms
       end
 
       subject{ Capybara.string(presenter.parenthesis)}
       it{ should have_selector 'span.reading' }
-      it{ should have_selector 'span.glossaries.synonyms' }
-      it{ should have_selector 'span.glossaries.similars' }
-      it{ should have_selector 'span.glossaries.antonyms' }
-      its(:text){ should eq '(まほう; 魔法使い; 胡椒 砂糖; 馬鹿)' }
+      #it{ should have_selector 'span.glossaries.synonyms' }
+      #it{ should have_selector 'span.glossaries.similars' }
+      #it{ should have_selector 'span.glossaries.antonyms' }
+      #its(:text){ should eq '(まほう; 魔法使い; 胡椒 砂糖; 馬鹿)' }
+      its(:text){ should eq '(まほう)' }
     end # with content
   end # .parenthesis
 

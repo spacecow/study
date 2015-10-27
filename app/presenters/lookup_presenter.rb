@@ -21,5 +21,27 @@ class LookupPresenter < BasePresenter
     end
   end
 
+  def associations
+    a = [synonym_links, antonym_links, similar_links].reject(&:blank?)
+    h.content_tag :div, class:'associations' do
+      "(#{a.join('; ')})".html_safe
+    end
+  end
+
+  private
+
+    # ====== ASSOCIATION LINKS =================
+    LINKS = %w(synonym antonym similar)
+    LINKS.each do |link|
+      define_method("#{link}_links") do
+        (glossaries = lookup.glossary.send("#{link.pluralize}_total")
+        h.content_tag :span, class:[link.pluralize, 'glossaries'].join(' ') do
+          glossaries.map{|e|
+            h.link_to(e.content, e)
+          }.join(' ').html_safe
+        end if glossaries.present?).to_s
+      end
+    end
+
 
 end

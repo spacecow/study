@@ -5,8 +5,14 @@ describe 'Glossary show' do
 
   context "synonyms" do
     let(:pegasus){ create :glossary, content:'pegasus'}
-    before{ manticora.synonyms << pegasus } 
-    subject{ find 'div.synonyms' }
+    let(:sentence){ create :sentence }
+    let(:lookup){ create :lookup, glossary:manticora, sentence:sentence }
+    let(:lookup2){ create :lookup, glossary:pegasus, sentence:sentence }
+    before do
+      lookup; lookup2
+      manticora.synonyms << pegasus 
+    end
+    subject{ find 'span.synonyms' }
 
     context "direct" do
       before{ visit glossary_path(manticora)}

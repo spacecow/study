@@ -36,6 +36,12 @@ FactoryGirl.define do
     glossary
   end
 
+  factory :antonym_glossary do
+  end
+
+  factory :similar_glossary do
+  end
+
   factory :translation do
     key "Factory Key"
     locale

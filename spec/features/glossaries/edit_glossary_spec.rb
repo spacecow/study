@@ -5,11 +5,13 @@ describe "Sentence update" do
   it "" do
     signin
     glossary = create :glossary
+    sentence = create :sentence
     disdain = create :glossary, content:"disdain"
     snobbery = create :glossary, content:"snobbery"
     love = create :glossary, content:"love"
     visit edit_glossary_path(glossary)
     fill_in "Content", with:"contempt"
+    fill_in "Sentences", with:sentence.id
     fill_in "Synonyms", with:disdain.id
     fill_in "Similars", with:snobbery.id
     fill_in "Antonyms", with:love.id
