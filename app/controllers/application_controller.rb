@@ -16,4 +16,6 @@ class ApplicationController < ActionController::Base
 
   helper_method :jt, :current_user
 
+  def repo; @repo ||= Repository.new; end
+
 end

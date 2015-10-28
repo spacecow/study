@@ -28,21 +28,15 @@ class SentencesController < ApplicationController
   end
 
   def create
-    @sentence = current_user.sentences.build(params[:sentence])
-    #@sentence = Sentence.new(params[:sentence])
-    if @sentence.save
-      redirect_to @sentence 
-    else
-      render :new
-    end
+    @sentence = repo.create_sentence user:current_user, params:params[:sentence]
+    redirect_to @sentence 
   end
 
   def edit
   end
 
   def update
-    if @sentence.update_attributes(params[:sentence])
-      redirect_to @sentence, notice:updated(:sentence)
-    end
+    @sentence = repo.update_sentence sentence:@sentence, params:params[:sentence]
+    redirect_to @sentence, notice:updated(:sentence)
   end
 end

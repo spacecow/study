@@ -1,13 +1,5 @@
-module Penis; end
-class SoundUploader; end
-module ActiveRecord
-  class Base 
-    def self.mount_uploader *args; end
-  end
-end
-
 require './spec/helpers/model_helper'
-require './app/models/glossary'
+require './spec/helpers/glossary_helper'
 
 describe Glossary do
   let(:mdl){ Glossary.new }

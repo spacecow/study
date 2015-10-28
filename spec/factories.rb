@@ -1,3 +1,5 @@
+if FactoryGirl.factories.instance_variable_get('@items').empty?
+
 # -*- coding: utf-8 -*-
 FactoryGirl.define do
   factory :glossary do
@@ -50,4 +52,6 @@ FactoryGirl.define do
   factory :user do
     password 'secret'
   end
+end
+
 end
