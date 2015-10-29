@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20151025120137) do
+ActiveRecord::Schema.define(:version => 20151028200323) do
 
   create_table "answers", :force => true do |t|
     t.integer "quiz_id",     :null => false
@@ -28,6 +28,16 @@ ActiveRecord::Schema.define(:version => 20151025120137) do
     t.datetime "created_at",  :null => false
     t.datetime "updated_at",  :null => false
   end
+
+  create_table "definitions", :force => true do |t|
+    t.string   "content"
+    t.integer  "glossary_id", :null => false
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
+  end
+
+  add_index "definitions", ["content", "glossary_id"], :name => "index_definitions_on_content_and_glossary_id", :unique => true
+  add_index "definitions", ["glossary_id"], :name => "definitions_glossary_id_fk"
 
   create_table "glossaries", :force => true do |t|
     t.string   "content"
@@ -151,5 +161,12 @@ ActiveRecord::Schema.define(:version => 20151025120137) do
     t.datetime "updated_at",       :null => false
     t.string   "password_digest"
   end
+
+  add_foreign_key "answers", "questions", name: "answers_ibfk_2"
+  add_foreign_key "answers", "quizzes", name: "answers_ibfk_1"
+
+  add_foreign_key "definitions", "glossaries", name: "definitions_glossary_id_fk"
+
+  add_foreign_key "questions", "quizzes", name: "questions_ibfk_1"
 
 end

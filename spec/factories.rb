@@ -2,6 +2,10 @@ if FactoryGirl.factories.instance_variable_get('@items').empty?
 
 # -*- coding: utf-8 -*-
 FactoryGirl.define do
+  factory :definition do
+    glossary
+  end
+
   factory :glossary do
     sequence(:content){|n| "Factory content #{n}"}
   end

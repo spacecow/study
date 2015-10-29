@@ -1,4 +1,3 @@
-require 'active_record'
 require './spec/helpers/database_helper'
 require './spec/helpers/factory_helper'
 require './spec/helpers/sentence_helper'

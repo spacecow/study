@@ -14,6 +14,7 @@ gem 'carrierwave'
 gem 'bcrypt-ruby'
 gem 'rb-readline'
 gem 'therubyracer'
+gem 'foreigner'
 
 group :assets do
   gem 'sass-rails',   '~> 3.2.3'
