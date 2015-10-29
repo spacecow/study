@@ -6,15 +6,15 @@ describe "Sentence edit" do
     let(:sentence){ create :sentence }
 
     it "" do
-      glossary = create :glossary
+      definition = create :definition
       signin
       visit edit_sentence_path(sentence)
       fill_in 'Japanese', with:"updated japanese"
-      fill_in 'Glossary', with:glossary.id
+      fill_in 'Glossary', with:definition.id
       click_button "Update Sentence"
       sentence = Sentence.last
       sentence.japanese.should eq "updated japanese"
-      sentence.glossary_ids.should eq [glossary.id]
+      sentence.definition_ids.should eq [definition.id]
     end
 
   end

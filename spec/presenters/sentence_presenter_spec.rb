@@ -41,7 +41,8 @@ describe SentencePresenter do
 
     context 'with glossaries' do
       let(:glossary){ Glossary.new }
-      let(:lookup){ double :lookup, glossary:glossary, meaning:'meaning' }
+      let(:definition){ double :definition, glossary:glossary, content:"content" }
+      let(:lookup){ double :lookup, definition:definition, meaning:'meaning' }
       before do
         controller.stub(:current_user){ nil }
         sentence.should_receive(:lookups).once.and_return [lookup]

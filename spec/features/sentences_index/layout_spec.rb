@@ -65,7 +65,8 @@ describe "Sentences index" do
     before(:each) do
       sentence = FactoryGirl.create(:sentence, english:'The flood overwhelmed the village', japanese:'kouzui ga sono mura wo nomikonde shimatta')
       @glossary = FactoryGirl.create(:glossary, content:'洪水', reading:'こうずい')
-      @glossary.sentences << sentence
+      definition = create :definition, glossary:@glossary
+      definition.sentences << sentence
     end
 
     context ", glossaries & kanjis" do

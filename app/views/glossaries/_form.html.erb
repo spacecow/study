@@ -4,7 +4,7 @@
   <%= f.input :forms %>
   <%= f.input :sound %>
   <div><%= glossary.sound_url %></div>
-  <%= f.input :sentence_tokens, input_html:{data:{pre:glossary.sentences, url:sentences_path(:format=>:json)}} %>
+  <%# f.input :sentence_tokens, input_html:{data:{pre:glossary.sentences, url:sentences_path(:format=>:json)}} %>
   <%= f.input :synonym_tokens, input_html:{data:{pre:glossary.synonyms, url:glossaries_path(format: :json)}} %>
   <%= f.input :similar_tokens, input_html:{data:{pre:glossary.similars, url:glossaries_path(format: :json)}} %>
   <%= f.input :antonym_tokens, input_html:{data:{pre:glossary.antonyms, url:glossaries_path(format: :json)}} %>

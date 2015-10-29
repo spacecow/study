@@ -5,7 +5,8 @@ describe "glossaries/index.html.erb" do
     controller.stub(:current_user){ create :user }
     glossary = create :glossary
     sentence = create :sentence
-    lookup = create :lookup, glossary:glossary, sentence:sentence
+    definition = create :definition, glossary:glossary
+    lookup = create :lookup, definition:definition, sentence:sentence
     assign(:glossaries,[glossary])
     assign(:lookups,[lookup])
     render

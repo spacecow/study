@@ -45,10 +45,12 @@ describe Kuk do
         let(:lookup){ double :lookup }
         let(:glossary){ double :glossary, content:'deuce', all_forms:forms, reading:'du:s', sound_url:'yeah' }
         let(:lookups){ [lookup] }
+        let(:definition){ double :defintion } 
         before do
-          lookup.should_receive(:glossary){ glossary }
-          glossary.should_receive(:meaning).with(:lookup_meaning){ "even in tennis" } 
-          lookup.should_receive(:meaning){ :lookup_meaning } 
+          definition.should_receive(:glossary){ glossary }
+          definition.should_receive(:content){ :definition_content }
+          lookup.should_receive(:definition){ definition }
+          glossary.should_receive(:meaning).with(:definition_content){ "even in tennis" } 
         end
 
         context "glossary has one form" do

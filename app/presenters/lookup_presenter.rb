@@ -17,7 +17,7 @@ class LookupPresenter < BasePresenter
 
   def meaning
     h.content_tag :div, class:'meaning' do
-      h.link_to lookup.meaning.nil? ? "edit me" : lookup.meaning, h.edit_lookup_path(lookup)
+      h.link_to lookup.definition.content.nil? ? "edit me" : lookup.definition.content, h.edit_lookup_path(lookup)
     end
   end
 
@@ -34,7 +34,7 @@ class LookupPresenter < BasePresenter
     LINKS = %w(synonym antonym similar)
     LINKS.each do |link|
       define_method("#{link}_links") do
-        (glossaries = lookup.glossary.send("#{link.pluralize}_total")
+        (glossaries = lookup.definition.glossary.send("#{link.pluralize}_total")
         h.content_tag :span, class:[link.pluralize, 'glossaries'].join(' ') do
           glossaries.map{|e|
             h.link_to(e.content, e)

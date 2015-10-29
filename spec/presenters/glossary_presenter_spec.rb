@@ -147,7 +147,8 @@ describe GlossaryPresenter do
       before{ controller.stub(:current_user){ nil }}
       let(:glossary){ create :glossary }
       let(:sentence){ create :sentence }
-      let(:lookups){ [create(:lookup, glossary:glossary, sentence:sentence)] }
+      let(:defintion){ create :definition, glossary:glossary }
+      let(:lookups){ [create(:lookup, definition:defintion, sentence:sentence)] }
       subject{ Capybara.string(presenter.glossaries(lookups))}
       it{ should have_selector 'li.glossary', count:1 }  
     end
@@ -205,10 +206,10 @@ describe GlossaryPresenter do
           its(:value){ should eq 'のみこむ' }
         end
 
-        describe "Sentence" do
-          subject{ rendered.find_field 'Sentence' }
-          its(:value){ should be_nil } 
-        end
+        #describe "Sentence" do
+        #  subject{ rendered.find_field 'Sentence' }
+        #  its(:value){ should be_nil } 
+        #end
 
         describe "Synonyms" do
           subject{ rendered.find_field 'Synonyms' }

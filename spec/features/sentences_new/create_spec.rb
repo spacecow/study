@@ -50,21 +50,21 @@ describe "Sentence new" do
         before(:each) do
           fill_in 'Glossary', with:'<<<魔法>>>'
           @lookup_count = Lookup.count
-          @glossary_count = Glossary.count
+          @definition_count = Glossary.count
           click_button 'Create Sentence'
           @lookup = Lookup.last
-          @glossary = Glossary.last
+          @definition = Definition.last
         end
 
         it "adds a glossary to the db" do
-          Glossary.count.should eq @glossary_count+1
+          Definition.count.should eq @definition_count+1
         end
         it "adds a lookup to the db" do
           Lookup.count.should eq @lookup_count+1
         end
 
-        it "sets the glossary_id" do
-          @lookup.glossary.should eq @glossary
+        it "sets the definition_id" do
+          @lookup.definition.should eq @definition
         end
         it "sets the sentence_id" do
           @lookup.sentence.should eq Sentence.last
@@ -73,8 +73,9 @@ describe "Sentence new" do
 
       context "existing glossary" do
         before(:each) do
-          @glossary = FactoryGirl.create(:glossary, content:'魔法')
-          fill_in 'Glossary', with:@glossary.id
+          glossary = create :glossary, content:'魔法'
+          @definition = create :definition, glossary:glossary
+          fill_in 'Glossary', with:@definition.id
           @lookup_count = Lookup.count
           click_button 'Create Sentence'
           @lookup = Lookup.last
@@ -84,8 +85,8 @@ describe "Sentence new" do
           Lookup.count.should eq @lookup_count+1
         end
 
-        it "sets the glossary_id" do
-          @lookup.glossary.should eq @glossary
+        it "sets the definition_id" do
+          @lookup.definition.should eq @definition
         end
 
         it "sets the sentence_id" do

@@ -9,7 +9,8 @@ describe 'Quiz new layout' do
   before do
     signin_member
     sentence = create :sentence
-    create :lookup, sentence:sentence, glossary:glossary, meaning:"contempt"
+    definition = create :definition, glossary:glossary, content:"contempt"
+    create :lookup, sentence:sentence, definition:definition
     synonym_disdain
     reverse_synonym_defiance
     visit new_quiz_path

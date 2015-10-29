@@ -11,7 +11,7 @@ class SentencePresenter < BasePresenter
     lookups = sentence.lookups
     h.content_tag :ul, class:'glossaries' do
       lookups.map do |lookup|
-        h.render lookup.glossary, sentences:false, kanjis:true, glossary_tag:'li', extra_class:'', lookup:lookup
+        h.render lookup.definition.glossary, sentences:false, kanjis:true, glossary_tag:'li', extra_class:'', lookup:lookup
       end.join.html_safe
     end if lookups.present?
   end

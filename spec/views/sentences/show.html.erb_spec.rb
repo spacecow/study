@@ -2,12 +2,12 @@ require 'spec_helper'
 
 describe 'sentences/show.html.erb' do
   let(:sentence){ stub_model(Sentence, english:'english sentence', japanese:'japanese sentence')}
-  let(:glossary){ create :glossary }
+  let(:definition){ create :definition }
 
   before do
     controller.stub(:current_user){ create :user }
     assign(:sentence, sentence)
-    create :lookup, sentence:sentence, glossary:glossary
+    create :lookup, sentence:sentence, definition:definition
     render
   end
 

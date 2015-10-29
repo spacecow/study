@@ -4,14 +4,14 @@ describe "Glossary show" do
   
   let(:glossary){ create :glossary, content:'trough',
     reading:"trɒf" }
+  let(:definition_container){ create :definition, glossary:glossary, content:'a container' }
+  let(:definition_drain){ create :definition, glossary:glossary, content:"a long hallow" }
   let(:container){ create :sentence,
     japanese:"plants grew in troughs" }
   let(:drain){ create :sentence,
     japanese:"walk in the trough", project:container.project }
-  let(:lookup_container){ create :lookup, glossary:glossary,
-    sentence:container, meaning:'a container' }
-  let(:lookup_drain){ create :lookup, glossary:glossary,
-    sentence:drain, meaning:"a long hallow" }
+  let(:lookup_container){ create :lookup, definition:definition_container, sentence:container }
+  let(:lookup_drain){ create :lookup, definition:definition_drain, sentence:drain }
 
   let(:pot){ create :glossary, content:"pot" }
   let(:dirt){ create :glossary, content:"dirt" }

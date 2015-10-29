@@ -7,10 +7,10 @@ describe SentencesController do
     before{ session[:userid] = create(:user).id }
 
     context "update" do
-      let(:glossary){ create :glossary }
+      let(:definition){ create :definition }
       before do
         Sentence.should_receive(:find).and_return sentence
-        put :update, id:1, sentence:{japanese:'日本語', english:'Japanese', glossary_tokens:glossary.id}
+        put :update, id:1, sentence:{japanese:'日本語', english:'Japanese', definition_tokens:definition.id}
       end
 
       describe Sentence do

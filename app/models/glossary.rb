@@ -4,8 +4,10 @@ class Glossary < ActiveRecord::Base
 
   mount_uploader :sound, SoundUploader
 
-  has_many :lookups
-  has_many :sentences, :through => :lookups
+  has_many :definitions
+
+  #has_many :lookups
+  #has_many :sentences, :through => :lookups
 
   has_many :glossaries_kanjis
   has_many :kanjis, :through => :glossaries_kanjis

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20151028200323) do
+ActiveRecord::Schema.define(:version => 20151029131351) do
 
   create_table "answers", :force => true do |t|
     t.integer "quiz_id",     :null => false
@@ -77,9 +77,10 @@ ActiveRecord::Schema.define(:version => 20151028200323) do
   create_table "lookups", :force => true do |t|
     t.integer  "glossary_id"
     t.integer  "sentence_id"
-    t.datetime "created_at",  :null => false
-    t.datetime "updated_at",  :null => false
+    t.datetime "created_at",    :null => false
+    t.datetime "updated_at",    :null => false
     t.string   "meaning"
+    t.integer  "definition_id"
   end
 
   create_table "meanings", :force => true do |t|

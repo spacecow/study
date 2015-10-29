@@ -48,11 +48,11 @@ describe GlossariesController do
 
     context "add lookup" do
       let(:sentence){ create :sentence }
-      before{ put :update, id:glossary.id, glossary:{sentence_tokens:sentence.id}}
+      before{ put :update, id:glossary.id, glossary:{}}
 
       describe Lookup do
         subject{ Lookup }
-        its(:count){ should be 1 } 
+        its(:count){ should be 0 } 
       end
     end
 

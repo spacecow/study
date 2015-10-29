@@ -18,7 +18,7 @@ class GlossaryPresenter < BasePresenter
   def glossaries lookups
     h.content_tag :ul, class:'glossaries' do
       lookups.map do |lookup|
-        h.render lookup.glossary, sentences:true, kanjis:true, extra_class:'', glossary_tag:'li', meaning:nil, lookup:nil
+        h.render lookup.definition.glossary, sentences:true, kanjis:true, extra_class:'', glossary_tag:'li', meaning:nil, lookup:nil
       end.join.html_safe
     end if lookups.present?
   end
@@ -63,12 +63,12 @@ class GlossaryPresenter < BasePresenter
 
   def meaning lookup 
     h.content_tag :div, class:'meaning' do
-      h.link_to lookup.meaning.nil? ? 'edit me' : lookup.meaning, h.edit_lookup_path(lookup)
+      h.link_to lookup.definition.content.nil? ? 'edit me' : lookup.definition.content, h.edit_lookup_path(lookup)
     end
   end
 
   def sentences
-    lookups = glossary.lookups
+    lookups = glossary.definitions.map(&:lookups).flatten
     h.content_tag :ul, class:'sentences' do
       h.render lookups, glossaries:false, meaning:true if lookups.present?
     end

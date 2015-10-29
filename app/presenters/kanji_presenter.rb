@@ -7,7 +7,8 @@ class KanjiPresenter < BasePresenter
   end
 
   def glossaries
-    lookup = Struct.new(:meaning).new("?")
+    definition = Struct.new(:content).new("?")
+    lookup = Struct.new(:definition).new(definition)
     glossaries = kanji.glossaries
     h.content_tag :div, class:'glossaries' do
       (h.subminititle( h.pl :glossary ) +
@@ -37,7 +38,8 @@ class KanjiPresenter < BasePresenter
   # ----------------------------
 
   def random_glossary(taken_glossary=nil)
-    lookup = Struct.new(:meaning).new("?")
+    definition = Struct.new(:content).new("?")
+    lookup = Struct.new(:definition).new(definition)
     glossary = kanji.random_glossary(taken_glossary)
     (" - " + h.render(glossary, extra_class:'random', glossary_tag:'span', sentences:false, kanjis:false, lookup:lookup)).html_safe unless glossary.nil?
   end

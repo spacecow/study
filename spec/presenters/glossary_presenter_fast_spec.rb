@@ -5,12 +5,14 @@ require './app/presenters/glossary_presenter'
 
 describe GlossaryPresenter do
   let(:glossary){ double :glossary }
+  let(:definition){ double :definition }
   let(:view){ double :view }
   let(:presenter){ GlossaryPresenter.new glossary, view }
 
   describe ".sentences" do
     before do
-      glossary.should_receive(:lookups).and_return lookups
+      definition.should_receive(:lookups).and_return lookups
+      glossary.should_receive(:definitions).and_return [definition]
       view.should_receive(:content_tag).with(:ul, class:'sentences').and_yield
     end
     subject{ presenter.sentences }
@@ -23,7 +25,7 @@ describe GlossaryPresenter do
 
     context "with sentences" do
       let(:lookups){ [lookup] }
-      let(:lookup){ create :lookup }
+      let(:lookup){ double :lookup }
       before do
         view.should_receive(:render).
         with(lookups, glossaries:false, meaning:true)

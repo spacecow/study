@@ -5,9 +5,11 @@ describe 'Glossary show' do
 
   context "synonyms" do
     let(:pegasus){ create :glossary, content:'pegasus'}
+    let(:definition_manticora){ create :definition, glossary:manticora }
+    let(:definition_pegasus){ create :definition, glossary:pegasus }
     let(:sentence){ create :sentence }
-    let(:lookup){ create :lookup, glossary:manticora, sentence:sentence }
-    let(:lookup2){ create :lookup, glossary:pegasus, sentence:sentence }
+    let(:lookup){ create :lookup, definition:definition_manticora, sentence:sentence }
+    let(:lookup2){ create :lookup, definition:definition_pegasus, sentence:sentence }
     before do
       lookup; lookup2
       manticora.synonyms << pegasus 

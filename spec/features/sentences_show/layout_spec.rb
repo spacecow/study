@@ -8,8 +8,9 @@ describe "Sentence show" do
 
   context "with glossary" do
     before(:each) do
-      @glossary = FactoryGirl.create(:glossary, content:'kouzui')
-      @sentence.glossaries << @glossary
+      @glossary = create :glossary, content:'kouzui'
+      definition = create :definition, glossary:@glossary
+      @sentence.definitions << definition
       visit sentence_path(@sentence)
     end
 

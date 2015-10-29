@@ -1,8 +1,8 @@
 require 'spec_helper'
 
 describe "sentences/sentence.html.erb" do
-  let(:glossary){ stub_model Glossary }
-  let(:sentence){ stub_model Sentence, glossaries:[glossary] }
+  let(:definition){ create :definition }
+  let(:sentence){ stub_model Sentence, definitions:[definition] }
 
   context "base layout" do
     before{ render sentence, glossaries:false }

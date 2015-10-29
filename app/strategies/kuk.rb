@@ -8,9 +8,10 @@ module Kuk
         correct:content }]
     else
       lookups.map do |lookup|
-        glossary = lookup.glossary
+        definition = lookup.definition
+        glossary = definition.glossary
         { string:Masker.mask(content,glossary.all_forms),
-          content2:glossary.meaning(lookup.meaning),
+          content2:glossary.meaning(definition.content),
           correct:glossary.content,
           reading:glossary.reading,
           sound:glossary.sound_url }

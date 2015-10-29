@@ -24,7 +24,7 @@ class SentencesController < ApplicationController
     last_sentence = current_user.sentences.order(:updated_at).last
     last_project_id = last_sentence.project.id if last_sentence
     @sentence = Sentence.new(project_id:last_project_id)
-    @sentence.glossaries.build
+    #@sentence.glossaries.build
   end
 
   def create
