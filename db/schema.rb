@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20151029131351) do
+ActiveRecord::Schema.define(:version => 20151029230806) do
 
   create_table "answers", :force => true do |t|
     t.integer "quiz_id",     :null => false
