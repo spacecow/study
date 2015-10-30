@@ -19,10 +19,16 @@ class Definition < ActiveRecord::Base
     tokens.split(",")
   end
 
+  def self.prepoulate arr
+    arr.select("definitions.id, concat(glossaries.content, ' - ', definitions.content) as content").
+    joins(:glossary)
+  end
+
   def self.tokens query
-    select("definitions.id, concat(glossaries.content, ' - ', definitions.content) as content").
-    having("content like ?", "%#{query}%").
-    joins(:glossary) +
+    #select("definitions.id, concat(glossaries.content, ' - ', definitions.content) as content").
+    prepoulate(Definition).
+    having("content like ?", "%#{query}%") +
+    #joins(:glossary) +
     [{id: "<<<#{query}>>>", content: "New: \"#{query}\""}]
   end
 

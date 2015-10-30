@@ -18,6 +18,8 @@ FactoryGirl.define do
   end
 
   factory :lookup do
+    sentence
+    definition
   end
 
   factory :meaning do

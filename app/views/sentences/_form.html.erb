@@ -1,7 +1,7 @@
 <%= simple_form_for @sentence do |f| %>
   <%= f.input :japanese %>
   <%= f.input :english %>
-  <%= f.input :definition_tokens, label:pl(:glossary,1), input_html:{data:{pre:@sentence.definitions, url:definitions_path(:format=>:json)}} %>
+  <%= f.input :definition_tokens, label:pl(:glossary,1), input_html:{data:{pre:@sentence.definitions_prepopulate, url:definitions_path(:format=>:json)}} %>
   <%= f.association :project, collection:Project.all.map{|e| [e.name, e.id]}, include_blank:false %>
   <%= f.submit %>
 <% end %>

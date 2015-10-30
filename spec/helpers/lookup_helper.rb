@@ -1,0 +1,1 @@
+require './app/models/lookup'

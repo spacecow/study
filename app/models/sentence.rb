@@ -19,6 +19,10 @@ class Sentence < ActiveRecord::Base
     self.definition_ids = Definition.ids_from_tokens tokens 
   end
 
+  def definitions_prepopulate
+    Definition.prepoulate definitions
+  end
+
   def glossary_tokens=(tokens)
     self.glossary_ids = Glossary.ids_from_tokens(tokens) 
   end
