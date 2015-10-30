@@ -4,7 +4,9 @@
   <%= presenter.content %>
   <%= presenter.parenthesis %>
   <%= presenter.actions %>
-  <%= presenter.meaning lookup if lookup %>
+  <div class="definition">
+    <%= presenter.definition lookup if lookup %>
+  </div>
   <%= presenter.sentences if sentences %>
   <%= presenter.kanjis(glossary,:ul) if kanjis %>
 </<%= glossary_tag %>>

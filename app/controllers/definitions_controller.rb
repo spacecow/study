@@ -1,5 +1,8 @@
 class DefinitionsController < ApplicationController
 
+  def show
+  end
+
   def index
     respond_to do |f|
       f.json {render json:Definition.tokens(params[:q])}

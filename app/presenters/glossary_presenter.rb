@@ -61,9 +61,12 @@ class GlossaryPresenter < BasePresenter
     end
   end
 
-  def meaning lookup 
-    h.content_tag :div, class:'meaning' do
-      h.link_to lookup.definition.content.nil? ? 'edit me' : lookup.definition.content, h.edit_definition_path(lookup.definition)
+  def definition lookup 
+    h.content_tag(:span, class:'content') do
+      h.link_to lookup.definition.content, h.definition_path(lookup.definition)
+    end +
+    h.content_tag(:span, class:'actions') do
+      h.link_to "Edit Definition", h.edit_definition_path(lookup.definition)
     end
   end
 

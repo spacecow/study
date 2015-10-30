@@ -24,11 +24,6 @@ describe "display sentence" do
     page.text.should include 'to overwhelm'
   end
 
-  context "edit definition" do
-    before{ click_link 'to overwhelm' }
-    its(:current_path){ should eq edit_definition_path(definition) }
-  end
-
   context "show glossary" do
     before{ click_link 'nomikomu' }
     its(:current_path){ should eq glossary_path(glossary) }
@@ -38,6 +33,17 @@ describe "display sentence" do
     before{ click_link 'Edit Glossary' }
     its(:current_path){ should eq edit_glossary_path(glossary) }
   end
+
+  context "show definition" do
+    before{ click_link 'to overwhelm' }
+    its(:current_path){ should eq definition_path(definition) }
+  end
+
+  context "edit definition" do
+    before{ click_link 'Edit Definition' }
+    its(:current_path){ should eq edit_definition_path(definition) }
+  end
+
 
   context "edit sentence" do
     before{ click_link 'Edit Sentence' }
