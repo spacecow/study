@@ -39,5 +39,6 @@ describe "Glossary show" do
     should include "pot"
     should include "dirt"
     should include "glas"
+    all(".meaning a").first[:href].should eq edit_definition_path(definition_container)
   end
 end

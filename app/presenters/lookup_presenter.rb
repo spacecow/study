@@ -17,7 +17,7 @@ class LookupPresenter < BasePresenter
 
   def meaning
     h.content_tag :div, class:'meaning' do
-      h.link_to lookup.definition.content.nil? ? "edit me" : lookup.definition.content, h.edit_lookup_path(lookup)
+      h.link_to lookup.definition.content.nil? ? "edit me" : lookup.definition.content, h.edit_definition_path(lookup.definition)
     end
   end
 

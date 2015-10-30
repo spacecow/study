@@ -5,7 +5,9 @@
     <%= presenter.japanese %>
     <%= presenter.english %>
   </div>
-  <%= presenter.glossaries if glossaries %>
+  <ul class="glossaries">
+    <%= presenter.glossaries if glossaries %>
+  </ul>
   <div class="clear"></div>
 </li>
 

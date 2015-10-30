@@ -9,11 +9,9 @@ class SentencePresenter < BasePresenter
 
   def glossaries
     lookups = sentence.lookups
-    h.content_tag :ul, class:'glossaries' do
-      lookups.map do |lookup|
-        h.render lookup.definition.glossary, sentences:false, kanjis:true, glossary_tag:'li', extra_class:'', lookup:lookup
-      end.join.html_safe
-    end if lookups.present?
+    lookups.map do |lookup|
+      h.render lookup.definition.glossary, sentences:false, kanjis:true, glossary_tag:'li', extra_class:'', lookup:lookup
+    end.join.html_safe
   end
 
   def japanese
@@ -27,4 +25,9 @@ class SentencePresenter < BasePresenter
       h.render sentences, glossaries:true
     end if sentences.present?
   end
+
+  def edit_link
+    h.link_to "Edit Sentence", h.edit_sentence_path(sentence) if h.can? :edit, sentence
+  end
+
 end

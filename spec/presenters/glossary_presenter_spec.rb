@@ -38,11 +38,11 @@ describe GlossaryPresenter do
 
     context "logged in user" do
       before{ controller.stub(:current_user){ create :user }}
-      its(:text){ should eq 'Edit' }
+      its(:text){ should eq 'Edit Glossary' }
 
       context "link" do
         subject{ rendered.find('a') }
-        its(:text){ should eq 'Edit' } 
+        its(:text){ should eq 'Edit Glossary' } 
         specify{ subject[:href].should eq edit_glossary_path glossary }
       end
     end

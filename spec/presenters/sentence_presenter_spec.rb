@@ -36,7 +36,7 @@ describe SentencePresenter do
   describe '#glossaries' do
     context 'without glossaries' do
       before{ sentence.should_receive(:lookups).once.and_return [] }
-      it{ presenter.glossaries.should be_nil } 
+      it{ presenter.glossaries.should be_blank } 
     end
 
     context 'with glossaries' do

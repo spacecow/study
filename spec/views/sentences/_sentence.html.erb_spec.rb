@@ -16,7 +16,7 @@ describe "sentences/sentence.html.erb" do
     before{ render sentence, glossaries:false }
 
     subject{ Capybara.string(rendered) }
-    it{ should_not have_selector 'ul.glossaries' }
+    it{ should have_selector 'ul.glossaries' }
   end
 
   context "with glossaries" do

@@ -57,7 +57,7 @@ describe "Sentences index" do
     end
 
     it "has no glossaries list" do
-      page.should_not have_ul(:glossaries,0)
+      page.should have_ul(:glossaries,0)
     end
   end
 
