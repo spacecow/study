@@ -63,7 +63,7 @@ class GlossaryPresenter < BasePresenter
 
   def definition lookup 
     h.content_tag(:span, class:'content') do
-      h.link_to lookup.definition.content, h.definition_path(lookup.definition)
+      h.link_to lookup.definition.content.nil? ? "no definition" : lookup.definition.content, h.definition_path(lookup.definition)
     end +
     h.content_tag(:span, class:'actions') do
       h.link_to "Edit Definition", h.edit_definition_path(lookup.definition)
