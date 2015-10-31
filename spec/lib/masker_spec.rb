@@ -27,17 +27,17 @@ describe Masker do
   
     context "mask one word" do
       let(:word){ "deuce" }
-      it{ should eq 'what the *****' }
+      it{ should eq ['what the *****','deuce'] }
     end
 
     context "mask one word that is actually two" do
       let(:word){ "the deuce" }
-      it{ should eq 'what *** *****' }
+      it{ should eq ['what *** *****', 'the deuce'] }
     end
 
     context "mask one of two words" do
       let(:word){ ["deuc","deuce"] }
-      it{ should eq 'what the *****' }
+      it{ should eq ['what the *****','deuce'] }
     end
 
   end

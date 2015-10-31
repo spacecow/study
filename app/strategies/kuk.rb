@@ -10,10 +10,11 @@ module Kuk
       lookups.map do |lookup|
         definition = lookup.definition
         glossary = definition.glossary
-        { string:Masker.mask(content,glossary.all_forms),
+        masked = Masker.mask(content,glossary.all_forms)
+        { string:masked.first,
           content2:glossary.meaning(definition.content),
           correct:glossary.content,
-          reading:glossary.reading,
+          reading:"#{glossary.reading}, #{masked.last}",
           sound:glossary.sound_url }
       end
     end

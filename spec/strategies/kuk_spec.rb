@@ -58,7 +58,7 @@ describe Kuk do
           its([:string]){ should eq "what the *****" }
           its([:content2]){ should eq "even in tennis" }
           its([:correct]){ should eq "deuce" }
-          its([:reading]){ should eq "du:s" }
+          its([:reading]){ should eq "du:s, deuce" }
         end
 
         context "glossary has two form" do
@@ -66,7 +66,7 @@ describe Kuk do
           its([:string]){ should eq "what the *****" }
           its([:content2]){ should eq "even in tennis" }
           its([:correct]){ should eq "deuce" }
-          its([:reading]){ should eq "du:s" }
+          its([:reading]){ should eq "du:s, deuce" }
         end
       end
     end

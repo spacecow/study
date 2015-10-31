@@ -11,7 +11,7 @@ class Masker
     if arr.kind_of? Array
       arr.
         map{|w| mask_word s, w}.
-        sort_by{|mask| mask.count('*')}.
+        sort_by{|pair| pair.first.count('*')}.
         last
     elsif arr.kind_of? String
       mask_word s, arr 
@@ -21,7 +21,7 @@ class Masker
   private
 
     def self.mask_word s, w
-      s.sub w, w.gsub(/\w/,'*')
+      [s.sub(w, w.gsub(/\w/,'*')),w]
     end
 
 end
