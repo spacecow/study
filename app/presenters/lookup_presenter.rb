@@ -24,7 +24,7 @@ class LookupPresenter < BasePresenter
   def associations
     a = [synonym_links, antonym_links, similar_links].reject(&:blank?)
     h.content_tag :div, class:'associations' do
-      "(#{a.join('; ')})".html_safe
+      a.empty? ? "" : "(#{a.join('; ')})".html_safe
     end
   end
 
